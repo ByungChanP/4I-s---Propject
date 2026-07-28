@@ -1,4 +1,4 @@
-package net.likelion.bebc25._is_first_project;
+package net.likelion.bebc25.first_project;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
