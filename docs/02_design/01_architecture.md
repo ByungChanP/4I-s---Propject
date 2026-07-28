@@ -16,7 +16,7 @@
 
 ### 1.1.2 애플리케이션 계층 (Application Layer)
 - Spring Boot Web (Spring MVC)
-- HttpSession 세션 기반 로그인 인증 및 HandlerInterceptor 인증 체크
+- HttpSession 세션 기반 로그인 인증
 - Controller / Service / Repository 계층 분리 3-Tier Layered Architecture
 
 ### 1.1.3 데이터 계층 (Data Access & Storage Layer)
