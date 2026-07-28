@@ -46,7 +46,7 @@ erDiagram
 
     GAME {
         int id PK
-        varchar_50
+        varchar_50 name
         text backbackground_img_dir
         text game_logo_dir
         text detail  
