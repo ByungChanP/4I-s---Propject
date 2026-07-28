@@ -1,4 +1,4 @@
-package net.likelion.bebc25._is_first_project;
+package net.likelion.bebc25.first_project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
