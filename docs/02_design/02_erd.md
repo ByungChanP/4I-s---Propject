@@ -13,8 +13,8 @@
 ```mermaid
 erDiagram
     MEMBER ||--o{ POST : writes
-    MEMBER ||--o{ REPLY : writes
-    POST ||--o{ REPLY : contains
+    MEMBER ||--o{ USER_INFO : writes
+    POST ||--o{ USER_INFO : contains
     GAME ||--o{ POST : contais
 
     MEMBER {
