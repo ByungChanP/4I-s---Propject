@@ -15,7 +15,7 @@ erDiagram
     MEMBER ||--o{ POST : writes
     MEMBER ||--o{ USER_INFO : writes
     POST ||--o{ USER_INFO : contains
-    GAME ||--o{ POST : contais
+    GAME ||--o{ POST : contains
 
     MEMBER {
         int id PK
@@ -47,7 +47,7 @@ erDiagram
     GAME {
         int id PK
         varchar_50 name
-        text backbackground_img_dir
+        text background_img_dir
         text game_logo_dir
         text detail  
     }
