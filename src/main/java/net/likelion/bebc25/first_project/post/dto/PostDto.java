@@ -16,18 +16,26 @@ import java.time.LocalDateTime;
 public class PostDto {
     private int id;
 
+    private int gameId;
+
+    private String author;
+
+    private String tag;
+
     @NotBlank(message = "제목은 필수 입력 항목입니다.")
     @Size(max = 100, message = "제목은 100자 이하로 입력해야 합니다.")
     private String title;
 
-    @NotBlank(message = "내용은 필수 입력 항목입니다.")
+    @NotBlank(message = "내용을 입력해주세요")
     private String content;
 
-    @NotBlank(message = "작성자는 필수 입력 항목입니다.")
-    @Size(min = 2, max = 10, message = "작성자 이름은 2자 이상 10자 이하여야 합니다.")
-    private String author;
+    private int participantCount;
 
-    private boolean secret;
+    @NotBlank(message = "모집인원을 설정해주세요.")
+    private int maxParticipantCount;
+
+    @NotBlank(message = "마감 시간을 설정해주세요.")
+    private LocalDateTime deadline;
+
     private LocalDateTime createdAt;
-
 }
