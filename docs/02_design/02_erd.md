@@ -16,8 +16,10 @@ erDiagram
     MEMBER ||--o{ USER_INFO : writes
     POST ||--o{ USER_INFO : contains
     GAME ||--o{ POST : contains
-    MEMBER ||--|| LOL_INFO  : writes
-    MEMBER ||--|| LOST_INFO : writes
+    GAME |--o{ INGAME_INFO : contains
+    MEMBER ||--o{ INGAME_INFO : contains
+
+
 
     MEMBER {
         int id PK
@@ -58,27 +60,13 @@ erDiagram
         text detail  
     }
 
-    LOL_INFO {
+    INGAME_INFO{
         int id PK
-        int member_id FK
-        text nickname
-        int ingame_level
-        text ingame_rank
-        varchar_10 main_position
-        int rating_score
-        int rating_count
+        int game_id FK
+        int post_id FK
+        text ingame_info
     }
 
-    LOST_INFO {
-        int id PK
-        int member_id FK
-        text nickname
-        int equipment_lvl
-        varchar_10 main_role
-        int achievement_count
-        int rating_score
-        int rating_count
-    }
 ```
 
 ---
@@ -120,25 +108,12 @@ erDiagram
 - game_logo_dir: text (게임 로고 이미지 경로)
 - detail: text (게임 상세)
 
-### 1.2.5 lol_info (lol 프로필 정보 테이블)
-- id: INT, PRIMARY KEY, AUTO_INCREMENT (lol 테이블 고유 식별자)
+### 1.2.5 ingame_info (게임 프로필 정보 테이블)
+- id: INT, PRIMARY KEY, AUTO_INCREMENT (인게임 정보 테이블 고유 식별자)
 - member_id: INT, FOREIGN KEY, NOT NULL (작성자 회원 식별자)
-- ingame_nickname: TEXT, NOT NULL (인게임 닉네임)
-- ingame_lvl: INT, NOT NULL (인게임 레벨)
-- ingame_rank: TEXT, NOT NULL (인게임 랭크)
-- main_position: VARCHAR(10), NOT NULL (주 포지션)
-- rating_score: INT, NOT NULL (평점)
-- rating_count: INT, DEFAULT 0 (평가해준 인원)
+- game_id: INT. FOREIGN KEY, NOT NULL (게임 식별자)
+- ingame_info: text
 
-### 1.2.6 lost_info (lost ark 프로필 정보 테이블)
-- id: INT, PRIMARY KEY, AUTO_INCREMENT (lost 테이블 고유 식별자)
-- member_id: INT, FOREIGN KEY, NOT NULL (작성자 회원 식별자)
-- ingame_nickname: TEXT, NOT NULL (인게임 닉네임)
-- equipment_lvl: INT, NOT NULL (인게임 장비레벨)
-- main_role: VARCHAR(10), NOT NULL (주캐릭 직업)
-- achievement_count: INT, NOT NULL (업적수)
-- rating_score: INT, NOT NULL (평점)
-- rating_count: INT, DEFAULT 0 (평가해준 인원)
 ---
 
 ## 1.3 테이블 생성 DDL 스크립트
@@ -186,27 +161,11 @@ CREATE TABLE IF NOT EXISTS game
     detail             TEXT
 )
 
-CREATE TABLE IF NOT EXISTS lol_info
+CREATE TABLE IF NOT EXISTS ingame_info
 (
-    id              INT AUTO_INCREMENT PRIMARY KEY,
-    member_id       INT REFERENCES member (id) ON DELETE CASCADE,
-    ingame_nickname TEXT        NOT NULL,
-    ingame_lvl      INT         NOT NULL,
-    ingame_rank     TEXT        NOT NULL,
-    main_position   VARCHAR(10) NOT NULL,
-    rating_score    INT         NOT NULL,
-    rating_count    INT DEFAULT 0
-)
-
-CREATE TABLE IF NOT EXISTS lostark_info
-(
-    id                INT AUTO_INCREMENT PRIMARY KEY,
-    member_id         INT REFERENCES member (id) ON DELETE CASCADE,
-    ingame_nickname   TEXT        NOT NULL,
-    equipment_lvl     INT         NOT NULL,
-    main_role         VARCHAR(10) NOT NULL,
-    achievement_count INT         NOT NULL,
-    rating_score      INT         NOT NULL,
-    rating_count      INT DEFAULT 0
-)
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    game_id     INT REFERENCES game (id) ON DELETE CASCADE,
+    member_id   INT REFERENCES member (id) ON DELETE CASCADE,
+    ingame_info TEXT
+);
 ```
