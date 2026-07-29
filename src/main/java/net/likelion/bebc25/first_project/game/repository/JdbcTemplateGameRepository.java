@@ -1,0 +1,38 @@
+package net.likelion.bebc25.first_project.game.repository;
+
+import net.likelion.bebc25.first_project.game.dto.GameDto;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+
+import java.sql.ResultSet;
+import java.util.List;
+
+@Repository
+public class JdbcTemplateGameRepository implements GameRepository {
+    private final JdbcTemplate jdbcTemplate;
+
+    public JdbcTemplateGameRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    private final RowMapper<GameDto> gameRowMapper = (ResultSet rs, int rowNum) -> {
+        return GameDto.builder()
+                .id(rs.getInt("id"))
+                .gameTitle("game_title")
+                .details("details")
+                .logoImgDir("logo_img_dir")
+                .backgroundImgDir("background_img_dir")
+                .build();
+    };
+
+    @Override
+    public GameDto findById(int id) {
+        return jdbcTemplate.queryForObject("", gameRowMapper, id);
+    }
+
+    @Override
+    public List<GameDto> findAll() {
+        return jdbcTemplate.query("", gameRowMapper);
+    }
+}
