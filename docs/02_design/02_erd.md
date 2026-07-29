@@ -16,7 +16,7 @@ erDiagram
     MEMBER ||--o{ USER_INFO : writes
     POST ||--o{ USER_INFO : contains
     GAME ||--o{ POST : contains
-    GAME |--o{ INGAME_INFO : contains
+    GAME ||--o{ INGAME_INFO : contains
     MEMBER ||--o{ INGAME_INFO : contains
 
 
