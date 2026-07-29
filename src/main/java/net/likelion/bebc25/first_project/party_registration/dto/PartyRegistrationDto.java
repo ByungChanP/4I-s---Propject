@@ -1,4 +1,4 @@
-package net.likelion.bebc25.first_project.reply.dto;
+package net.likelion.bebc25.first_project.party_registration.dto;
 
 import lombok.*;
 
@@ -9,6 +9,6 @@ import lombok.*;
 @ToString
 @Builder
 // 게시글 하나를 저장할 객체
-public class ReplyDto {
+public class PartyRegistrationDto {
 
 }
