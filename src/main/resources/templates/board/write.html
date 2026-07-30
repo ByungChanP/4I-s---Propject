@@ -1,10 +1,117 @@
 <!DOCTYPE html>
-<html lang="ko-KR">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>게시글 작성</title>
 </head>
-<body>
 
+<body>
+<!-- 배너 -->
+<header>
+    <h1>게임 파티 모집 게시판</h1>
+
+    <!-- 회원가입, 로그인 버튼 -->
+    <div align="right">
+        <button>회원가입</button>
+        <button>로그인</button>
+    </div>
+</header>
+<hr>
+<form>
+    <!-- 모집 유형 -->
+    <div>
+        <label>모집유형 :</label>
+
+        <input type="radio" id="rank" name="recruitType" value="rank">
+        <label for="rank">랭크</label>
+
+        <input type="radio" id="normal" name="recruitType" value="normal">
+        <label for="normal">일반</label>
+    </div>
+    <br>
+
+    <!-- 모집 인원 -->
+    <div>
+        <label for="memberCount">파티 모집 인원 선택 :</label>
+
+        <select id="memberCount" name="memberCount">
+            <option value="2">2명</option>
+            <option value="3">3명</option>
+            <option value="4">4명</option>
+            <option value="5">5명</option>
+        </select>
+    </div>
+    <br>
+
+    <!-- 랭크 -->
+    <div>
+        <label>인게임 랭크 :</label>
+
+        <select name="minRank">
+            <option>아이언</option>
+            <option>브론즈</option>
+            <option>실버</option>
+            <option>골드</option>
+            <option>플래티넘</option>
+            <option>에메랄드</option>
+            <option>다이아몬드</option>
+            <option>마스터</option>
+            <option>그랜드마스터</option>
+            <option>챌린저</option>
+        </select>
+        이상
+
+        <select name="maxRank">
+            <option>아이언</option>
+            <option>브론즈</option>
+            <option>실버</option>
+            <option>골드</option>
+            <option>플래티넘</option>
+            <option>에메랄드</option>
+            <option>다이아몬드</option>
+            <option>마스터</option>
+            <option>그랜드마스터</option>
+            <option>챌린저</option>
+        </select>
+        이하
+    </div>
+    <br>
+
+    <!-- 모집 마감 시간 -->
+    <div>
+        <label for="deadline">파티 모집 마감 시간 :</label>
+
+        <select id="deadline" name="deadline">
+            <option>1시간</option>
+            <option>2시간</option>
+            <option>3시간</option>
+            <option>6시간</option>
+            <option>12시간</option>
+            <option>24시간</option>
+        </select>
+    </div>
+    <br>
+
+    <!-- 제목 -->
+    <div>
+        <label for="title">게시글 제목</label><br>
+        <input type="text" id="title" name="title" size="80" placeholder="제목을 입력하세요">
+    </div>
+    <br>
+
+    <!-- 내용 -->
+    <div>
+        <label for="content">게시글 내용</label><br>
+        <textarea id="content" name="content" rows="15" cols="80" placeholder="모집 조건, 포지션, 디스코드 여부 등을 자유롭게 작성해주세요"></textarea>
+    </div>
+    <br>
+
+    <!-- 취소 및 확인 -->
+    <div align="right">
+        <button type="reset">취소</button>
+        <button type="submit">확인</button>
+    </div>
+
+</form>
 </body>
 </html>
