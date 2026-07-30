@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ import java.util.List;
  */
 @Repository
 public class JdbcTemplateMemberRepository implements MemberRepository {
-    
+
     private final JdbcTemplate jdbcTemplate;
 
     /**
@@ -30,13 +29,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      * 데이터베이스 ResultSet 데이터를 MemberDto 객체로 변환해주는 맵퍼 정의입니다.
      */
     private final RowMapper<MemberDto> memberRowMapper = (ResultSet rs, int rowNum) -> {
-        return MemberDto.builder()
-                .id(rs.getInt("id"))
-                .username(rs.getString("username"))
-                .password(rs.getString("password"))
-                .email(rs.getString("email"))
-                .createdAt(rs.getObject("created_at", LocalDateTime.class))
-                .build();
+        return null;
     };
 
     /**
@@ -44,8 +37,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      */
     @Override
     public void save(MemberDto member) {
-        jdbcTemplate.update("INSERT INTO member2 (username, password, email) VALUES (?, ?, ?)",
-                            member.getUsername(), member.getPassword(), member.getEmail());
+
     }
 
     /**
@@ -53,7 +45,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      */
     @Override
     public MemberDto findByUsername(String username) {
-        return jdbcTemplate.queryForObject("SELECT * FROM member2 WHERE username = ?", memberRowMapper, username);
+        return null;
     }
 
     /**
@@ -61,7 +53,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      */
     @Override
     public MemberDto findById(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM member2 WHERE id = ?", memberRowMapper, id);
+        return null;
     }
 
     /**
@@ -69,8 +61,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      */
     @Override
     public void update(MemberDto member) {
-        jdbcTemplate.update("UPDATE member2 SET password = ?, email = ? WHERE id = ?"
-                , member.getPassword(), member.getEmail(), member.getId());
+
     }
 
     /**
@@ -78,7 +69,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      */
     @Override
     public void deleteById(int id) {
-        jdbcTemplate.update("DELETE FROM member2 WHERE id = ?", id);
+
     }
 
     /**
@@ -86,6 +77,6 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      */
     @Override
     public List<MemberDto> findAll() {
-        return jdbcTemplate.query("SELECT * FROM member2", memberRowMapper);
+        return null;
     }
 }
