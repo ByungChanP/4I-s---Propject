@@ -7,68 +7,79 @@
   <link rel="stylesheet" href="profile.css">
 </head>
 <body>
-  <header>
-    <h1 class="Header">
-      <a href="main.html">
-        <img src="logo.png" alt="멋사라이브">
-      </a>
-    </h1>
-    <div class="User-area">
-      <!-- th:text 닉네임으로 동적 처리 -->
-      <span class="User-Welcome">사용자님</span>
-      <!-- 어디 경로로 요청을 보내야할지 아직 모름-->
-      <form action="/logout" method="post">
-        <button type="submit" class="logout-btn">로그아웃</button>
-      </form>
-    </div>
-  </header>
-  <div>
-    <img src="gameLogo" alt="lol">
-    <h2>리그 오브 레전드 파티 모집 게시판</h2>
-    <span>듀오, 랭크, 일반, 칼바람 파티원을 모집해보세요</span>
-  </div>
-  
-    <form action="/mypage" method="post">
-
-      <div class="text-form">
-        <div class="IngameNickname-form">
-          <label for="IngameNickname">닉네임</label>
-          <input type="text" name="ingamenickname" id="nickname" placeholder="닉네임을 입력하세요">
-        </div>
-        <div class="level-form">
-          <label for="level">레벨</label>
-          <input type="text" name="Userlevel" id="level" placeholder="레벨을 입력하세요">
-        </div>
-        <div class="rank-form">
-          <label for="rank">랭크</label>
-          <input type="text" name="UserRank" id="rank" placeholder="랭크를 입력하세요">
-        </div>
-      </div>
-
-      <div class="checkbox-form">
-        <label for="position">주 포지션</label>
-        <span>주로 플레이하는 포지션을 선택해주세요(복수 선택 가능)</span>
-        <div class="position-list">
-          <label>
-            <input type="checkbox" name="position" value="TOP">
-              탑
-          </label>
-
-          <label>
-            <input type="checkbox" name="position" value="JUNGLE">
-              정글
-          </label>
-
-          <label>
-            <input type="checkbox" name="position" value="MID">
-              미드
-          </label>
-        </div>
-      </div>
-      <button type="submit" class="post_ingame_profile" >프로필 등록</button>
+<header>
+  <h1 class="Header">
+    <a href="main.html">
+      <img src="logo.png" alt="멋사라이브">
+    </a>
+  </h1>
+  <div class="User-area">
+    <!-- th:text 닉네임으로 동적 처리 -->
+    <span class="User-Welcome">사용자님</span>
+    <!-- 어디 경로로 요청을 보내야할지 아직 모름-->
+    <form action="/logout" method="post">
+      <button type="submit" class="logout-btn">로그아웃</button>
     </form>
-    <!--취소시 post게시판으로 이동 -->
-    <a href="/mypage" class="cancel-btn">취소</a>
- 
+  </div>
+</header>
+<div>
+  <img src="gameLogo" alt="lol">
+  <h2>리그 오브 레전드 파티 모집 게시판</h2>
+  <span>듀오, 랭크, 일반, 칼바람 파티원을 모집해보세요</span>
+</div>
+
+<form action="/mypage" method="post">
+
+  <div class="text-form">
+    <div class="IngameNickname-form">
+      <label for="nickname">닉네임</label>
+      <input type="text" name="ingamenickname" id="nickname" placeholder="닉네임을 입력하세요">
+    </div>
+    <div class="level-form">
+      <label for="level">레벨</label>
+      <input type="text" name="Userlevel" id="level" placeholder="레벨을 입력하세요">
+    </div>
+    <div class="rank-form">
+      <label for="rank">랭크</label>
+      <input type="text" name="UserRank" id="rank" placeholder="랭크를 입력하세요">
+    </div>
+  </div>
+
+  <div class="checkbox-form">
+    <label>주 포지션</label>
+    <span>주로 플레이하는 포지션을 선택해주세요(복수 선택 가능)</span>
+    <div class="position-list">
+      <label>
+        <input type="checkbox" name="position" value="TOP">
+        탑
+      </label>
+
+      <label>
+        <input type="checkbox" name="position" value="JUNGLE">
+        정글
+      </label>
+
+      <label>
+        <input type="checkbox" name="position" value="MID">
+        미드
+      </label>
+
+      <label>
+        <input type="checkbox" name="position" value="SUPPORT">
+        서포트
+      </label>
+
+      <label>
+        <input type="checkbox" name="position" value="ADC">
+        원딜
+      </label>
+
+    </div>
+  </div>
+  <button type="submit" class="post_ingame_profile" >프로필 등록</button>
+</form>
+<!--취소시 post게시판으로 이동 -->
+<a href="/mypage" class="cancel-btn">취소</a>
+
 </body>
 </html>
