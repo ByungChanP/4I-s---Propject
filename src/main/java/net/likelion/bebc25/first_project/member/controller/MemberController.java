@@ -1,11 +1,16 @@
 package net.likelion.bebc25.first_project.member.controller;
 
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import net.likelion.bebc25.first_project.member.dto.MemberDto;
+import net.likelion.bebc25.first_project.member.dto.SessionMemberDto;
 import net.likelion.bebc25.first_project.member.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -34,10 +39,11 @@ public class MemberController {
      * @param model 화면에 전달할 데이터를 담는 Model 객체
      * @return 회원 목록 화면으로의 redirect 경로
      */
-    @GetMapping("/list.html")
+    @GetMapping("/list")
     public String getMemberList(Model model) {
         List<MemberDto> members = memberService.getMembers();
         model.addAttribute("members", members);
+
         return "member/list";
     }
 
@@ -46,8 +52,8 @@ public class MemberController {
      *
      * @return 회원 가입 화면으로의 redirect 경로
      */
-    @GetMapping("/register.html")
-    public String getRegisterForm(@ModelAttribute("member") MemberDto member) {
+    @GetMapping("/register")
+    public String getRegisterForm(@ModelAttribute("memberForm") MemberDto member) {
         return "member/register";
     }
 
@@ -58,9 +64,24 @@ public class MemberController {
      * @return 로그인 화면으로의 redirect 경로
      */
     @PostMapping("/register")
-    public String register(@ModelAttribute MemberDto memberDto) {
-        memberService.register(memberDto);
-        return "redirect:/member/login.html";
+    public String register(@Valid @ModelAttribute("memberForm") MemberDto memberDto  // Validation 검증 대상 객체
+            , BindingResult bindingResult) { // Validation 검증 결과 저장 객체(대상 객체 뒤에 기술해야 함)
+        // 실습 영역
+        if(bindingResult.hasErrors()){ // 검증에 실패했을 경우
+            return "member/register"; // 작성중이던 페이지로 다시 보낸다.
+        }
+
+        try{
+            memberService.register(memberDto);
+        }catch(Exception e){
+            // username 이 중복되는 예외 발생 시 username 필드 에러로 바인딩
+            // rejectValue(에러가 발생한 필드, 에러코드, 기본 에러메세지)
+            // 에러코드: 메세지 설정파일(errors.properties, messages.properties)에 정의한 키값(없을 경우 세번째 에러메세지로 대체됨)
+            bindingResult.rejectValue("username", "duplicate", e.getMessage());
+            return "member/register";
+        }
+
+        return "redirect:/member/login"; // 브라우저에 login으로 재요청하라고 응답
     }
 
     /**
@@ -68,35 +89,56 @@ public class MemberController {
      *
      * @return 로그인 화면으로의 redirect 경로
      */
-    @GetMapping("/login.html")
-    public String getLoginForm(@ModelAttribute("member") MemberDto member) {
+    @GetMapping("/login")
+    public String getLoginForm(@ModelAttribute("loginForm") MemberDto memberDto) {  // 모델에 자동으로 주입까지 됨(loginForm 이름으로)
+        // 실습 영역
         return "member/login";
     }
 
     /**
      * 로그인 인증 요청을 처리합니다.
      *
-     * @param username 로그인 요청 사용자 아이디(고유 식별 ID)
-     * @param password 로그인 요청 사용자 비밀번호
+     * @param member 사용자가 입력한 username, password가 들어있는 DTO
      * @return 회원 목록 화면으로의 redirect 경로
      */
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password) {
-        memberService.login(username, password);
-        return "redirect:/member/list.html";
+    public String login(@Valid @ModelAttribute("loginForm") MemberDto member,
+                        BindingResult bindingResult,
+                        RedirectAttributes redirectAttributes,
+                        HttpSession session) { // 로그인 실패시 에러메세지와 함께
+        // 실습 영역
+        if(bindingResult.hasErrors()){ // 검증에 실패했을 경우
+            return "member/login"; // 작성중이던 페이지로 다시 보낸다.
+        }
+
+        // 로그인 시도
+        MemberDto memberInfo = memberService.login(member.getEmail(), member.getPassword());
+        if(memberInfo == null){ // 로그인 실패시
+            // 실패 메시지를 담고 다시 로그인 페이지로 리다이렉트
+            // addFlashAttribute: 임시로 세션에 속성을 담아서 리다이렉트 된 페이지에서 꺼내어 사용 후 속성값은 세션에서 제거함
+            redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호를 확인하세요.");
+            redirectAttributes.addFlashAttribute("loginForm", member); // 입력 폼 데이터 유지
+            return "redirect:/member/login"; // 로그인 폼 페이지로 이동
+        }
+
+        // 로그인 성공 시 세션 생성해서 사용자 정보를 저장
+        SessionMemberDto sessionMember = new SessionMemberDto(memberInfo);
+        session.setAttribute("loginMember", sessionMember);
+
+        return "redirect:/member/list";
     }
 
     /**
      * 회원 정보 수정 화면으로 유도합니다.
      *
-     * @param id    수정할 회원의 일련번호
+     * @param id 수정할 회원의 일련번호
      * @param model 화면에 전달할 데이터를 담는 Model 객체
      * @return 회원 정보 수정 화면으로의 redirect 경로
      */
-    @GetMapping("/edit.html")
+    @GetMapping("/edit")
     public String getEditForm(@RequestParam int id, Model model) {
         MemberDto member = memberService.getMember(id);
-        model.addAttribute("member", member);
+        model.addAttribute("memberForm", member);
         return "member/edit";
     }
 
@@ -107,9 +149,14 @@ public class MemberController {
      * @return 회원 목록 화면으로의 redirect 경로
      */
     @PostMapping("/edit")
-    public String edit(@ModelAttribute MemberDto memberDto) {
+    public String edit(@Valid @ModelAttribute("memberForm") MemberDto memberDto,
+                       BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){ // 검증에 실패했을 경우
+            return "member/edit"; // 작성중이던 페이지로 다시 보낸다.
+        }
         memberService.modifyInfo(memberDto);
-        return "redirect:/member/list.html";
+
+        return "redirect:/member/list";
     }
 
     /**
@@ -121,6 +168,8 @@ public class MemberController {
     @PostMapping("/withdraw")
     public String withdraw(@RequestParam int id) {
         memberService.withdraw(id);
-        return "redirect:/member/list.html";
+        return "redirect:/member/list";
     }
+
+
 }
