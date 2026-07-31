@@ -29,7 +29,6 @@
 </div>
 
 <form action="/mypage" method="post">
-
   <div class="text-form">
     <div class="IngameNickname-form">
       <label for="nickname">닉네임</label>
@@ -39,12 +38,23 @@
       <label for="level">레벨</label>
       <input type="text" name="Userlevel" id="level" placeholder="레벨을 입력하세요">
     </div>
-    <div class="rank-form">
-      <label for="rank">랭크</label>
-      <input type="text" name="UserRank" id="rank" placeholder="랭크를 입력하세요">
+  </div>
+  <div class="radio-form">
+    <label for="rank">랭크</label>
+    <div class="rank-form" id="rank">
+      <input type="radio" name="UserRank"  value="unranked">언랭크
+      <input type="radio" name="UserRank"  value="iron">아이언
+      <input type="radio" name="UserRank"  value="bronze">브론즈
+      <input type="radio" name="UserRank"  value="silver">실버
+      <input type="radio" name="UserRank"  value="gold">골드
+      <input type="radio" name="UserRank"  value="platinum">플레티넘
+      <input type="radio" name="UserRank"  value="emerald">에매랄드
+      <input type="radio" name="UserRank"  value="diamond">다이아몬드
+      <input type="radio" name="UserRank"  value="master">마스터
+      <input type="radio" name="UserRank"  value="grandmaster">그랜드 마스터
+      <input type="radio" name="UserRank"  value="challenger">챌린저
     </div>
   </div>
-
   <div class="checkbox-form">
     <label>주 포지션</label>
     <span>주로 플레이하는 포지션을 선택해주세요(복수 선택 가능)</span>
@@ -78,7 +88,7 @@
   </div>
   <button type="submit" class="post_ingame_profile" >프로필 등록</button>
 </form>
-<!--취소시 post게시판으로 이동 -->
+<!--취소시 게시판으로 이동 -->
 <a href="/mypage" class="cancel-btn">취소</a>
 
 </body>
