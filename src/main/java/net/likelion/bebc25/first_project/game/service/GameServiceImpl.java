@@ -1,9 +1,11 @@
 package net.likelion.bebc25.first_project.game.service;
 
 import net.likelion.bebc25.first_project.game.dto.GameDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class GameServiceImpl implements GameService {
 
     @Override
