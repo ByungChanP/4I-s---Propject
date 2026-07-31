@@ -3,6 +3,7 @@ package net.likelion.bebc25.first_project.member.controller;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import net.likelion.bebc25.first_project.exception.DuplicateUsernameException;
 import net.likelion.bebc25.first_project.member.dto.MemberDto;
 import net.likelion.bebc25.first_project.member.dto.SessionMemberDto;
 import net.likelion.bebc25.first_project.member.service.MemberService;
@@ -73,7 +74,7 @@ public class MemberController {
 
         try{
             memberService.register(memberDto);
-        }catch(Exception e){
+        }catch(DuplicateUsernameException e){
             // username 이 중복되는 예외 발생 시 username 필드 에러로 바인딩
             // rejectValue(에러가 발생한 필드, 에러코드, 기본 에러메세지)
             // 에러코드: 메세지 설정파일(errors.properties, messages.properties)에 정의한 키값(없을 경우 세번째 에러메세지로 대체됨)
