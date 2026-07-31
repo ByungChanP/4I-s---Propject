@@ -83,6 +83,15 @@ public class BoardController {
         return "redirect:/board/leagueoflegend/detail";
     }
 
+    // 파티 참가
+    @PostMapping("/*/request:join")
+    public String joinParty() {
+        log.info("파티 참가 신청");
+        return "redirect:/board/leagueoflegend/detail";
+    }
+
+    // 파티 참가 취소
+
     // 참가 거부
     @PostMapping("/*/request:refuse")
     public String refuseParticipant() {
