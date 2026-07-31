@@ -33,7 +33,7 @@
         </div>
         <p>지원인원 3/5</p>
         <p>마감시간 <span>1사간 45분 남음</span></p>
-        <form action="close" method="post">
+        <form action="./request:close" method="post">
             <button>모집마감</button>
         </form>
     </div>
@@ -65,8 +65,14 @@
                     <td>미드</td>
                     <td>4.3</td>
                     <td>
-                        <form action="" method="post">
-                            <button>평가하기</button>
+                        <form action="./request:rating" method="post">
+                            평가하기:
+                            1<input type="radio" name="star" aria-label="author_star1" value="1">
+                            2<input type="radio" name="star" aria-label="author_star2" value="2">
+                            3<input type="radio" name="star" aria-label="author_star3" value="3">
+                            4<input type="radio" name="star" aria-label="author_star4" value="4">
+                            5<input type="radio" name="star" aria-label="author_star5" value="5">
+                            <button type="submit">제출하기</button>
                         </form>
                     </td>
                 </tr>
@@ -93,11 +99,17 @@
                     <td>정글</td>
                     <td>3.8</td>
                     <td>
-                        <form action="remove" method="post">
+                        <form action="./request:refuse" method="post">
                             <button>x</button>
                         </form>
-                        <form action="" method="post">
-                            <button>평가하기</button>
+                        <form action="./request:rating" method="post">
+                            평가하기:
+                            1<input type="radio" name="star" aria-label="participant_star1" value="1">
+                            2<input type="radio" name="star" aria-label="participant_star2" value="2">
+                            3<input type="radio" name="star" aria-label="participant_star3" value="3">
+                            4<input type="radio" name="star" aria-label="participant_star4" value="4">
+                            5<input type="radio" name="star" aria-label="participant_star5" value="5">
+                            <button type="submit">제출하기</button>
                         </form>
                     </td>
                 </tr>
@@ -109,11 +121,17 @@
                     <td>서포터</td>
                     <td>4.1</td>
                     <td>
-                        <form action="remove" method="post">
+                        <form action="./request:refuse" method="post">
                             <button>x</button>
                         </form>
-                        <form action="" method="post">
-                            <button>평가하기</button>
+                        <form action="./request:rating" method="post">
+                            평가하기
+                            1<input type="radio" name="star" aria-label="participant_star1" value="1">
+                            2<input type="radio" name="star" aria-label="participant_star2" value="2">
+                            3<input type="radio" name="star" aria-label="participant_star3" value="3">
+                            4<input type="radio" name="star" aria-label="participant_star4" value="4">
+                            5<input type="radio" name="star" aria-label="participant_star5" value="5">
+                            <button type="submit">제출하기</button>
                         </form>
                     </td>
                 </tr>
@@ -121,13 +139,13 @@
         </div>
     </div>
     <div class="buttons_container">
-        <a href="list.html">
+        <a href="/board/leageueoflegend">
             <button>목록</button>
         </a>
-        <a href="edit.html">
+        <a href="./edit">
             <button>게시글 수정</button>
         </a>
-        <form action="" method="post">
+        <form action="./request:delete_post" method="post">
             <button type="submit">삭제</button>
         </form>
     </div>
