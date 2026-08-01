@@ -21,9 +21,12 @@ header {
     background-color: white;
 }
 
+.board_info, main {
+    margin-inline: 5%;
+}
+
 .board_info {
     margin-block-start: 20px;
-    margin-inline: 5%;
 }
 
 .board_info, .post_info_content {
@@ -31,7 +34,6 @@ header {
 }
 
 main {
-    margin-inline: 5%;
     padding: 0 2% 2% 2%;
     background-color: white;
 }
@@ -110,7 +112,7 @@ main > div {
 .refuse {
     width: 40px;
     font-size: 20px;
-    background-color: rgb(254, 73, 73);
+    background-color: rgb(250 50 50);
 }
 
 .edit {
