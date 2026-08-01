@@ -32,7 +32,7 @@ header {
 
 main {
     margin-inline: 5%;
-    padding: 0% 2% 2% 2%;
+    padding: 0 2% 2% 2%;
     background-color: white;
 }
 
@@ -41,7 +41,7 @@ main > div {
 }
 
 .title {
-    border-bottom: solid 1px rgb(220, 220, 220);
+    border-block-end: solid 1px rgb(220, 220, 220);
 }
 
 .post_info_content {
@@ -50,6 +50,7 @@ main > div {
 
 .content {
     flex-grow: 1;
+    padding-inline: 10px;
     border: solid 1px rgb(220, 220, 220);
     border-radius: 10px;
 }
@@ -57,6 +58,16 @@ main > div {
 .user_info {
     table-layout: fixed;
     text-align: center;
+    border-collapse: collapse;
+}
+
+.user_info th, .user_info td {
+    padding-block: 5px;
+    border-bottom: solid 1px rgb(220, 220, 220);
+}
+
+.user_info tr:last-child td {
+    border-bottom: none;
 }
 
 .nickname, .ingame_nickname {
