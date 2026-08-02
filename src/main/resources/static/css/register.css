@@ -1,0 +1,102 @@
+header{
+    background-color: white;
+    height: auto;
+}
+.Header{
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    padding: 0 10px;
+
+}
+.logotomain{
+
+    width: 100px;
+    height: 100px;
+    object-fit: fill;
+}
+.Home-btn{
+    font-size: 24px;
+    margin-top: 24px;
+    color: black;
+}
+/* 헤더 공통 사용 */
+body{
+    background-color: whitesmoke;
+    margin: 0;
+}
+
+.Top{
+    margin-top: 25px;
+    text-align: center;
+}
+
+/* 핵심 구현 */
+.white-box{
+    margin: 20px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 1000px;
+    height: 600px;
+    background-color: white;
+    text-align: center;
+}
+
+.form-group{
+    padding: 50px;
+}
+
+.id-form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 25%;
+    font-size: 12px;
+    gap: 5px;
+}
+.id-form input {
+    width: 450px;
+    height: 40px;
+    border-color: black;
+}
+
+.password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 12px;
+    text-align: left;
+    margin-left: 25%;
+}
+.password-form input {
+    width: 450px;
+    height: 40px;
+    border-color: black;
+}
+
+.nickname-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 12px;
+    text-align: left;
+    margin-left: 25%;
+}
+.nickname-form input {
+    width: 450px;
+    height: 40px;
+    border-color: black;
+}
+
+.register-btn{
+    width: 460px;
+    height: 40px;
+    background-color: lightsalmon;
+    margin-left: 25px;
+}
+
+/* 하이퍼 링크 공통 사항 */
+a:hover,
+a:focus {
+    color: lightcoral;
+}
