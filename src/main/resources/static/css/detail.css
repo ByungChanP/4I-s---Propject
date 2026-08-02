@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+    min-width: 1250px;
+    background-color: whitesmoke;
+}
+
+header, .row, .board_info, .post_info_content {
+    display: flex;
+    align-items: center;
+}
+
+.label {
+    font-weight: bold;
+    color: rgb(0, 73, 182);
+    width: 15%;
+}
+
+header {
+    padding: 10px;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.board_info, main {
+    margin-inline: 5%;
+}
+
+.board_info {
+    margin-block-start: 20px;
+}
+
+.board_info, .post_info_content {
+    gap: 5%;
+}
+
+main {
+    padding: 0 2% 2% 2%;
+    background-color: white;
+}
+
+main > div {
+    margin-block-start: 20px;
+}
+
+.title {
+    border-block-end: solid 1px rgb(220, 220, 220);
+}
+
+.post_info_content {
+    flex-grow: 1;
+}
+
+.content {
+    flex-grow: 1;
+    padding-inline: 10px;
+    border: solid 1px rgb(220, 220, 220);
+    border-radius: 10px;
+}
+
+.user_info {
+    table-layout: fixed;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.user_info th, .user_info td {
+    padding-block: 5px;
+    border-bottom: solid 1px rgb(220, 220, 220);
+}
+
+.user_info tr:last-child td {
+    border-bottom: none;
+}
+
+.nickname, .ingame_nickname {
+    width: 15%;
+}
+
+.rating {
+    width: 5%;
+}
+
+.btn_col {
+    width: 20%;
+}
+
+.btn_container {
+    display: flex;
+    justify-content: right;
+    gap: 10px;
+}
+
+.btn {
+    width: 120px;
+    height: 40px;
+    border: solid 1px rgb(192, 192, 192);
+    border-radius: 5px;
+    background-color: white;
+}
+
+.close, .delete, .logout {
+    color: white;
+    background-color: rgb(255, 115, 0);
+}
+
+.submit {
+    width: 90px;
+    height: 25px;
+    background-color: white;
+}
+
+.refuse {
+    width: 40px;
+    font-size: 20px;
+    background-color: rgb(250 50 50);
+}
+
+.edit {
+    color: rgb(255, 115, 0);
+    border-color: rgb(255, 115, 0);
+}
