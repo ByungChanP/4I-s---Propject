@@ -1,0 +1,112 @@
+/* Header 작성*/
+header{
+    background-color: white;
+    height: 100px;
+}
+.Header{
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    padding: 0 10px;
+
+}
+.Header-right{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+}
+.logotomain{
+    width: 100px;
+    height: 100px;
+    object-fit: fill;
+}
+body{
+    background-color: whitesmoke;
+    margin: 0;
+}
+/* 게시판 베너 작성 */
+.game-post{
+    margin-top: 50px;
+    margin-left: 10%;
+    display: flex;
+    text-align: left;
+    gap: 30px;
+    height: 65px;
+}
+
+.white-box{
+    margin: 100px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 1000px;
+    height: 600px;
+    background-color: white;
+    text-align: center;
+}
+
+.ingamenickname-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 25%;
+    font-size: 12px;
+    gap: 5px;
+}
+
+.ingamenickname-form input {
+    width: 450px;
+    height: 40px;
+    border-color: black;
+    margin-bottom:30px;
+}
+
+.level-form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 25%;
+    font-size: 12px;
+    gap: 5px;
+}
+
+.level-form input {
+    width: 450px;
+    height: 40px;
+    border-color: black;
+}
+
+.radio-form{
+    margin-top: 50px;
+    width: 450px;
+    margin-left: 25%;
+}
+.rank-label{
+    margin-right: 5px;
+    font-size: 20px;
+    font-weight: 700;
+    gap: 10px
+}
+.rank-form{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+.position-list{
+    margin-top: 10px;
+}
+.register-profile{
+    margin-top: 10px;
+
+}
+.register-profile-btn{
+    background-color: lightsalmon;
+    margin-left: 10%;
+}
+
+/* 하이퍼 링크 공통 사항 */
+a:hover,
+a:focus {
+    color: lightcoral;
+}

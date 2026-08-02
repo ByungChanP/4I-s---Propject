@@ -172,5 +172,17 @@ public class MemberController {
         return "redirect:/member/list";
     }
 
+    /**
+     * 프로필 양식 화면으로 유도합니다.
+     *
+     * @return 프로필 화면으로의 redirect 경로
+     */
+    @GetMapping("/profile")
+    public String getProfileForm(@ModelAttribute("profileForm") MemberDto memberDto) {  // 모델에 자동으로 주입까지 됨(loginForm 이름으로)
+        // 실습 영역
+        return "member/profile";
+    }
+
+
 
 }
