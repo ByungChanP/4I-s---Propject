@@ -58,3 +58,4 @@ CREATE TABLE IF NOT EXISTS ingame_info
     member_id   INT REFERENCES member (id) ON DELETE CASCADE,
     ingame_info TEXT
 );
+SET FOREIGN_KEY_CHECKS = 1;

@@ -42,8 +42,8 @@ public class SessionMemberDto implements Serializable {
     public SessionMemberDto(MemberDto memberDto) {
         if (memberDto != null) {
             this.id = memberDto.getId();
-            this.nickname = memberDto.getNickname();
             this.email = memberDto.getEmail();
+            this.nickname = memberDto.getNickname();
         }
     }
 }
