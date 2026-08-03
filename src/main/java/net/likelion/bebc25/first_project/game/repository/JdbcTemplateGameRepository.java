@@ -19,7 +19,7 @@ public class JdbcTemplateGameRepository implements GameRepository {
     private final RowMapper<GameDto> gameRowMapper = (ResultSet rs, int rowNum) -> {
         return GameDto.builder()
                 .id(rs.getInt("id"))
-                .gameTitle("game_title")
+                .gameTitle(rs.getString("game_title"))
                 .details("details")
                 .logoImgDir("logo_img_dir")
                 .backgroundImgDir("background_img_dir")

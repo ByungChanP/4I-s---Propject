@@ -31,11 +31,15 @@ public class BoardController {
     }
 
     // 게시글 목록 조회
-    @GetMapping("/")
-    public String getPosts(Model model) {
+    @GetMapping("/{id}")
+    public String getPosts(@PathVariable("id") int gameId, Model model) {
         log.info("게시글 목록");
         List<PostDto> posts = postService.getPosts();
         model.addAttribute("posts", posts);
+
+        GameDto game = gameService.getGame(gameId);
+        model.addAttribute("game", game);
+
         return "board/list";
     }
 
