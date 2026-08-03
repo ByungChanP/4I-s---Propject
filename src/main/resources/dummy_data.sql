@@ -1,6 +1,6 @@
 INSERT INTO game(game_title, detail, background_img_dir, game_logo_dir)
-VALUES ('League Of Legend', '자세한 설명은 생략한다', '', ''),
-       ('Lost Ark', '자세한 설명은 생략한다', '', '');
+VALUES ('League Of Legend', '자세한 설명은 생략한다', '/images/lol/lol-banner.png', '/images/lol/lol_logo.png'),
+       ('Lost Ark', '자세한 설명은 생략한다', '/images/lostark/lostark-banner.png', '/images/lostark/lostark-logo.png');
 
 INSERT INTO member(email, pw, nickname, profile_img_dir)
 VALUES ('user1@example.com', '1111', 'user1', ''),

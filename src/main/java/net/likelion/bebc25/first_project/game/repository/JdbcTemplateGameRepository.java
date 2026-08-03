@@ -20,9 +20,9 @@ public class JdbcTemplateGameRepository implements GameRepository {
         return GameDto.builder()
                 .id(rs.getInt("id"))
                 .gameTitle(rs.getString("game_title"))
-                .details("details")
-                .logoImgDir("logo_img_dir")
-                .backgroundImgDir("background_img_dir")
+                .details(rs.getString("detail"))
+                .logoImgDir(rs.getString("game_logo_dir"))
+                .backgroundImgDir(rs.getString("background_img_dir"))
                 .build();
     };
 
