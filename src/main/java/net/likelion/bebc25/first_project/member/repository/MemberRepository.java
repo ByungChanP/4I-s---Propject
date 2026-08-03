@@ -19,10 +19,10 @@ public interface MemberRepository {
      * 회원 로그인 아이디(username)를 기반으로 회원 정보를 조회합니다.
      * username은 사용자의 실명이 아닌 로그인 시 사용하는 고유한 식별자(ID)입니다.
      *
-     * @param username 조회할 로그인 아이디(고유 식별 ID)
+     * @param email 조회할 로그인 이메일(고유 식별 Email)
      * @return 조회된 회원 정보 DTO, 없을 경우 null 반환
      */
-    MemberDto findByUsername(String username);
+    MemberDto findByEmail(String email);
 
     /**
      * 회원 일련번호를 기반으로 회원 정보를 조회합니다.
