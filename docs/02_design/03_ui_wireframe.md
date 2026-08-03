@@ -25,8 +25,8 @@
 
 ## 2. 주요 화면별 명세
 
-### 2.1 메인 화면
-<img src="../images/01_post_list.png" width="500" alt="게시글 목록 화면">
+### 2.1 메인 화면 (GET `/main`)
+<img src="../images/01_index.png" width="500" alt="게시글 목록 화면">
 
 - 출력 데이터 항목 (Output Data):
   - GNB 영역: 멋사라이브 로고, 로그인 버튼  (이미 로그인 상태인 경우 로그아웃 버튼 초기 메인화면으로 이동)
@@ -38,8 +38,8 @@
   - 게임 카드 클릭 시 미인증 상태에서도 게시물 페이지에 이동
 
 
-### 2.2 로그인 화면 (GET `/posts/{postId}`)
-<img src="../images/02_post_detail.png" width="500" alt="게시글 상세 화면">
+### 2.2 로그인 화면 (GET `/member/login`)
+<img src="../images/02_signin.png" width="500" alt="게시글 상세 화면">
 
 - 입력 데이터 및 검증 규칙 (Input Data & Validation):
   - 아이디/이메일: 필수 입력
@@ -49,8 +49,8 @@
   - [회원가입] 버튼 클릭 시 회원가입 화면으로 이동
   - 로고 클릭 시 로그인 전 메인 화면으로 이동
 
-### 2.3 회원 가입 화면 (GET `/posts/form`)
-<img src="../images/03_post_form.png" width="500" alt="게시글 작성 화면">
+### 2.3 회원 가입 화면 (GET `/member/register`)
+<img src="../images/03_signup.png" width="500" alt="게시글 작성 화면">
 
 - 입력 데이터 및 검증 규칙 (Input Data & Validation):
   - 이메일: 필수 입력, 어노테이션 이메일 형식 검증
@@ -59,8 +59,8 @@
 - 화면 제어 및 권한 규칙 (Behavior Rules):
   - [가입하기] 버튼 제출 시 유효성 검증 완료 후 로그인 화면으로 이동
 
-### 2.4 파티 모집 게시판 (GET `/posts/{postId}/form`)
-<img src="../images/03_post_form.png" width="500" alt="게시글 수정 화면">
+### 2.4 파티 모집 게시판 (GET `/board/{gameId}/`)
+<img src="../images/04_post_party.png" width="500" alt="게시글 수정 화면">
 
 - 출력 데이터 항목 (Output Data):
   - GNB 및 헤더: 선택된 게임 배너 타이틀
@@ -72,8 +72,8 @@
   - [프로필 등록] 버튼 클릭 시 전개글/프로필 등록 화면으로 이동
   - 파티 게시글 행 클릭 시 해당 파티 모집 상세 화면(사용자)으로 이동
 
-### 2.5 파티 모집 작성 화면 
-<img src="../images/04_signup.png" width="500" alt="사용자 회원가입 화면">
+### 2.5 파티 모집 작성 화면 (GET `/board/{gameId}/write`)
+<img src="../images/05_party_join.png" width="500" alt="사용자 회원가입 화면">
 
 - 입력 데이터 및 검증 규칙 (Input Data & Validation):
   - 모집 유형: 필수 선택, 체크 박스 (Radio, 랭크 / 일반) 
@@ -86,8 +86,8 @@
   - [취소] 버튼 클릭 시 파티 모집 게시판 목록으로 이동
   - [등록하기] 버튼 제출 시 유효성 검증 수행 후 파티 모집 상세 화면(작성자)으로 이동
 
-### 2.6 파티 모집 상세 화면(사용자) 
-<img src="../images/05_login.png" width="500" alt="사용자 로그인 화면">
+### 2.6 파티 모집 상세 화면(사용자) (GET `/board/{gameId}/detail?id={postId}`)
+<img src="../images/06_party_join_detail.png" width="500" alt="사용자 로그인 화면">
 
 - 출력 데이터 항목 (Output Data):
   - GNB 및 타이틀 영역: 서비스 로고, 사용자 프로필/인증 정보, 게임별 게시판 헤더 배너 (ex: 리그 오브 레전드 파티 모집 게시판)
@@ -101,7 +101,8 @@
   - 목록 이동: [목록으로] 버튼 클릭 시 이전 파티 모집 게시판 목록 화면으로 이동
   - 권한 제어: 일반 방문/참여자 시점 화면이므로 게시글 수정/삭제/모집완료 컨트롤은 숨김 처리되며, [파티 참여하기] 버튼이 노출됨
 
-### 2.7 파티 모집 상세 화면(작성자)
+### 2.7 파티 모집 상세 화면(작성자) (GET `/board/{gameId}/detail?id={postId}`)
+<img src="../images/07_party_join_detail_owner.png" width="500" alt="사용자 로그인 화면">
 - 출력 데이터 항목 (Output Data):
   - 일반 사용자 화면 데이터 + 관리 컨트롤 영역
 - 화면 제어 및 권한 규칙 (Behavior Rules):
@@ -110,7 +111,8 @@
   - [게시글 삭제] 클릭 시 파티 모집 게시판으로 이동, 게시글 리스트에서 제거
   - [게시글 목록] 클릭 시 파티 모집 게시판으로 이동, 게시글 리스트에 보임
 
-### 2.8 프로필 등록화면 (게임마다 변경사항 있음)
+### 2.8 프로필 등록화면 (게임마다 변경사항 있음) (GET `/board/{gameId}/profile`)
+<img src="../images/08_profile.png" width="500" alt="사용자 로그인 화면">
 - 출력 데이터 항목 (Output Data):
   - GNB 및 타이틀 영역: 서비스 로고, 사용자 프로필/인증 정보, 게임별 게시판 헤더 배너
   - 입력 폼 타이틀: 닉네임, 레벨, 랭크, 포지션 등 
