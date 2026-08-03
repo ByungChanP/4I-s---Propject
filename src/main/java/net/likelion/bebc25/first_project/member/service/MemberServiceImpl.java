@@ -1,9 +1,12 @@
 package net.likelion.bebc25.first_project.member.service;
 
+import net.likelion.bebc25.first_project.exception.DuplicateUsernameException;
 import net.likelion.bebc25.first_project.member.dto.MemberDto;
 import net.likelion.bebc25.first_project.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,8 +31,13 @@ public class MemberServiceImpl implements MemberService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public void register(MemberDto member) {
-        memberRepository.save(member);
+        try{
+            memberRepository.save(member);
+        }catch(DuplicateKeyException e){ // 중복 에러가 발생할 경우(username이 이미 등록되어 있을 경우)
+            throw new DuplicateUsernameException("이미 사용중인 아이디입니다.");
+        }
     }
 
     /**
@@ -37,8 +45,10 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public MemberDto login(String username, String password) {
-        MemberDto targetMember = memberRepository.findByUsername(username);
-        if (password.equals(targetMember.getPassword())) return targetMember;
+        MemberDto member = memberRepository.findByUsername(username);
+        if(member != null && member.getPassword().equals(password)){
+            return member;
+        }
         return null;
     }
 
@@ -46,6 +56,7 @@ public class MemberServiceImpl implements MemberService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public void modifyInfo(MemberDto member) {
         memberRepository.update(member);
     }
@@ -54,7 +65,9 @@ public class MemberServiceImpl implements MemberService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public void withdraw(int id) {
+        // 실습 영역
         memberRepository.deleteById(id);
     }
 
