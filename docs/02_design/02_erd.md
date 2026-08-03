@@ -16,8 +16,8 @@ erDiagram
     MEMBER ||--o{ PARTICIPANT-INFO : writes
     POST ||--o{ PARTICIPANT-INFO : contains
     GAME ||--o{ POST : contains
-    GAME ||--o{ IN_GAME_INFO : contains
-    MEMBER ||--o{ IN_GAME_INFO : contains
+    GAME ||--o{ INGAME_INFO : contains
+    MEMBER ||--o{ INGAME_INFO : contains
 
     MEMBER {
         int id PK
@@ -63,7 +63,7 @@ erDiagram
     INGAME_INFO{
         int id PK
         int game_id FK
-        int post_id FK
+        int member_id FK
         json ingame_info
     }
 
