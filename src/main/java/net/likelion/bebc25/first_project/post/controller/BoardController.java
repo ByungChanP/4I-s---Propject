@@ -62,9 +62,12 @@ public class BoardController {
     }
 
     // 게시글 작성화면 요청
-    @GetMapping("/*/write_post")
-    public String getWriteForm(Model model) {
+    @GetMapping("/{gameId}/write")
+    public String getWriteForm(@PathVariable("gameId") int gameId, Model model) {
         model.addAttribute("postDto", new PostDto());
+
+        GameDto game = gameService.getGame(gameId);
+        model.addAttribute("game", game);
         return "board/write";
     }
 
