@@ -33,8 +33,8 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
         return MemberDto.builder()
                 .id(rs.getInt("id"))
                 .email(rs.getString("email"))
-                .password(rs.getString("password"))
-                .nickname(rs.getString("nickname"))
+                .password(rs.getString("pw"))
+                .nickname(rs.getString("name"))
                 .createdAt(rs.getObject("created_at", LocalDateTime.class))
                 .profileImgDir(rs.getString("profile_img_dir"))
                 .build();

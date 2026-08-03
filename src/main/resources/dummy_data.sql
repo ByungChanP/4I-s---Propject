@@ -1,8 +1,3 @@
-TRUNCATE TABLE game;
-TRUNCATE TABLE member;
-TRUNCATE TABLE post;
-
-
 INSERT INTO game(name, detail, background_img_dir, game_logo_dir)
 VALUES ('League Of Legend', '자세한 설명은 생략한다', '', ''),
        ('Lost Ark', '자세한 설명은 생략한다', '', '');
