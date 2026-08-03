@@ -34,17 +34,19 @@ erDiagram
         int id PK
         int member_id FK
         int game_id FK
+        varchar_10 tag
         varchar_30 title
+        text restrictions
         text content
         int max_count
         int participant_count
         datetime created_at
         datetime deadline
-        text restrictions
-        varchar_10 tag
+        
+        
     }
 
-    USER_INFO {
+    PARTICIPANT-INFO {
         int id PK
         int post_id FK
         int member_id FK

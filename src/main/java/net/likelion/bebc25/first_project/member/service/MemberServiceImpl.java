@@ -46,7 +46,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberDto login(String username, String password) {
         MemberDto member = memberRepository.findByUsername(username);
-        if(member != null && member.getPassword().equals(password)){
+        if(member == null){
+            return null;
+        }
+        if(member.getEmail().equals(username) && member.getPassword().equals(password)){
             return member;
         }
         return null;

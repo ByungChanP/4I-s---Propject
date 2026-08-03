@@ -37,7 +37,7 @@ public class MemberDto {
     @Size(min = 4, max = 20, message = "비밀번호는 4자 이상 20자 이하여야 합니다.")
     private String password;
 
-    @NotBlank
+
     @Size(min = 2, max = 20, message = "닉네임은 2자 이상 20자 이하여야 합니다.")
     private String nickname;
 

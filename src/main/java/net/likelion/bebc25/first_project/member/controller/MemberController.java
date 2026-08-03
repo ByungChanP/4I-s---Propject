@@ -107,14 +107,19 @@ public class MemberController {
                         BindingResult bindingResult,
                         RedirectAttributes redirectAttributes,
                         HttpSession session) { // 로그인 실패시 에러메세지와 함께
+
+        System.out.println(">>> 1. 로그인 요청 들어옴 - 이메일: " + member.getEmail());
+
         // 실습 영역
         if(bindingResult.hasErrors()){ // 검증에 실패했을 경우
+            System.out.println(">>> 2. 검증 에러 발생!");
             return "member/login"; // 작성중이던 페이지로 다시 보낸다.
         }
 
         // 로그인 시도
         MemberDto memberInfo = memberService.login(member.getEmail(), member.getPassword());
         if(memberInfo == null){ // 로그인 실패시
+            System.out.println(">>> 3. 로그인 실패 (DB에 회원 없음 또는 비번 불일치)");
             // 실패 메시지를 담고 다시 로그인 페이지로 리다이렉트
             // addFlashAttribute: 임시로 세션에 속성을 담아서 리다이렉트 된 페이지에서 꺼내어 사용 후 속성값은 세션에서 제거함
             redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호를 확인하세요.");
@@ -123,8 +128,10 @@ public class MemberController {
         }
 
         // 로그인 성공 시 세션 생성해서 사용자 정보를 저장
+        System.out.println(">>> 4. 로그인 성공! 세션 생성 중... " + memberInfo.getEmail());
         SessionMemberDto sessionMember = new SessionMemberDto(memberInfo);
         session.setAttribute("loginMember", sessionMember);
+        System.out.println(">>> 5. /member/list 로 리다이렉트 실행");
 
         return "redirect:/member/list";
     }
