@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>멋사라이브</title>
+    <link rel="stylesheet" href="/css/detail.css">
+</head>
+
+<body>
+<header>
+    <img src="/images/logo/site-logo.png" alt="멋사라이브 로고" width="10%" height="auto">
+    <div>
+        <img src="" alt="유저 기본프로필 이미지"> 안녕하세요, 사용자님!
+        <a href="">
+            <button class="btn logout">로그아웃</button>
+        </a>
+    </div>
+</header>
+<div class="board_info">
+    <img src="/images/lol/lol-banner.png" alt="리그오브레전드 배너이미지" width="230px" height="auto">
+    <h1>리그오브레전드 파티 모집 게시판</h1>
+</div>
+<main>
+    <div class="title row">
+        <p class="label">제목</p>
+        <h2>실버 정글, 미드 구해요!</h2>
+    </div>
+    <div class="post_info row">
+        <p class="label"></p>
+        <div class="post_info_content">
+            <p><img src="" alt="사용자프로필"> 소환사루나</p>
+            <p>일반</p>
+            <p>지원인원 3/5</p>
+            <p>마감시간 <span>1사간 45분 남음</span></p>
+            <form action="./request:close" method="post">
+                <button class="btn close">모집마감</button>
+            </form>
+        </div>
+    </div>
+    <div class="detail row">
+        <p class="label">모집 내용</p>
+        <div class="content">
+            <p>편하게 같이 게임하실 분 구합니다.</p>
+            <p>실버 구간이고, 정글 또는 미드 플레이 가능하신 분 환영해요.</p>
+            <p>디스코드 가능하신 분이면 더 좋고, 즐겜 위주로 편하게 하실 분 구합니다!</p>
+        </div>
+    </div>
+    <div class="author_info row">
+        <p class="label">게시글 작성자 정보</p>
+        <div class="content">
+            <table class="user_info">
+                <tr>
+                    <th class="nickname">닉네임</th>
+                    <th class="ingame_nickname">인게임 닉네임</th>
+                    <th>레벨</th>
+                    <th>랭크</th>
+                    <th>포지션</th>
+                    <th class="rating">평점</th>
+                    <th class="btn_col">평가하기</th>
+                </tr>
+                <tr>
+                    <td>소환사루나</td>
+                    <td>달빛정글러</td>
+                    <td>278</td>
+                    <td>실버</td>
+                    <td>미드</td>
+                    <td>4.3</td>
+                    <td>
+                        <form action="./request:rating" method="post">
+                            <input type="radio" name="star" aria-label="author_star1" value="1">1
+                            <input type="radio" name="star" aria-label="author_star2" value="2">2
+                            <input type="radio" name="star" aria-label="author_star3" value="3">3
+                            <input type="radio" name="star" aria-label="author_star4" value="4">4
+                            <input type="radio" name="star" aria-label="author_star5" value="5">5
+                            <button type="submit" class="btn submit">제출하기</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="participants_info row">
+        <p class="label">현재 참여 중인 파티원</p>
+        <div class="content">
+            <table class="user_info">
+                <tr>
+                    <th class="nickname">닉네임</th>
+                    <th class="ingame_nickname">인게임 닉네임</th>
+                    <th>레벨</th>
+                    <th>랭크</th>
+                    <th>포지션</th>
+                    <th class="rating">평점</th>
+                    <th class="btn_col">참가거부 / 평가하기</th>
+                </tr>
+                <tr>
+                    <td>정글의신</td>
+                    <td>블루버프왕</td>
+                    <td>214</td>
+                    <td>실버</td>
+                    <td>정글</td>
+                    <td>3.8</td>
+                    <td>
+                        <form action="./request:refuse" method="post">
+                            <button class="btn refuse">x</button>
+                        </form>
+                        <form action="./request:rating" method="post">
+                            <input type="radio" name="star" aria-label="participant_star1" value="1">1
+                            <input type="radio" name="star" aria-label="participant_star2" value="2">2
+                            <input type="radio" name="star" aria-label="participant_star3" value="3">3
+                            <input type="radio" name="star" aria-label="participant_star4" value="4">4
+                            <input type="radio" name="star" aria-label="participant_star5" value="5">5
+                            <button type="submit" class="btn submit">제출하기</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>서포티양</td>
+                    <td>힐의축복</td>
+                    <td>167</td>
+                    <td>실버</td>
+                    <td>서포터</td>
+                    <td>4.1</td>
+                    <td>
+                        <form action="./request:refuse" method="post">
+                            <button class="btn refuse">x</button>
+                        </form>
+                        <form action="./request:rating" method="post">
+                            <input type="radio" name="star" aria-label="participant_star1" value="1">1
+                            <input type="radio" name="star" aria-label="participant_star2" value="2">2
+                            <input type="radio" name="star" aria-label="participant_star3" value="3">3
+                            <input type="radio" name="star" aria-label="participant_star4" value="4">4
+                            <input type="radio" name="star" aria-label="participant_star5" value="5">5
+                            <button type="submit" class="btn submit">제출하기</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="btn_container">
+        <a href="/board/leageueoflegend">
+            <button class="btn list">목록</button>
+        </a>
+        <a href="./edit">
+            <button class="btn edit">게시글 수정</button>
+        </a>
+        <form action="./request:delete_post" method="post">
+            <button type="submit" class="btn delete">삭제</button>
+        </form>
+    </div>
+</main>
+</body>
+
+</html>
