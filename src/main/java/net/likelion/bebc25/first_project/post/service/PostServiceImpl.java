@@ -5,6 +5,7 @@ import net.likelion.bebc25.first_project.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -34,6 +35,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public void editPost(PostDto post) {
         postRepository.update(post);
+    }
+
+    @Override
+    public void closePost(PostDto post) {
+        postRepository.close(post);
     }
 
     @Override

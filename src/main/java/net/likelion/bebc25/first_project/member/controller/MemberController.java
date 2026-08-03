@@ -64,17 +64,17 @@ public class MemberController {
      * @param memberDto 회원 가입 폼 입력 데이터 DTO
      * @return 로그인 화면으로의 redirect 경로
      */
-    @PostMapping("/register")
+    @PostMapping("/requset:register")
     public String register(@Valid @ModelAttribute("memberForm") MemberDto memberDto  // Validation 검증 대상 객체
             , BindingResult bindingResult) { // Validation 검증 결과 저장 객체(대상 객체 뒤에 기술해야 함)
         // 실습 영역
-        if(bindingResult.hasErrors()){ // 검증에 실패했을 경우
+        if (bindingResult.hasErrors()) { // 검증에 실패했을 경우
             return "member/register"; // 작성중이던 페이지로 다시 보낸다.
         }
 
-        try{
+        try {
             memberService.register(memberDto);
-        }catch(DuplicateUsernameException e){
+        } catch (DuplicateUsernameException e) {
             // username 이 중복되는 예외 발생 시 username 필드 에러로 바인딩
             // rejectValue(에러가 발생한 필드, 에러코드, 기본 에러메세지)
             // 에러코드: 메세지 설정파일(errors.properties, messages.properties)에 정의한 키값(없을 경우 세번째 에러메세지로 대체됨)
@@ -102,19 +102,24 @@ public class MemberController {
      * @param member 사용자가 입력한 username, password가 들어있는 DTO
      * @return 회원 목록 화면으로의 redirect 경로
      */
-    @PostMapping("/login")
+    @PostMapping("/requset:login")
     public String login(@Valid @ModelAttribute("loginForm") MemberDto member,
                         BindingResult bindingResult,
                         RedirectAttributes redirectAttributes,
                         HttpSession session) { // 로그인 실패시 에러메세지와 함께
+
+        System.out.println(">>> 1. 로그인 요청 들어옴 - 이메일: " + member.getEmail());
+
         // 실습 영역
-        if(bindingResult.hasErrors()){ // 검증에 실패했을 경우
+        if (bindingResult.hasErrors()) { // 검증에 실패했을 경우
+            System.out.println(">>> 2. 검증 에러 발생!");
             return "member/login"; // 작성중이던 페이지로 다시 보낸다.
         }
 
         // 로그인 시도
         MemberDto memberInfo = memberService.login(member.getEmail(), member.getPassword());
-        if(memberInfo == null){ // 로그인 실패시
+        if (memberInfo == null) { // 로그인 실패시
+            System.out.println(">>> 3. 로그인 실패 (DB에 회원 없음 또는 비번 불일치)");
             // 실패 메시지를 담고 다시 로그인 페이지로 리다이렉트
             // addFlashAttribute: 임시로 세션에 속성을 담아서 리다이렉트 된 페이지에서 꺼내어 사용 후 속성값은 세션에서 제거함
             redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호를 확인하세요.");
@@ -123,16 +128,18 @@ public class MemberController {
         }
 
         // 로그인 성공 시 세션 생성해서 사용자 정보를 저장
+        System.out.println(">>> 4. 로그인 성공! 세션 생성 중... " + memberInfo.getEmail());
         SessionMemberDto sessionMember = new SessionMemberDto(memberInfo);
         session.setAttribute("loginMember", sessionMember);
+        System.out.println(">>> 5. /member/list 로 리다이렉트 실행");
 
-        return "redirect:/member/list";
+        return "redirect:/";
     }
 
     /**
      * 회원 정보 수정 화면으로 유도합니다.
      *
-     * @param id 수정할 회원의 일련번호
+     * @param id    수정할 회원의 일련번호
      * @param model 화면에 전달할 데이터를 담는 Model 객체
      * @return 회원 정보 수정 화면으로의 redirect 경로
      */
@@ -152,7 +159,7 @@ public class MemberController {
     @PostMapping("/edit")
     public String edit(@Valid @ModelAttribute("memberForm") MemberDto memberDto,
                        BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){ // 검증에 실패했을 경우
+        if (bindingResult.hasErrors()) { // 검증에 실패했을 경우
             return "member/edit"; // 작성중이던 페이지로 다시 보낸다.
         }
         memberService.modifyInfo(memberDto);
@@ -182,7 +189,6 @@ public class MemberController {
         // 실습 영역
         return "member/profile";
     }
-
 
 
 }

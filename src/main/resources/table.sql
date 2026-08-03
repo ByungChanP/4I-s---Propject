@@ -1,13 +1,13 @@
-# DROP TABLE IF EXISTS user_info;
-# DROP TABLE IF EXISTS post;
-# DROP TABLE IF EXISTS ingame_info;
-# DROP TABLE IF EXISTS game;
-# DROP TABLE IF EXISTS member;
+DROP TABLE IF EXISTS participant_info;
+DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS ingame_info;
+DROP TABLE IF EXISTS game;
+DROP TABLE IF EXISTS member;
 
 CREATE TABLE IF NOT EXISTS game
 (
     id                 INT AUTO_INCREMENT PRIMARY KEY,
-    name               VARCHAR(50) UNIQUE NOT NULL,
+    game_title         VARCHAR(50) UNIQUE NOT NULL,
     background_img_dir TEXT,
     game_logo_dir      TEXT,
     detail             TEXT
@@ -29,17 +29,20 @@ CREATE TABLE IF NOT EXISTS post
     game_id           INT REFERENCES game (id) ON DELETE CASCADE,
     member_id         INT REFERENCES member (id) ON DELETE RESTRICT,
     tag               VARCHAR(10) NOT NULL,
+    min_rank          VARCHAR(15) NOT NULL,
+    max_rank          VARCHAR(15) NOT NULL,
     restrictions      TEXT,
     title             VARCHAR(30) NOT NULL,
     content           TEXT        NOT NULL,
     max_count         INT      DEFAULT 0,
     participant_count INT      DEFAULT 1,
     deadline          DATETIME    NOT NULL,
+    is_closed         BOOLEAN  DEFAULT FALSE,
     created_at        DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 
-CREATE TABLE IF NOT EXISTS user_info
+CREATE TABLE IF NOT EXISTS participant_info
 (
     id         INT AUTO_INCREMENT PRIMARY KEY,
     member_id  INT REFERENCES member (id) ON DELETE RESTRICT,
@@ -55,3 +58,4 @@ CREATE TABLE IF NOT EXISTS ingame_info
     member_id   INT REFERENCES member (id) ON DELETE CASCADE,
     ingame_info TEXT
 );
+SET FOREIGN_KEY_CHECKS = 1;
