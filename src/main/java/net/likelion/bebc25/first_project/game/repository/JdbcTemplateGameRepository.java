@@ -28,11 +28,11 @@ public class JdbcTemplateGameRepository implements GameRepository {
 
     @Override
     public GameDto findById(int id) {
-        return jdbcTemplate.queryForObject("", gameRowMapper, id);
+        return jdbcTemplate.queryForObject("SELECT * FROM game WHERE id = ?", gameRowMapper, id);
     }
 
     @Override
     public List<GameDto> findAll() {
-        return jdbcTemplate.query("", gameRowMapper);
+        return jdbcTemplate.query("SELECT * FROM game ORDER BY game_title", gameRowMapper);
     }
 }

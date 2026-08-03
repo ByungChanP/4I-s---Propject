@@ -2,29 +2,25 @@
 <!--<header th:replace="~{layout/common :: header}"></header>-->
 <header th:fragment="header" class="container-fluid  px-4 py-4 bg-white shadow-sm">
     <div class="d-flex justify-content-between align-items-center common-container">
-        <a href="#" class="">
+        <a href="/" class="">
             <img src="/images/logo/site-logo.png" width="200">
-        </a>
-        <a href="login.html" class="btn btn-orange">
-            로그인
         </a>
     </div>
 
     <div class="d-flex justify-content-between align-items-center common-container">
-        <a href="#" class="">
-            <img src="/images/logo/site-logo.png" width="200">
-        </a>
         <div class="d-flex align-items-center gap-3">
             <a href="mypage.html">
-                <img src="images/icon/person-circle.svg" >
+                <img src="images/icon/person-circle.svg">
             </a>
             <span>
             안녕하세요,&nbsp;
-            <strong th:text="${nickname.nickname}">
+            <strong th:text="${member.nickname}">
                 닉네임
             </strong>님!
             </span>
-            <a href="">로그아웃</a>
+            <a href="/">
+                <button>로그아웃</button>
+            </a>
         </div>
     </div>
 </header>
@@ -32,7 +28,7 @@
 <!--<section th:replace="~{layout/common :: intro}"></section>-->
 <section th:fragment="intro" class="container common-container d-flex justify-content-between align-items-center">
     <div class="d-flex align-items-center gap-4">
-        <img src="/images/lol/lol-banner.png" class="board-banner" >
+        <img src="/images/lol/lol-banner.png" class="board-banner">
         <div>
             <h3 class="fw-bold">
                 <span th:text="${game.gameTitle}">게임명</span>
@@ -43,7 +39,7 @@
             </p>
         </div>
     </div>
-<!--    <a href="/profile.html" class="btn btn-outline-orange fw-semibold">-->
-<!--        인게임 프로필 등록-->
-<!--    </a>-->
+    <!--    <a href="/profile.html" class="btn btn-outline-orange fw-semibold">-->
+    <!--        인게임 프로필 등록-->
+    <!--    </a>-->
 </section>

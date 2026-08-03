@@ -34,7 +34,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
                 .id(rs.getInt("id"))
                 .email(rs.getString("email"))
                 .password(rs.getString("pw"))
-                .nickname(rs.getString("name"))
+                .nickname(rs.getString("nickname"))
                 .createdAt(rs.getObject("created_at", LocalDateTime.class))
                 .profileImgDir(rs.getString("profile_img_dir"))
                 .build();
@@ -45,7 +45,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      */
     @Override
     public void save(MemberDto member) {
-        jdbcTemplate.update("INSERT INTO member (name, email, pw, profile_img_dir) VALUES (?,?,?,?)"
+        jdbcTemplate.update("INSERT INTO member (nickname, email, pw, profile_img_dir) VALUES (?,?,?,?)"
                 , member.getNickname()
                 , member.getEmail()
                 , member.getPassword()
@@ -73,7 +73,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      */
     @Override
     public void update(MemberDto member) {
-        jdbcTemplate.update("UPDATE member SET name = ?, email = ?, pw = ?, profile_img_dir = ? WHERE id = ?"
+        jdbcTemplate.update("UPDATE member SET nickname = ?, email = ?, pw = ?, profile_img_dir = ? WHERE id = ?"
                 , member.getNickname()
                 , member.getEmail()
                 , member.getPassword()

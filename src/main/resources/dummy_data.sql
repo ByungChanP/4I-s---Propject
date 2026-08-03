@@ -2,7 +2,7 @@ INSERT INTO game(game_title, detail, background_img_dir, game_logo_dir)
 VALUES ('League Of Legend', '자세한 설명은 생략한다', '', ''),
        ('Lost Ark', '자세한 설명은 생략한다', '', '');
 
-INSERT INTO member(email, pw, name, profile_img_dir)
+INSERT INTO member(email, pw, nickname, profile_img_dir)
 VALUES ('user1@example.com', '1111', 'user1', ''),
        ('user2@example.com', '1111', 'user2', ''),
        ('user3@example.com', '1111', 'user3', ''),

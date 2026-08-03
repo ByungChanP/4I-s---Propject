@@ -1,6 +1,7 @@
 package net.likelion.bebc25.first_project.post.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import net.likelion.bebc25.first_project.game.dto.GameDto;
 import net.likelion.bebc25.first_project.game.service.GameService;
 import net.likelion.bebc25.first_project.member.dto.MemberDto;
 import net.likelion.bebc25.first_project.member.service.MemberService;
@@ -8,11 +9,7 @@ import net.likelion.bebc25.first_project.post.dto.PostDto;
 import net.likelion.bebc25.first_project.post.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -44,12 +41,14 @@ public class BoardController {
 
     // 게시글 상세 조회
     @GetMapping("/*/detail")
-    public String getDetail(@RequestParam int id, Model model1, Model model2, Model remainTime) {
+    public String getDetail(@RequestParam int id, Model model1, Model model2, Model model3, Model remainTime) {
         log.info("게시글 상세조회");
         PostDto post = postService.getPost(id);
         MemberDto member = memberService.getMember(post.getMemberId());
+        GameDto game = gameService.getGame(post.getGameId());
         model1.addAttribute("post", post);
         model2.addAttribute("member", member);
+        model3.addAttribute("game", game);
 
         int remainTimeInMinute = (int) Duration.between(LocalDateTime.now(), post.getDeadline()).toMinutes();
         String remainTimeInString = String.format("%d시간 %d분 남음", remainTimeInMinute / 60, remainTimeInMinute % 60);
@@ -80,6 +79,7 @@ public class BoardController {
 
         return "redirect:/board/leagueoflegend";
     }
+
     // 게시글 수정 요청
     @PostMapping("/*/request:edit_post")
     public String editPost() {
