@@ -84,7 +84,7 @@ main > div {
     width: 20%;
 }
 
-.btn_container {
+.btn_container, .author_only {
     display: flex;
     justify-content: right;
     gap: 10px;
@@ -98,7 +98,7 @@ main > div {
     background-color: white;
 }
 
-.close, .delete, .logout {
+.close, .delete, .logout, .join {
     color: white;
     background-color: rgb(255, 115, 0);
 }

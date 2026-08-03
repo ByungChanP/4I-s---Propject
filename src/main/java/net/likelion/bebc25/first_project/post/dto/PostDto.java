@@ -18,7 +18,7 @@ public class PostDto {
 
     private int gameId;
 
-    private String author;
+    private int memberId;
 
     private String tag;
 
@@ -36,6 +36,8 @@ public class PostDto {
 
     @NotBlank(message = "마감 시간을 설정해주세요.")
     private LocalDateTime deadline;
+
+    private boolean isClosed;
 
     private LocalDateTime createdAt;
 }

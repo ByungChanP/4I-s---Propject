@@ -1,8 +1,8 @@
-# DROP TABLE IF EXISTS user_info;
-# DROP TABLE IF EXISTS post;
-# DROP TABLE IF EXISTS ingame_info;
-# DROP TABLE IF EXISTS game;
-# DROP TABLE IF EXISTS member;
+DROP TABLE IF EXISTS user_info;
+DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS ingame_info;
+DROP TABLE IF EXISTS game;
+DROP TABLE IF EXISTS member;
 
 CREATE TABLE IF NOT EXISTS game
 (
@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS post
     max_count         INT      DEFAULT 0,
     participant_count INT      DEFAULT 1,
     deadline          DATETIME    NOT NULL,
+    is_closed         BOOLEAN  DEFAULT FALSE,
     created_at        DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 

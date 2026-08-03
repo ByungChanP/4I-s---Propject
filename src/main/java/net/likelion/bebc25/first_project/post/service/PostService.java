@@ -13,5 +13,7 @@ public interface PostService {
 
     void editPost(PostDto post);
 
+    void closePost(PostDto post);
+
     void removePost(int id);
 }
