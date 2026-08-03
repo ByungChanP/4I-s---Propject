@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/common.css">
 </head>
 <body>
+<!--<header th:replace="~{layout/common :: header}"></header>-->
 <header class="container-fluid  px-4 py-4 bg-white shadow-sm">
     <!--    <div class="d-flex justify-content-between align-items-center common-container">-->
     <!--        <a href="#" class="">-->
@@ -48,17 +49,17 @@
     </section>
     <section class="container">
         <nav class="row g-3">
-            <div class="col-4">
+            <div class="col-4" th:each="game : ${games}">
                 <div class="card shadow-sm game-card">
                     <img src="/images/lol/lol-banner.png" class="game-banner overflow-hidden card-img-top w-100">
                     <a href="/board/leagueoflegend" class="text-decoration-none text-dark">
                         <div class="card-body d-flex align-items-center gap-3">
                             <img src="/images/lol/lol_logo.png" class="game-icon">
                             <div>
-                                <h5 class="fw-bold mb-1">
+                                <h5 class="fw-bold mb-1" th:text="${game.gameTitle}">
                                     게임 명(예시 : 리그 오브 레전드)
                                 </h5>
-                                <p>
+                                <p th:text="${game.details}">
                                     게임 설명(예시 : 전략과 팀워크가 빛나는 MOBA의 정석)
                                 </p>
                             </div>
