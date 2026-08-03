@@ -7,6 +7,7 @@ import net.likelion.bebc25.first_project.post.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -43,8 +44,8 @@ public class BoardController {
 
     // 게시글 작성화면 요청
     @GetMapping("/*/write_post")
-    public String getWriteForm() {
-        log.info("게시글 작성");
+    public String getWriteForm(Model model) {
+        model.addAttribute("postDto", new PostDto());
         return "board/write";
     }
 
@@ -57,11 +58,13 @@ public class BoardController {
 
     // 게시글 등록 요청
     @PostMapping("/*/request:post")
-    public String writePost() {
-        log.info("게시글 등록요청");
+    public String writePost(@ModelAttribute PostDto postDto) {
+
+        log.info("postDto = {}", postDto);
+        postService.writePost(postDto);
+
         return "redirect:/board/leagueoflegend";
     }
-
     // 게시글 수정 요청
     @PostMapping("/*/request:edit_post")
     public String editPost() {

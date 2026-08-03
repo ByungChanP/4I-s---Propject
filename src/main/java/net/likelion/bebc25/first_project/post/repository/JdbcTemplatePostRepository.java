@@ -1,5 +1,6 @@
 package net.likelion.bebc25.first_project.post.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import net.likelion.bebc25.first_project.post.dto.PostDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
+@Slf4j
 public class JdbcTemplatePostRepository implements PostRepository {
 
     private final JdbcTemplate jdbcTemplate;
@@ -25,8 +27,8 @@ public class JdbcTemplatePostRepository implements PostRepository {
                 .title(rs.getString("title"))
                 .author(rs.getString("author"))
                 .content(rs.getString("content"))
-                .maxParticipantCount(rs.getInt("maxParticipantCount"))
-                .participantCount(rs.getInt("participantCount"))
+                .maxParticipantCount(rs.getInt("max_count"))
+                .participantCount(rs.getInt("participant_count"))
                 .createdAt(rs.getObject("created_at", LocalDateTime.class))
                 .tag(rs.getString("tag"))
                 .deadline(rs.getObject("deadline", LocalDateTime.class))
@@ -45,16 +47,18 @@ public class JdbcTemplatePostRepository implements PostRepository {
 
     @Override
     public void save(PostDto post) {
-         jdbcTemplate.update("INSERT INTO post(game_id, title, tag, author, content, maxParticipantCount, participantCount, deadline) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-                , post.getGameId()
-                , post.getTitle()
-                , post.getTag()
-                , post.getAuthor()
-                , post.getContent()
-                , post.getMaxParticipantCount()
-                , post.getParticipantCount()
-                , post.getDeadline());
-
+        log.info("repository save = {}", post);
+            jdbcTemplate.update("INSERT INTO post(game_id, title, tag, member_id, min_rank, max_rank, content, max_count, participant_count, deadline) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                    , 0 // 테스트를 위해 0
+                    , post.getTitle()
+                    , post.getTag()
+                    , 1 // 테스트를 위해 1 (아직 로그인과 HttpSession구현이 안됨)
+                    , post.getMinRank()
+                    , post.getMaxRank()
+                    , post.getContent()
+                    , post.getMaxParticipantCount()
+                    , 1 // 글을 처음 작성할 때는 현재 참가자는 무조건 1명 (글 작성자)
+                    , post.getDeadline());
     }
 
     @Override
