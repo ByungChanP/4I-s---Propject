@@ -19,7 +19,7 @@ public class JdbcTemplateGameRepository implements GameRepository {
     private final RowMapper<GameDto> gameRowMapper = (ResultSet rs, int rowNum) -> {
         return GameDto.builder()
                 .id(rs.getInt("id"))
-                .gameTitle("game_title")
+                .gameTitle(rs.getString("game_title"))
                 .details("details")
                 .logoImgDir("logo_img_dir")
                 .backgroundImgDir("background_img_dir")
@@ -28,11 +28,11 @@ public class JdbcTemplateGameRepository implements GameRepository {
 
     @Override
     public GameDto findById(int id) {
-        return jdbcTemplate.queryForObject("", gameRowMapper, id);
+        return jdbcTemplate.queryForObject("SELECT * FROM game WHERE id = ?", gameRowMapper, id);
     }
 
     @Override
     public List<GameDto> findAll() {
-        return jdbcTemplate.query("", gameRowMapper);
+        return jdbcTemplate.query("SELECT * FROM game ORDER BY game_title", gameRowMapper);
     }
 }

@@ -24,7 +24,7 @@
             <div class="col-4" th:each="game : ${games}">
                 <div class="card shadow-sm game-card">
                     <img src="/images/lol/lol-banner.png" class="game-banner overflow-hidden card-img-top w-100">
-                    <a href="/board/leagueoflegend" class="text-decoration-none text-dark">
+                    <a th:href="|/board/${game.id}|" class="text-decoration-none text-dark">
                         <div class="card-body d-flex align-items-center gap-3">
                             <img src="/images/lol/lol_logo.png" class="game-icon">
                             <div>

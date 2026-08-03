@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>멋사라이브</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="/css/detail.css">
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/detail.css}">
 </head>
 <body>
 <header th:replace="~{layout/common :: header}"></header>
 <section th:replace="~{layout/common :: intro}"></section>
 <main>
-<!--    <div class="title row">-->
-<!--        <p class="label">제목</p>-->
-<!--        <h2>실버 정글, 미드 구해요!</h2>-->
-<!--    </div>-->
+    <!--    <div class="title row">-->
+    <!--        <p class="label">제목</p>-->
+    <!--        <h2>실버 정글, 미드 구해요!</h2>-->
+    <!--    </div>-->
     <div class="post_info row">
         <p class="label"></p>
         <div class="post_info_content">
