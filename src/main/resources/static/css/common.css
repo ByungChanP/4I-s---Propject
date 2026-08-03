@@ -58,9 +58,9 @@ header {
 }
 
 .board-banner {
-    width: 180px;
-    height: 80px;
-    object-fit: cover;
+    width: 250px;
+    height: 100px;
+
     border-radius: 8px;
 }
 

@@ -90,7 +90,7 @@ main > div {
     gap: 10px;
 }
 
-.btn {
+.btn_detail {
     width: 120px;
     height: 40px;
     border: solid 1px rgb(192, 192, 192);

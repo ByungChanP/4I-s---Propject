@@ -1,31 +1,79 @@
 <!DOCTYPE html>
 <html lang="ko-KR">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>멋사라이브</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="/css/detail.css">
 </head>
-
 <body>
-<header>
-    <img src="/images/logo/site-logo.png" alt="멋사라이브 로고" width="10%" height="auto">
-    <div>
-        <img src="" alt="유저 기본프로필 이미지"> 안녕하세요, 사용자님!
-        <a href="">
-            <button class="btn logout">로그아웃</button>
+<!--<header th:replace="~{layout/common :: header}"></header>-->
+<header th:fragment="header" class="container-fluid  px-4 py-4 bg-white shadow-sm">
+<!--    <div class="d-flex justify-content-between align-items-center common-container">-->
+<!--        <a href="#" class="">-->
+<!--            <img src="/images/logo/site-logo.png" width="200">-->
+<!--        </a>-->
+<!--        <a href="login.html" class="btn btn-orange">-->
+<!--            로그인-->
+<!--        </a>-->
+<!--    </div>-->
+
+    <div class="d-flex justify-content-between align-items-center common-container">
+        <a href="#" class="">
+            <img src="/images/logo/site-logo.png" width="200">
         </a>
+        <div class="d-flex align-items-center gap-3">
+            <a href="mypage.html">
+                <img src="images/icon/person-circle.svg" >
+            </a>
+            <span>
+            안녕하세요,&nbsp;
+            <strong th:text="${nickname.}">
+                닉네임
+            </strong>님!
+            </span>
+            <a href="">로그아웃</a>
+        </div>
     </div>
 </header>
-<div class="board_info">
-    <img src="/images/lol/lol-banner.png" alt="리그오브레전드 배너이미지" width="230px" height="auto">
-    <h1>리그오브레전드 파티 모집 게시판</h1>
-</div>
-<main>
-    <div class="title row">
-        <p class="label">제목</p>
-        <h2>실버 정글, 미드 구해요!</h2>
+<!--<header>-->
+<!--    <img src="/images/logo/site-logo.png" alt="멋사라이브 로고" width="10%" height="auto">-->
+<!--    <div>-->
+<!--        <img src="" alt="유저 기본프로필 이미지"> 안녕하세요, 사용자님!-->
+<!--        <a href="">-->
+<!--            <button class="btn logout">로그아웃</button>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</header>-->
+<!--<div class="board_info">-->
+<!--    <img src="/images/lol/lol-banner.png" alt="리그오브레전드 배너이미지" width="230px" height="auto">-->
+<!--    <h1>리그오브레전드 파티 모집 게시판</h1>-->
+<!--</div>-->
+<!--<section th:replace="~{layout/common :: intro}"></section>-->
+<section th:fragment="intro" class="container common-container d-flex justify-content-between align-items-center py-4 px-4">
+    <div class="d-flex align-items-center gap-3">
+        <img src="/images/lol/lol-banner.png" class="board-banner" >
+        <div>
+            <h3 class="fw-bold">
+                <span th:text="${game.gameTitle}">게임명</span>
+                파티 모집 게시판
+            </h3>
+            <p class="text-secondary fw-semibold">
+                파티원을 모집해보세요!
+            </p>
+        </div>
     </div>
+    <!--    <a href="/profile.html" class="btn btn-outline-orange fw-semibold">-->
+    <!--        인게임 프로필 등록-->
+    <!--    </a>-->
+</section>
+<main>
+<!--    <div class="title row">-->
+<!--        <p class="label">제목</p>-->
+<!--        <h2>실버 정글, 미드 구해요!</h2>-->
+<!--    </div>-->
     <div class="post_info row">
         <p class="label"></p>
         <div class="post_info_content">
@@ -34,7 +82,7 @@
             <p>지원인원 3/5</p>
             <p>마감시간 <span>1사간 45분 남음</span></p>
             <form action="./request:close" method="post">
-                <button class="btn close">모집마감</button>
+                <button class="btn_detail close">모집마감</button>
             </form>
         </div>
     </div>
@@ -73,7 +121,7 @@
                             <input type="radio" name="star" aria-label="author_star3" value="3">3
                             <input type="radio" name="star" aria-label="author_star4" value="4">4
                             <input type="radio" name="star" aria-label="author_star5" value="5">5
-                            <button type="submit" class="btn submit">제출하기</button>
+                            <button type="submit" class="btn_detail submit">제출하기</button>
                         </form>
                     </td>
                 </tr>
@@ -102,7 +150,7 @@
                     <td>3.8</td>
                     <td>
                         <form action="./request:refuse" method="post">
-                            <button class="btn refuse">x</button>
+                            <button class="btn_detail refuse">x</button>
                         </form>
                         <form action="./request:rating" method="post">
                             <input type="radio" name="star" aria-label="participant_star1" value="1">1
@@ -110,7 +158,7 @@
                             <input type="radio" name="star" aria-label="participant_star3" value="3">3
                             <input type="radio" name="star" aria-label="participant_star4" value="4">4
                             <input type="radio" name="star" aria-label="participant_star5" value="5">5
-                            <button type="submit" class="btn submit">제출하기</button>
+                            <button type="submit" class="btn_detail submit">제출하기</button>
                         </form>
                     </td>
                 </tr>
@@ -131,7 +179,7 @@
                             <input type="radio" name="star" aria-label="participant_star3" value="3">3
                             <input type="radio" name="star" aria-label="participant_star4" value="4">4
                             <input type="radio" name="star" aria-label="participant_star5" value="5">5
-                            <button type="submit" class="btn submit">제출하기</button>
+                            <button type="submit" class="btn_detail submit">제출하기</button>
                         </form>
                     </td>
                 </tr>
@@ -140,13 +188,13 @@
     </div>
     <div class="btn_container">
         <a href="/board/leageueoflegend">
-            <button class="btn list">목록</button>
+            <button class="btn_detail list">목록</button>
         </a>
         <a href="./edit">
-            <button class="btn edit">게시글 수정</button>
+            <button class="btn_detail edit">게시글 수정</button>
         </a>
         <form action="./request:delete_post" method="post">
-            <button type="submit" class="btn delete">삭제</button>
+            <button type="submit" class="btn_detail delete">삭제</button>
         </form>
     </div>
 </main>

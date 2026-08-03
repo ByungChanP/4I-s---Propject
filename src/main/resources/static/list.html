@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/common.css">
 </head>
 <body>
+<!--<header th:replace="~{layout/common :: header}"></header>-->
 <header class="container-fluid  px-4 py-4 bg-white shadow-sm">
     <div class="d-flex justify-content-between align-items-center common-container">
         <a href="#" class="">
@@ -37,12 +38,13 @@
     <!--    </div>-->
 </header>
 <main class="px-4 py-4">
-    <section class="container common-container d-flex justify-content-between align-items-center">
+    <!--<section th:replace="~{layout/common :: intro}"></section>-->
+    <section th:fragment="intro" class="container common-container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center gap-3">
-            <img src="/images/lol/lol-banner.png" class="board-banner">
+            <img src="/images/lol/lol-banner.png" class="board-banner" >
             <div>
                 <h3 class="fw-bold">
-                    <span>게임명</span>
+                    <span th:text="${game.gameTitle}">게임명</span>
                     파티 모집 게시판
                 </h3>
                 <p class="text-secondary fw-semibold">
@@ -50,9 +52,9 @@
                 </p>
             </div>
         </div>
-        <a href="/profile.html" class="btn btn-outline-orange fw-semibold">
-            인게임 프로필 등록
-        </a>
+            <a href="/profile.html" class="btn btn-outline-orange fw-semibold">
+                인게임 프로필 등록
+            </a>
     </section>
     <section class="container common-container py-4">
         <div class="row g-3">

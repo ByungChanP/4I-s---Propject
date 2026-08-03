@@ -2,117 +2,155 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/write.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>게시글 작성</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="/css/write.css">
 </head>
 
 <body>
 <!-- 배너 -->
-<header>
-    <img src="/images/logo/site-logo.png" alt="멋사라이브 로고" width="160px" height="90px">
-    <div>
-        <img src="" alt="유저 기본프로필 이미지">
-        <p>안녕하세요, 사용자님!</p>
-    </div>
-    <a href="">로그아웃</a>
-</header>
-<div class="board_info">
-    <img src="/images/lol/lol-banner.png" alt="리그오브레전드 배너이미지" width="230px" height="auto">
-    <h1>리그오브레전드 파티 모집 게시판</h1>
-</div>div
-    <hr>
-<form action="./request:post" method="post">
-    <!-- 모집 유형 -->
-    <div class = "form-group">
-        <label>모집유형 :</label>
+<!--<header th:replace="~{layout/common :: header}"></header>-->
+<header class="container-fluid  px-4 py-4 bg-white shadow-sm">
+    <!--    <div class="d-flex justify-content-between align-items-center common-container">-->
+    <!--        <a href="#" class="">-->
+    <!--            <img src="/images/logo/site-logo.png" width="200">-->
+    <!--        </a>-->
+    <!--        <a href="login.html" class="btn btn-orange">-->
+    <!--            로그인-->
+    <!--        </a>-->
+    <!--    </div>-->
 
-        <input type="radio" id="rank" name="recruitType" value="rank">
-        <label for="rank">랭크</label>
-
-        <input type="radio" id="normal" name="recruitType" value="normal">
-        <label for="normal">일반</label>
-    </div>
-
-    <!-- 모집 인원 -->
-    <div class="form-group">
-        <label for="memberCount">파티 모집 인원 선택 :</label>
-
-        <select id="memberCount" name="memberCount">
-            <option value="2">2명</option>
-            <option value="3">3명</option>
-            <option value="4">4명</option>
-            <option value="5">5명</option>
-        </select>
-    </div>
-
-    <!-- 랭크 -->
-    <div class="form-group select-group">
-        <label>인게임 랭크 :</label>
-
-        <select name="minRank">
-            <option>아이언</option>
-            <option>브론즈</option>
-            <option>실버</option>
-            <option>골드</option>
-            <option>플래티넘</option>
-            <option>에메랄드</option>
-            <option>다이아몬드</option>
-            <option>마스터</option>
-            <option>그랜드마스터</option>
-            <option>챌린저</option>
-        </select>
-        이상
-
-        <select name="maxRank">
-            <option>아이언</option>
-            <option>브론즈</option>
-            <option>실버</option>
-            <option>골드</option>
-            <option>플래티넘</option>
-            <option>에메랄드</option>
-            <option>다이아몬드</option>
-            <option>마스터</option>
-            <option>그랜드마스터</option>
-            <option>챌린저</option>
-        </select>
-        이하
-    </div>
-
-    <!-- 모집 마감 시간 -->
-    <div class="form-group select-group" >
-        <label for="deadline">파티 모집 마감 시간 :</label>
-
-        <select id="deadline" name="deadline">
-            <option>1시간</option>
-            <option>2시간</option>
-            <option>3시간</option>
-            <option>6시간</option>
-            <option>12시간</option>
-            <option>24시간</option>
-        </select>
-    </div>
-
-    <!-- 제목 -->
-    <div class="form-group">
-        <label for="title">게시글 제목</label>
-        <input type="text" id="title">
-    </div>
-
-    <!-- 내용 -->
-    <div class="form-group">
-        <label for="content">게시글 내용</label>
-        <textarea id="content" name="content" rows="15" cols="80"
-                  placeholder="모집 조건, 포지션, 디스코드 여부 등을 자유롭게 작성해주세요"></textarea>
-    </div>
-
-    <!-- 취소 및 확인 -->
-    <div class="button-group">
-        <a href="/board/leageueoflegend">
-            <button type="button">취소</button>
+    <div class="d-flex justify-content-between align-items-center common-container">
+        <a href="#" class="">
+            <img src="/images/logo/site-logo.png" width="200">
         </a>
-        <button type="submit">확인</button>
+        <div class="d-flex align-items-center gap-3">
+            <a href="mypage.html">
+                <img src="images/icon/person-circle.svg">
+            </a>
+            <span>
+            안녕하세요,&nbsp;
+            <strong>
+                닉네임
+            </strong>님!
+            </span>
+            <a href="">로그아웃</a>
+        </div>
     </div>
+</header>
+<main class="px-4 py-4">
+    <!--<section th:replace="~{layout/common :: intro}"></section>-->
+    <section class="container common-container d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-3">
+            <img src="/images/lol/lol-banner.png" class="board-banner">
+            <div>
+                <h3 class="fw-bold">
+                    <span>게임명</span>
+                    파티 모집 게시판
+                </h3>
+                <p class="text-secondary fw-semibold">
+                    파티원을 모집해보세요!
+                </p>
+            </div>
+        </div>
+        <!--        <a href="/profile.html" class="btn btn-outline-orange fw-semibold">-->
+        <!--            인게임 프로필 등록-->
+        <!--        </a>-->
+    </section>
+    <form action="./request:post" method="post">
+        <!-- 모집 유형 -->
+        <div class="form-group">
+            <label>모집유형 :</label>
 
-</form>
+            <input type="radio" id="rank" name="recruitType" value="rank">
+            <label for="rank">랭크</label>
+
+            <input type="radio" id="normal" name="recruitType" value="normal">
+            <label for="normal">일반</label>
+        </div>
+
+        <!-- 모집 인원 -->
+        <div class="form-group">
+            <label for="memberCount">파티 모집 인원 선택 :</label>
+
+            <select id="memberCount" name="memberCount">
+                <option value="2">2명</option>
+                <option value="3">3명</option>
+                <option value="4">4명</option>
+                <option value="5">5명</option>
+            </select>
+        </div>
+
+        <!-- 랭크 -->
+        <div class="form-group select-group">
+            <label>인게임 랭크 :</label>
+
+            <select name="minRank">
+                <option>아이언</option>
+                <option>브론즈</option>
+                <option>실버</option>
+                <option>골드</option>
+                <option>플래티넘</option>
+                <option>에메랄드</option>
+                <option>다이아몬드</option>
+                <option>마스터</option>
+                <option>그랜드마스터</option>
+                <option>챌린저</option>
+            </select>
+            이상
+
+            <select name="maxRank">
+                <option>아이언</option>
+                <option>브론즈</option>
+                <option>실버</option>
+                <option>골드</option>
+                <option>플래티넘</option>
+                <option>에메랄드</option>
+                <option>다이아몬드</option>
+                <option>마스터</option>
+                <option>그랜드마스터</option>
+                <option>챌린저</option>
+            </select>
+            이하
+        </div>
+
+        <!-- 모집 마감 시간 -->
+        <div class="form-group select-group">
+            <label for="deadline">파티 모집 마감 시간 :</label>
+
+            <select id="deadline" name="deadline">
+                <option>1시간</option>
+                <option>2시간</option>
+                <option>3시간</option>
+                <option>6시간</option>
+                <option>12시간</option>
+                <option>24시간</option>
+            </select>
+        </div>
+
+        <!-- 제목 -->
+        <div class="form-group">
+            <label for="title">게시글 제목</label>
+            <input type="text" id="title">
+        </div>
+
+        <!-- 내용 -->
+        <div class="form-group">
+            <label for="content">게시글 내용</label>
+            <textarea id="content" name="content" rows="15" cols="80"
+                      placeholder="모집 조건, 포지션, 디스코드 여부 등을 자유롭게 작성해주세요"></textarea>
+        </div>
+
+        <!-- 취소 및 확인 -->
+        <div class="button-group">
+            <a href="/board/leageueoflegend">
+                <button type="button">취소</button>
+            </a>
+            <button type="submit">확인</button>
+        </div>
+    </form>
+</main>
 </body>
 </html>

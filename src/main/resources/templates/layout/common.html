@@ -12,15 +12,15 @@
 
     <div class="d-flex justify-content-between align-items-center common-container">
         <a href="#" class="">
-            <img src="/images/logo/site-logo.png">
+            <img src="/images/logo/site-logo.png" width="200">
         </a>
         <div class="d-flex align-items-center gap-3">
             <a href="mypage.html">
-                <img src="images/icon/person-circle.svg" width="200">
+                <img src="images/icon/person-circle.svg" >
             </a>
             <span>
             안녕하세요,&nbsp;
-            <strong th:text="${nickname.}">
+            <strong th:text="${nickname.nickname}">
                 닉네임
             </strong>님!
             </span>
@@ -31,7 +31,7 @@
 <!--main 바로 밑에-->
 <!--<section th:replace="~{layout/common :: intro}"></section>-->
 <section th:fragment="intro" class="container common-container d-flex justify-content-between align-items-center">
-    <div class="d-flex align-items-center gap-3">
+    <div class="d-flex align-items-center gap-4">
         <img src="/images/lol/lol-banner.png" class="board-banner" >
         <div>
             <h3 class="fw-bold">
@@ -43,7 +43,7 @@
             </p>
         </div>
     </div>
-    <a href="/profile.html" class="btn btn-outline-orange fw-semibold">
-        인게임 프로필 등록
-    </a>
+<!--    <a href="/profile.html" class="btn btn-outline-orange fw-semibold">-->
+<!--        인게임 프로필 등록-->
+<!--    </a>-->
 </section>
