@@ -56,9 +56,8 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      * {@inheritDoc}
      */
     @Override
-    public MemberDto findByUsername(String username) {
-        List<MemberDto> members = jdbcTemplate.query("SELECT * FROM member WHERE name = ?", memberRowMapper, username);
-        return members.isEmpty() ? null : members.getFirst();
+    public MemberDto findByEmail(String email) {
+        return jdbcTemplate.queryForObject("SELECT * FROM member WHERE email = ?", memberRowMapper, email);
     }
 
     /**

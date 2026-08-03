@@ -33,9 +33,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void register(MemberDto member) {
-        try{
+        try {
             memberRepository.save(member);
-        }catch(DuplicateKeyException e){ // 중복 에러가 발생할 경우(username이 이미 등록되어 있을 경우)
+        } catch (DuplicateKeyException e) { // 중복 에러가 발생할 경우(username이 이미 등록되어 있을 경우)
             throw new DuplicateUsernameException("이미 사용중인 아이디입니다.");
         }
     }
@@ -44,12 +44,9 @@ public class MemberServiceImpl implements MemberService {
      * {@inheritDoc}
      */
     @Override
-    public MemberDto login(String username, String password) {
-        MemberDto member = memberRepository.findByUsername(username);
-        if(member == null){
-            return null;
-        }
-        if(member.getEmail().equals(username) && member.getPassword().equals(password)){
+    public MemberDto login(String email, String password) {
+        MemberDto member = memberRepository.findByEmail(email);
+        if (member != null && member.getPassword().equals(password)) {
             return member;
         }
         return null;
