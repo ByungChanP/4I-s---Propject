@@ -4,24 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>멋사라이브</title>
-    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/css/detail.css}">
 </head>
 <body>
 <header th:replace="~{layout/common :: header}"></header>
 <section th:replace="~{layout/common :: intro}"></section>
 <main>
-    <!--    <div class="title row">-->
-    <!--        <p class="label">제목</p>-->
-    <!--        <h2>실버 정글, 미드 구해요!</h2>-->
-    <!--    </div>-->
+    <div class="title row">
+        <p class="label">제목</p>
+        <h2>실버 정글, 미드 구해요!</h2>
+    </div>
     <div class="post_info row">
         <p class="label"></p>
         <div class="post_info_content">
-            <p><img src="" alt="사용자프로필" th:text="${member.nickname}"> 소환사루나</p>
+            <p><img th:src="${member.profileImgDir}" alt="" th:text="${member.nickname}"> 소환사루나</p>
             <p>일반</p>
-            <p>지원인원 3/5</p>
+            <p>지원인원 <span th:text="${post.participantCount}">3</span> / <span
+                    th:text="${post.maxParticipantCount}">5</span></p>
             <p th:if="${!post.isClosed()}">마감시간 <span th:text="${remainTime}">1사간 45분 남음</span></p>
             <p th:if="${post.isClosed()}"> 마감됨 </p>
             <form th:if="${!post.isClosed()}" th:action="@{./request:close(id=${post.id})}" method="post"
@@ -48,8 +49,6 @@
                     <th>레벨</th>
                     <th>랭크</th>
                     <th>포지션</th>
-                    <th class="rating">평점</th>
-                    <th class="btn_col">평가하기</th>
                 </tr>
                 <tr>
                     <td>소환사루나</td>
@@ -57,17 +56,6 @@
                     <td>278</td>
                     <td>실버</td>
                     <td>미드</td>
-                    <td>4.3</td>
-                    <td>
-                        <form action="./request:rating" method="post">
-                            <input type="radio" name="star" aria-label="author_star1" value="1">1
-                            <input type="radio" name="star" aria-label="author_star2" value="2">2
-                            <input type="radio" name="star" aria-label="author_star3" value="3">3
-                            <input type="radio" name="star" aria-label="author_star4" value="4">4
-                            <input type="radio" name="star" aria-label="author_star5" value="5">5
-                            <button type="submit" class="btn_detail submit">제출하기</button>
-                        </form>
-                    </td>
                 </tr>
             </table>
         </div>
@@ -82,8 +70,7 @@
                     <th>레벨</th>
                     <th>랭크</th>
                     <th>포지션</th>
-                    <th class="rating">평점</th>
-                    <th class="btn_col">참가거부 / 평가하기</th>
+                    <th class="btn_col" th:if="${!post.isClosed()}">참가거부</th>
                 </tr>
                 <tr>
                     <td>정글의신</td>
@@ -91,39 +78,9 @@
                     <td>214</td>
                     <td>실버</td>
                     <td>정글</td>
-                    <td>3.8</td>
                     <td>
                         <form th:if="${!post.isClosed()}" action="./request:refuse" method="post">
                             <button class="btn refuse">x</button>
-                        </form>
-                        <form action="./request:rating" method="post">
-                            <input type="radio" name="star" aria-label="participant_star1" value="1">1
-                            <input type="radio" name="star" aria-label="participant_star2" value="2">2
-                            <input type="radio" name="star" aria-label="participant_star3" value="3">3
-                            <input type="radio" name="star" aria-label="participant_star4" value="4">4
-                            <input type="radio" name="star" aria-label="participant_star5" value="5">5
-                            <button type="submit" class="btn_detail submit">제출하기</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>서포티양</td>
-                    <td>힐의축복</td>
-                    <td>167</td>
-                    <td>실버</td>
-                    <td>서포터</td>
-                    <td>4.1</td>
-                    <td>
-                        <form action="./request:refuse" method="post">
-                            <button class="btn refuse">x</button>
-                        </form>
-                        <form action="./request:rating" method="post">
-                            <input type="radio" name="star" aria-label="participant_star1" value="1">1
-                            <input type="radio" name="star" aria-label="participant_star2" value="2">2
-                            <input type="radio" name="star" aria-label="participant_star3" value="3">3
-                            <input type="radio" name="star" aria-label="participant_star4" value="4">4
-                            <input type="radio" name="star" aria-label="participant_star5" value="5">5
-                            <button type="submit" class="btn_detail submit">제출하기</button>
                         </form>
                     </td>
                 </tr>
@@ -131,14 +88,14 @@
         </div>
     </div>
     <div class="btn_container">
-        <a href="/board/leageueoflegend">
+        <a th:href="@{/board/{gameId}(gameId=${game.id})}">
             <button class="btn_detail list">목록</button>
         </a>
-        <div class="author_only">
-            <a href="./edit">
+        <div th:if="${session.loginMember.id == member.id}" class="author_only">
+            <a th:href="@{/board/{gameId}/edit(gameId=${game.id}, id=${post.id})}">
                 <button class="btn edit">게시글 수정</button>
             </a>
-            <form action="./request:delete_post" method="post">
+            <form th:action="@{/board/{gameId}/delete(postId=${post.id}, gameId=${game.id})}" method="post">
                 <button type="submit" class="btn delete">삭제</button>
             </form>
         </div>
