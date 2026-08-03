@@ -1,14 +1,11 @@
 package net.likelion.bebc25.first_project.user_game_info.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import net.likelion.bebc25.first_project.game.dto.GameDto;
 import net.likelion.bebc25.first_project.game.service.GameService;
 import net.likelion.bebc25.first_project.user_game_info.service.UserGameInfoService;
-import net.likelion.bebc25.first_project.user_game_info.dto.InfoDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
