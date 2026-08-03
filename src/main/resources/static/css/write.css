@@ -9,8 +9,13 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
     background-color: white;
+}
+
+.user-menu{
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .board_info, main {
