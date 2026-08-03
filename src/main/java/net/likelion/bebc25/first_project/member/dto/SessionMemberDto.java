@@ -34,6 +34,8 @@ public class SessionMemberDto implements Serializable {
      */
     private String nickname;
 
+    private String profileImgDir;
+
     /**
      * MemberDto 객체로부터 세션 DTO를 생성하는 변환 생성자
      *
@@ -44,6 +46,7 @@ public class SessionMemberDto implements Serializable {
             this.id = memberDto.getId();
             this.email = memberDto.getEmail();
             this.nickname = memberDto.getNickname();
+            this.profileImgDir = memberDto.getProfileImgDir();
         }
     }
 }

@@ -102,7 +102,7 @@ public class MemberController {
      * @param member 사용자가 입력한 username, password가 들어있는 DTO
      * @return 회원 목록 화면으로의 redirect 경로
      */
-    @PostMapping("/requset:login")
+    @PostMapping("/login")
     public String login(@Valid @ModelAttribute("loginForm") MemberDto member,
                         BindingResult bindingResult,
                         RedirectAttributes redirectAttributes,

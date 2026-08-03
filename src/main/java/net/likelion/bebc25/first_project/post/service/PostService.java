@@ -5,7 +5,7 @@ import net.likelion.bebc25.first_project.post.dto.PostDto;
 import java.util.List;
 
 public interface PostService {
-    List<PostDto> getPosts();
+    List<PostDto> getPosts(int gameId);
 
     PostDto getPost(int id);
 

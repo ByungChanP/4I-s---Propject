@@ -45,11 +45,10 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      */
     @Override
     public void save(MemberDto member) {
-        jdbcTemplate.update("INSERT INTO member (nickname, email, pw, profile_img_dir) VALUES (?,?,?,?)"
+        jdbcTemplate.update("INSERT INTO member (nickname, email, pw) VALUES (?,?,?)"
                 , member.getNickname()
                 , member.getEmail()
-                , member.getPassword()
-                , member.getProfileImgDir());
+                , member.getPassword());
     }
 
     /**

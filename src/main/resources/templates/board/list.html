@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>게시글 목록 조회 페이지</title>
+    <title>멋사라이브</title>
     <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{css/common.css}">
 </head>
@@ -72,7 +72,7 @@
                                     마감
                                 </option>
                             </select>
-                            <a href="./leagueoflegend/write_post" class="btn btn-orange">
+                            <a th:href="@{./1/write_post}" class="btn btn-orange">
                                 글쓰기
                             </a>
                         </div>
@@ -90,36 +90,40 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr th:each="post : ${posts}">
                             <td>
-                                <a href="./leagueoflegend/detail" class="text-decoration-none text-dark fw-semibold">
+                                <a th:href="@{./${game.gameTitle}/detail(id=${post.id})}" th:text="${post.title}"
+                                   class="text-decoration-none text-dark fw-semibold">
                                     제목(예시: 다이아 이상 파티원 모집합니다~)
                                 </a>
                             </td>
                             <td>
-                                <span class="btn border-warning bg-white fw-semibold">등급</span>
+                                <span th:text="${post.tag}" class="btn border-warning bg-white fw-semibold">등급</span>
                             </td>
                             <td>
                                 <div>
-                                    <img src="images/icon/person-circle.svg">
-                                    <span class="text-secondary">
+                                    <img src="/images/icon/person-circle.svg">
+                                    <span th:text="${post.memberId}" class="text-secondary">
                                      게시판 닉네임(인게임 닉네임X)
                                  </span>
                                 </div>
                             </td>
                             <td>
-                             <span>
+                             <span th:text="${post.participantCount}">
                                  현재참여정원
                              </span>
                                 /
-                                <span>
+                                <span th:text="${post.maxParticipantCount}">
                                  마감정원
                              </span>
                             </td>
                             <td>
-                             <span>
-                                 마감까지 남은 시간
-                             </span>
+                                <p th:if="${!post.isClosed()}" th:text="${post.deadline}">
+                                    마감까지 남은 시간
+                                </p>
+                                <p th:if="${post.isClosed()}" th:text="마감됨">
+                                    마감까지 남은 시간
+                                </p>
                             </td>
                         </tr>
                         </tbody>

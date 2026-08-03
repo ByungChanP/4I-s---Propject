@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS member
     email           VARCHAR(50) NOT NULL,
     pw              VARCHAR(20) NOT NULL,
     nickname        VARCHAR(20) NOT NULL,
-    created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
-    profile_img_dir TEXT
+    created_at      DATETIME     DEFAULT CURRENT_TIMESTAMP,
+    profile_img_dir VARCHAR(255) DEFAULT '/images/icon/person-circle.svg'
 );
 
 CREATE TABLE IF NOT EXISTS post
@@ -58,4 +58,3 @@ CREATE TABLE IF NOT EXISTS ingame_info
     member_id   INT REFERENCES member (id) ON DELETE CASCADE,
     ingame_info TEXT
 );
-SET FOREIGN_KEY_CHECKS = 1;
