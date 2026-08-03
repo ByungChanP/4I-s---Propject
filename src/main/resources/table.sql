@@ -1,13 +1,13 @@
- DROP TABLE IF EXISTS user_info;
- DROP TABLE IF EXISTS post;
- DROP TABLE IF EXISTS ingame_info;
- DROP TABLE IF EXISTS game;
- DROP TABLE IF EXISTS member;
+DROP TABLE IF EXISTS participant_info;
+DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS ingame_info;
+DROP TABLE IF EXISTS game;
+DROP TABLE IF EXISTS member;
 
 CREATE TABLE IF NOT EXISTS game
 (
     id                 INT AUTO_INCREMENT PRIMARY KEY,
-    name               VARCHAR(50) UNIQUE NOT NULL,
+    game_title         VARCHAR(50) UNIQUE NOT NULL,
     background_img_dir TEXT,
     game_logo_dir      TEXT,
     detail             TEXT
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS post
 );
 
 
-CREATE TABLE IF NOT EXISTS user_info
+CREATE TABLE IF NOT EXISTS participant_info
 (
     id         INT AUTO_INCREMENT PRIMARY KEY,
     member_id  INT REFERENCES member (id) ON DELETE RESTRICT,
