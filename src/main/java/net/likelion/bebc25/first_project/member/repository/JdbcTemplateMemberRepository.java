@@ -33,8 +33,8 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
         return MemberDto.builder()
                 .id(rs.getInt("id"))
                 .email(rs.getString("email"))
-                .password(rs.getString("password"))
-                .nickname(rs.getString("nickname"))
+                .password(rs.getString("pw"))
+                .nickname(rs.getString("name"))
                 .createdAt(rs.getObject("created_at", LocalDateTime.class))
                 .profileImgDir(rs.getString("profile_img_dir"))
                 .build();
@@ -45,7 +45,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      */
     @Override
     public void save(MemberDto member) {
-        jdbcTemplate.update("INSERT INTO member (nickname, email, password, profile_img_dir) VALUES (?,?,?,?)"
+        jdbcTemplate.update("INSERT INTO member (name, email, pw, profile_img_dir) VALUES (?,?,?,?)"
                 , member.getNickname()
                 , member.getEmail()
                 , member.getPassword()
@@ -57,7 +57,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      */
     @Override
     public MemberDto findByUsername(String username) {
-        List<MemberDto> members = jdbcTemplate.query("SELECT * FROM member WHERE username = ?", memberRowMapper, username);
+        List<MemberDto> members = jdbcTemplate.query("SELECT * FROM member WHERE name = ?", memberRowMapper, username);
         return members.isEmpty() ? null : members.getFirst();
     }
 
@@ -74,7 +74,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      */
     @Override
     public void update(MemberDto member) {
-        jdbcTemplate.update("UPDATE member SET nickname = ?, email = ?, password = ?, profile_img_dir = ? WHERE id = ?"
+        jdbcTemplate.update("UPDATE member SET name = ?, email = ?, pw = ?, profile_img_dir = ? WHERE id = ?"
                 , member.getNickname()
                 , member.getEmail()
                 , member.getPassword()

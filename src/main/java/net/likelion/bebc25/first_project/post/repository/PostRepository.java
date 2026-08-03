@@ -13,5 +13,11 @@ public interface PostRepository {
 
     void update(PostDto post);
 
+    void close(PostDto post);
+
+    void checkDeadline(int id);
+
+    void checkDeadline(List<PostDto> posts);
+
     void deleteById(int id);
 }

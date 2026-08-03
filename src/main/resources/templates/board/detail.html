@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko-KR">
-
+<html lang="ko-KR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>멋사라이브</title>
@@ -29,21 +28,23 @@
     <div class="post_info row">
         <p class="label"></p>
         <div class="post_info_content">
-            <p><img src="" alt="사용자프로필"> 소환사루나</p>
+            <p><img src="" alt="사용자프로필" th:text="${member.nickname}"> 소환사루나</p>
             <p>일반</p>
             <p>지원인원 3/5</p>
-            <p>마감시간 <span>1사간 45분 남음</span></p>
-            <form action="./request:close" method="post">
+            <p th:if="${!post.isClosed()}">마감시간 <span th:text="${remainTime}">1사간 45분 남음</span></p>
+            <p th:if="${post.isClosed()}"> 마감됨 </p>
+            <form th:if="${!post.isClosed()}" th:action="@{./request:close(id=${post.id})}" method="post"
+                  th:object="${post}">
                 <button class="btn close">모집마감</button>
             </form>
         </div>
     </div>
     <div class="detail row">
         <p class="label">모집 내용</p>
-        <div class="content">
-            <p>편하게 같이 게임하실 분 구합니다.</p>
-            <p>실버 구간이고, 정글 또는 미드 플레이 가능하신 분 환영해요.</p>
-            <p>디스코드 가능하신 분이면 더 좋고, 즐겜 위주로 편하게 하실 분 구합니다!</p>
+        <div class="content" th:text="${post.content}">
+            편하게 같이 게임하실 분 구합니다.
+            실버 구간이고, 정글 또는 미드 플레이 가능하신 분 환영해요.
+            디스코드 가능하신 분이면 더 좋고, 즐겜 위주로 편하게 하실 분 구합니다!
         </div>
     </div>
     <div class="author_info row">
@@ -101,7 +102,7 @@
                     <td>정글</td>
                     <td>3.8</td>
                     <td>
-                        <form action="./request:refuse" method="post">
+                        <form th:if="${!post.isClosed()}" action="./request:refuse" method="post">
                             <button class="btn refuse">x</button>
                         </form>
                         <form action="./request:rating" method="post">
@@ -142,12 +143,19 @@
         <a href="/board/leageueoflegend">
             <button class="btn list">목록</button>
         </a>
-        <a href="./edit">
-            <button class="btn edit">게시글 수정</button>
-        </a>
-        <form action="./request:delete_post" method="post">
-            <button type="submit" class="btn delete">삭제</button>
-        </form>
+        <div class="author_only">
+            <a href="./edit">
+                <button class="btn edit">게시글 수정</button>
+            </a>
+            <form action="./request:delete_post" method="post">
+                <button type="submit" class="btn delete">삭제</button>
+            </form>
+        </div>
+        <div class="participant_only">
+            <form th:if="${!post.isClosed()}" action="./request:join" method="post">
+                <button type="submit" class="btn join">파티 참가</button>
+            </form>
+        </div>
     </div>
 </main>
 </body>

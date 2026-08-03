@@ -23,25 +23,31 @@ public class JdbcTemplatePostRepository implements PostRepository {
     private final RowMapper<PostDto> postRowMapper = (ResultSet rs, int rowNum) -> {
         return PostDto.builder()
                 .id(rs.getInt("id"))
+                .memberId(rs.getInt("member_id"))
                 .gameId(rs.getInt("game_id"))
                 .title(rs.getString("title"))
-                .author(rs.getString("author"))
+                .tag(rs.getString("tag"))
                 .content(rs.getString("content"))
                 .maxParticipantCount(rs.getInt("max_count"))
                 .participantCount(rs.getInt("participant_count"))
                 .createdAt(rs.getObject("created_at", LocalDateTime.class))
-                .tag(rs.getString("tag"))
                 .deadline(rs.getObject("deadline", LocalDateTime.class))
+                .isClosed(rs.getBoolean("is_closed"))
                 .build();
     };
 
     @Override
     public List<PostDto> findAll() {
-        return jdbcTemplate.query("SELECT * FROM post ORDER BY id DESC", postRowMapper);
+        log.info("전체 게시글 목록 조회");
+        List<PostDto> posts = jdbcTemplate.query("SELECT * FROM post ORDER BY created_at DESC", postRowMapper);
+        checkDeadline(posts);
+        posts = jdbcTemplate.query("SELECT * FROM post ORDER BY created_at DESC", postRowMapper);
+        return posts;
     }
 
     @Override
     public PostDto findById(int id) {
+        checkDeadline(id);
         return jdbcTemplate.queryForObject("SELECT * FROM post WHERE id = ?", postRowMapper, id);
     }
 
@@ -63,14 +69,32 @@ public class JdbcTemplatePostRepository implements PostRepository {
 
     @Override
     public void update(PostDto post) {
-        jdbcTemplate.update("UPDATE post SET title = ?, tag = ?, content = ?, maxParticipantCount = ?, participantCount = ?, deadlinde = ? WHERE id = ?"
-                , post.getTitle()
-                , post.getTag()
-                , post.getContent()
-                , post.getMaxParticipantCount()
-                , post.getParticipantCount()
-                , post.getDeadline()
-                , post.getId());
+        jdbcTemplate.update("UPDATE post SET title = ?, tag = ?, content = ?, max_count = ?, participant_count = ?, deadline = ? WHERE id = ?",
+                            post.getTitle(),
+                            post.getTag(),
+                            post.getContent(),
+                            post.getMaxParticipantCount(),
+                            post.getParticipantCount(),
+                            post.getDeadline(),
+                            post.isClosed(),
+                            post.getId());
+
+        checkDeadline(post.getId());
+    }
+
+    @Override
+    public void close(PostDto post) {
+        jdbcTemplate.update("UPDATE post SET is_closed = true WHERE id = ?", post.getId());
+    }
+
+    @Override
+    public void checkDeadline(int id) {
+        jdbcTemplate.update("UPDATE post SET is_closed = true WHERE id = ? AND is_closed = false AND deadline <= NOW()", id);
+    }
+
+    @Override
+    public void checkDeadline(List<PostDto> posts) {
+        for (PostDto post : posts) {checkDeadline(post.getId());}
     }
 
     @Override

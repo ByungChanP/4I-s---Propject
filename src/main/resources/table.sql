@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS post
     max_count         INT      DEFAULT 0,
     participant_count INT      DEFAULT 1,
     deadline          DATETIME    NOT NULL,
+    is_closed         BOOLEAN  DEFAULT FALSE,
     created_at        DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
