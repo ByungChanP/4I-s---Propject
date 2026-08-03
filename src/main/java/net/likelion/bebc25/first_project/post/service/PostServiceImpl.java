@@ -37,6 +37,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public void closePost(PostDto post) {
+        postRepository.close(post);
+    }
+
+    @Override
     public void removePost(int id) {
         postRepository.deleteById(id);
     }
