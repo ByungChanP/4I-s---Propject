@@ -5,7 +5,7 @@ import net.likelion.bebc25.first_project.post.dto.PostDto;
 import java.util.List;
 
 public interface PostRepository {
-    List<PostDto> findAll();
+    List<PostDto> findAll(int gameId);
 
     PostDto findById(int id);
 

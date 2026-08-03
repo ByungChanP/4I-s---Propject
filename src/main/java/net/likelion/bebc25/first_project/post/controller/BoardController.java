@@ -34,7 +34,7 @@ public class BoardController {
     @GetMapping("/{id}")
     public String getPosts(@PathVariable("id") int gameId, Model model) {
         log.info("게시글 목록");
-        List<PostDto> posts = postService.getPosts();
+        List<PostDto> posts = postService.getPosts(gameId);
         model.addAttribute("posts", posts);
 
         GameDto game = gameService.getGame(gameId);
@@ -45,18 +45,19 @@ public class BoardController {
 
     // 게시글 상세 조회
     @GetMapping("/*/detail")
-    public String getDetail(@RequestParam int id, Model model1, Model model2, Model model3, Model remainTime) {
+    public String getDetail(@RequestParam int id, Model model, Model remainTime) {
         log.info("게시글 상세조회");
         PostDto post = postService.getPost(id);
         MemberDto member = memberService.getMember(post.getMemberId());
         GameDto game = gameService.getGame(post.getGameId());
-        model1.addAttribute("post", post);
-        model2.addAttribute("member", member);
-        model3.addAttribute("game", game);
+        model.addAttribute("post", post);
+        model.addAttribute("member", member);
+        model.addAttribute("game", game);
 
         int remainTimeInMinute = (int) Duration.between(LocalDateTime.now(), post.getDeadline()).toMinutes();
         String remainTimeInString = String.format("%d시간 %d분 남음", remainTimeInMinute / 60, remainTimeInMinute % 60);
         remainTime.addAttribute("remainTime", remainTimeInString);
+
         return "board/detail"; // 템플릿 파일 경로
     }
 

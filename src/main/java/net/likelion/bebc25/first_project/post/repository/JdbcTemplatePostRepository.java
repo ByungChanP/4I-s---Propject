@@ -37,11 +37,11 @@ public class JdbcTemplatePostRepository implements PostRepository {
     };
 
     @Override
-    public List<PostDto> findAll() {
+    public List<PostDto> findAll(int gameId) {
         log.info("전체 게시글 목록 조회");
-        List<PostDto> posts = jdbcTemplate.query("SELECT * FROM post ORDER BY created_at DESC", postRowMapper);
+        List<PostDto> posts = jdbcTemplate.query("SELECT * FROM post WHERE game_id = ? ORDER BY created_at DESC", postRowMapper, gameId);
         checkDeadline(posts);
-        posts = jdbcTemplate.query("SELECT * FROM post ORDER BY created_at DESC", postRowMapper);
+        posts = jdbcTemplate.query("SELECT * FROM post WHERE game_id = ? ORDER BY created_at DESC", postRowMapper, gameId);
         return posts;
     }
 
@@ -54,17 +54,17 @@ public class JdbcTemplatePostRepository implements PostRepository {
     @Override
     public void save(PostDto post) {
         log.info("repository save = {}", post);
-            jdbcTemplate.update("INSERT INTO post(game_id, title, tag, member_id, min_rank, max_rank, content, max_count, participant_count, deadline) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-                    , 0 // 테스트를 위해 0
-                    , post.getTitle()
-                    , post.getTag()
-                    , 1 // 테스트를 위해 1 (아직 로그인과 HttpSession구현이 안됨)
-                    , post.getMinRank()
-                    , post.getMaxRank()
-                    , post.getContent()
-                    , post.getMaxParticipantCount()
-                    , 1 // 글을 처음 작성할 때는 현재 참가자는 무조건 1명 (글 작성자)
-                    , post.getDeadline());
+        jdbcTemplate.update("INSERT INTO post(game_id, title, tag, member_id, min_rank, max_rank, content, max_count, participant_count, deadline) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                , 0 // 테스트를 위해 0
+                , post.getTitle()
+                , post.getTag()
+                , 1 // 테스트를 위해 1 (아직 로그인과 HttpSession구현이 안됨)
+                , post.getMinRank()
+                , post.getMaxRank()
+                , post.getContent()
+                , post.getMaxParticipantCount()
+                , 1 // 글을 처음 작성할 때는 현재 참가자는 무조건 1명 (글 작성자)
+                , post.getDeadline());
     }
 
     @Override
