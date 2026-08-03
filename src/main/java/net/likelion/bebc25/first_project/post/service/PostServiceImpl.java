@@ -29,15 +29,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void writePost(PostDto post) {
-        // 작성 시간
-        post.setCreatedAt(LocalDateTime.now());
-
-        // 현재 참가자 수
-        post.setParticipantCount(1);
-
-        // 임시 작성자
-        post.setAuthor("테스트");
-
         postRepository.save(post);
     }
 
