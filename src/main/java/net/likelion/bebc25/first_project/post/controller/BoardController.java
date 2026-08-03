@@ -44,8 +44,8 @@ public class BoardController {
     }
 
     // 게시글 상세 조회
-    @GetMapping("/*/detail")
-    public String getDetail(@RequestParam int id, Model model, Model remainTime) {
+    @GetMapping("/{gameId}/detail")
+    public String getDetail(@PathVariable("gameId") int gameId, @RequestParam int id, Model model, Model remainTime) {
         log.info("게시글 상세조회");
         PostDto post = postService.getPost(id);
         MemberDto member = memberService.getMember(post.getMemberId());
@@ -72,10 +72,14 @@ public class BoardController {
     }
 
     // 게시글 수정화면 요청
-    @GetMapping("/*/edit")
-    public String getEditForm() {
+    @GetMapping("/{gameId}/edit")
+    public String getEditForm(@PathVariable("gameId") int gameId, @RequestParam int id, Model model) {
+        PostDto post = postService.getPost(id);
+        model.addAttribute("post", post);
+        GameDto game = gameService.getGame(gameId);
+        model.addAttribute("game", game);
         log.info("게시글 수정");
-        return "board/edit";
+        return "board/write";
     }
 
     // 게시글 등록 요청
@@ -96,10 +100,10 @@ public class BoardController {
     }
 
     // 게시글 삭제 요청
-    @PostMapping("/*/request:delete_post")
-    public String deletePost() {
-        log.info("게시글 삭제요청");
-        return "redirect:/board/leagueoflegend";
+    @PostMapping("/{gameId}/delete")
+    public String deletePost(@PathVariable int gameId, @RequestParam int postId) {
+        postService.removePost(postId);
+        return "redirect:/board/" + gameId;
     }
 
     // 파티원 모집 마감 요청
