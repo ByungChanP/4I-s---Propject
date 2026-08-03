@@ -1,108 +1,121 @@
-<!DOCTYPE html>
-<html lang="ko-KR">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/common.css">
-  <link rel="stylesheet" href="/css/profile.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
 <header th:replace="~{layout/common :: header}"></header>
-<!--  <header>-->
-<!--    <div class="Header">-->
-<!--      <a href="/main">-->
-<!--        <img src="/images/logo/site-logo.png"  class="logotomain" alt="멋사라이브">-->
-<!--      </a>-->
-<!--      <div class="Header-right">-->
-<!--        <img src="profile.png" class="user-profile-image" alt="유저 기본 프로필 이미지">-->
-<!--        &lt;!&ndash; th:text 닉네임으로 동적 처리 &ndash;&gt;-->
-<!--        <span class="User-Welcome">사용자님</span>-->
-<!--        &lt;!&ndash; 어디 경로로 요청을 보내야할지 아직 모름, session 제거 후 메인으로 이동?&ndash;&gt;-->
-<!--        <form action="/logout" method="post">-->
-<!--          <button type="submit" class="logout-btn">로그아웃</button>-->
-<!--        </form>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </header>-->
-<section th:replace="~{layout/common :: intro}"></section>
-<!--  <div class="game-post">-->
-<!--    &lt;!&ndash;게시판별 이미지 타임리프 처리 &ndash;&gt;-->
-<!--    <img src="/images/lol/lol_logo.png" class="lol-logo" alt="lol">-->
-
-<!--    <div class="post-title">-->
-<!--      <h1>리그 오브 레전드 파티 모집 게시판</h1>-->
-<!--      <span>듀오, 랭크, 일반, 칼바람 파티원을 모집해보세요</span>-->
-<!--    </div>-->
-<!--  </div>-->
-
-  <div class="white-box">
-    <form action="/register" method="post">
-      <div class="text-form">
-        <div class="ingamenickname-form">
-          <label for="nickname">닉네임</label>
-          <input type="text" name="ingamenickname" id="nickname" placeholder="닉네임을 입력하세요">
+<main class="px-4 py-4">
+  <section th:replace="~{layout/common :: intro}"></section>
+  <!--  section 시맨틱 -->
+  <section class="container">
+    <!--        form에 css적용하기 위한 div-->
+    <div class="bg-white rounded shadow-sm p-5 mt-4">
+      <form action="" method="post">
+        <!--                바로 다음 라인 div form의 '행' 에 해당-->
+        <!--                1행-->
+        <div class="row align-items-center mb-4">
+          <label for="gameNickname" class="col-3 fw-bold text-center">
+            닉네임
+          </label>
+          <div class="col-9">
+            <input type="text" name="gameNickname" id="gameNickname" placeholder="인게임 닉네임을 입력해주세요"
+                   class="form-control form-control-lg">
+          </div>
         </div>
-        <div class="level-form">
-          <label for="level">레벨</label>
-          <input type="text" name="Userlevel" id="level" placeholder="레벨을 입력하세요">
+        <!--                2행 -->
+        <div class="row align-items-center mb-4">
+          <label for="level" class="col-3 fw-bold text-center">
+            레벨
+          </label>
+          <div class="col-9">
+            <input type="text" name="level" id="level" placeholder="예) 123"
+                   class="form-control form-control-lg">
+          </div>
         </div>
-      </div>
-      <div class="radio-form">
-        <label for="rank" class="rank-label">랭크</label>
-        <div class="rank-form" id="rank">
-          <input type="radio" name="UserRank"  value="unranked">언랭크
-          <input type="radio" name="UserRank"  value="iron">아이언
-          <input type="radio" name="UserRank"  value="bronze">브론즈
-          <input type="radio" name="UserRank"  value="silver">실버
-          <input type="radio" name="UserRank"  value="gold">골드
-          <input type="radio" name="UserRank"  value="platinum">플레티넘
-          <input type="radio" name="UserRank"  value="emerald">에매랄드
-          <input type="radio" name="UserRank"  value="diamond">다이아몬드
-          <input type="radio" name="UserRank"  value="master">마스터
-          <input type="radio" name="UserRank"  value="grandmaster">그랜드 마스터
-          <input type="radio" name="UserRank"  value="challenger">챌린저
+        <!--                3행-->
+        <div class="row align-items-center mb-4">
+          <label for="rank" class="col-3 fw-bold text-center">
+            랭크
+          </label>
+          <div class="col-9">
+            <select name="rank" id="rank" class="form-select form-select-lg">
+              <option value="" selected disabled>
+                랭크를 선택해주세요
+              </option>
+              <option value="UNRANKED">언랭크</option>
+              <option value="IRON">아이언</option>
+              <option value="BRONZE">브론즈</option>
+              <option value="SILVER">실버</option>
+              <option value="GOLD">골드</option>
+              <option value="PLATINUM">플래티넘</option>
+              <option value="EMERALD">에메랄드</option>
+              <option value="DIAMOND">다이아몬드</option>
+              <option value="MASTER">마스터</option>
+              <option value="GRANDMASTER">그랜드마스터</option>
+              <option value="CHALLENGER">챌린저</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="checkbox-form">
-        <label>주 포지션</label>
-        <span>주로 플레이하는 포지션을 선택해주세요(복수 선택 가능)</span>
-        <div></div>
-        <div class="position-list">
-          <label>
-            <input type="checkbox" name="position" value="TOP">
-            탑
+        <!--                4행-->
+        <div class="row align-items-center mb-4">
+          <label for="gameNickname" class="col-3 fw-bold text-center">
+            포지션
           </label>
-
-          <label>
-            <input type="checkbox" name="position" value="JUNGLE">
-            정글
-          </label>
-
-          <label>
-            <input type="checkbox" name="position" value="MID">
-            미드
-          </label>
-
-          <label>
-            <input type="checkbox" name="position" value="SUPPORT">
-            서포트
-          </label>
-
-          <label>
-            <input type="checkbox" name="position" value="ADC">
-            원딜
-          </label>
+          <div class="col-9">
+            <p>
+              주로 플레이하는 포지션을 선택해주세요. (복수 선택 가능)
+            </p>
+            <div class="row g-3">
+              <div class="col">
+                <input type="checkbox" name="position" id="top" value="TOP" class="btn-check">
+                <label for="top" class="btn btn-outline-secondary w-100 py-3">
+                  탑
+                </label>
+              </div>
+              <div class="col">
+                <input type="checkbox" name="position" id="jungle" value="JUNGLE" class="btn-check">
+                <label for="jungle" class="btn btn-outline-secondary w-100 py-3">
+                  정글
+                </label>
+              </div>
+              <div class="col">
+                <input type="checkbox" name="position" id="mid" value="MID" class="btn-check">
+                <label for="mid" class="btn btn-outline-secondary w-100 py-3">
+                  미드
+                </label>
+              </div>
+              <div class="col">
+                <input type="checkbox" name="position" id="adc" value="ADC" class="btn-check">
+                <label for="adc" class="btn btn-outline-secondary w-100 py-3">
+                  원딜
+                </label>
+              </div>
+              <div class="col">
+                <input type="checkbox" name="position" id="sup" value="SUP" class="btn-check">
+                <label for="sup" class="btn btn-outline-secondary w-100 py-3">
+                  서포터
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="register-profile">
-        <!--취소시 게시판으로 이동 -->
-        <a href="/board/list" class="cancel-btn">취소</a>
-        <button type="submit" class="register-profile-btn">프로필 등록</button>
-      </div>
-    </form>
-
-  </div>
+        <!--                5행 버튼-->
+        <div class="d-flex justify-content-center gap-4 mt-4">
+          <a href="" class="btn btn-outline-secondary profile-button">
+            취소
+          </a>
+          <button type="submit" class="btn btn-orange profile-button">
+            프로필 등록
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
 </body>
 </html>
