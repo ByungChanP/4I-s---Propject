@@ -2,42 +2,69 @@
 <html lang="ko-KR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>멋사라이브</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
 </head>
 <body>
-<header>
-    <img src="./../../static/images/logo/site-logo.png" alt="멋사라이브 로고" width="160px" height="90px">
-    <div>
-        <img src="" alt="유저 기본프로필 이미지">
-        <p>안녕하세요, 사용자님!</p>
+<header class="container-fluid  px-4 py-4 bg-white shadow-sm">
+    <!--    <div class="d-flex justify-content-between align-items-center common-container">-->
+    <!--        <a href="#" class="">-->
+    <!--            <img src="/images/logo/site-logo.png" class="" width="200">-->
+    <!--        </a>-->
+    <!--        <a href="login.html" class="btn btn-orange">-->
+    <!--            로그인-->
+    <!--        </a>-->
+    <!--    </div>-->
+
+    <div class="d-flex justify-content-between align-items-center common-container">
+        <a href="#" class="">
+            <img src="/images/logo/site-logo.png" width="200">
+        </a>
+        <div class="d-flex align-items-center gap-3">
+            <a href="mypage.html">
+                <img src="images/icon/person-circle.svg">
+            </a>
+            <span>
+            안녕하세요,&nbsp;
+            <strong>
+                닉네임
+            </strong>님!
+            </span>
+            <a href="/" class="btn-orange btn">로그아웃</a>
+        </div>
     </div>
-    <a href="">로그아웃</a>
 </header>
-<main>
-    <section>
-        <img src="/images/logo/site-logo-only.png">
-        <h1>
+<main class="main-container">
+    <section class="d-flex flex-column justify-content-center align-items-center text-center gap-2 main-intro-section">
+        <img src="/images/logo/site-logo-only.png" width="65">
+        <h1 class="fw-bold">
             멋사라이브
         </h1>
-        <p>
+        <p class="text-secondary">
             관심있는 게임을 선택하여 커뮤니티에 참여해보세요!
         </p>
     </section>
-    <section>
-        <nav>
-            <div>
-                <img src="/images">
-                <a href="/board/leagueoflegend">
-                    <div>
-                        <img src="/images">
-                        <h2>
-                            게임 명(예시 : 리그 오브 레전드)
-                        </h2>
-                        <p>
-                            게임 설명(예시 : 전략과 팀워크가 빛나는 MOBA의 정석)
-                        </p>
-                    </div>
-                </a>
+    <section class="container">
+        <nav class="row g-3">
+            <div class="col-4">
+                <div class="card shadow-sm game-card">
+                    <img src="/images/lol/lol-banner.png" class="game-banner overflow-hidden card-img-top w-100">
+                    <a href="/board/leagueoflegend" class="text-decoration-none text-dark">
+                        <div class="card-body d-flex align-items-center gap-3">
+                            <img src="/images/lol/lol_logo.png" class="game-icon">
+                            <div>
+                                <h5 class="fw-bold mb-1">
+                                    게임 명(예시 : 리그 오브 레전드)
+                                </h5>
+                                <p>
+                                    게임 설명(예시 : 전략과 팀워크가 빛나는 MOBA의 정석)
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </nav>
     </section>
