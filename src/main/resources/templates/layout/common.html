@@ -14,12 +14,12 @@
     <div th:if="${session.loginMember != null}"
          class="d-flex justify-content-between align-items-center common-container">
         <a href="#" class="">
-            <img src="/images/logo/site-logo.png" width="200">
+            <img src="/images/logo/site-logo.png" width="200px">
         </a>
         <div class="d-flex align-items-center gap-3">
-            <a href="mypage.html">
-                <img src="images/icon/person-circle.svg">
-            </a>
+
+            <img th:src="${session.loginMember.profileImgDir}">
+
             <span>
             안녕하세요,&nbsp;
             <strong th:text="${session.loginMember.nickname}">
