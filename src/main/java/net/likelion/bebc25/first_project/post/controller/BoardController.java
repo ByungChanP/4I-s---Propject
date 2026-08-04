@@ -63,9 +63,13 @@ public class BoardController {
 
     // 게시글 작성화면 요청
     @GetMapping("/{gameId}/write")
-    public String getWriteForm(@PathVariable("gameId") int gameId, Model model) {
-        model.addAttribute("postDto", new PostDto());
-
+    public String getWriteForm(
+            @PathVariable("gameId") int gameId,
+            Model model
+    ) {
+        PostDto postDto = new PostDto();
+        postDto.setGameId(gameId);
+        model.addAttribute("postDto", postDto);
         GameDto game = gameService.getGame(gameId);
         model.addAttribute("game", game);
         return "board/write";
@@ -75,11 +79,12 @@ public class BoardController {
     @GetMapping("/{gameId}/edit")
     public String getEditForm(@PathVariable("gameId") int gameId, @RequestParam int id, Model model) {
         PostDto post = postService.getPost(id);
-        model.addAttribute("post", post);
+        post.setGameId(gameId);
+        model.addAttribute("postDto", post);
         GameDto game = gameService.getGame(gameId);
         model.addAttribute("game", game);
         log.info("게시글 수정");
-        return "board/write";
+        return "board/edit";
     }
 
     // 게시글 등록 요청
@@ -94,10 +99,12 @@ public class BoardController {
     }
 
     // 게시글 수정 요청
-    @PostMapping("/*/request:edit_post")
-    public String editPost() {
-        log.info("게시글 수정요청");
-        return "redirect:/board/{gameId}";
+    @PostMapping("/{gameId}/edit")
+    public String editPost(@PathVariable int gameId,
+                           @ModelAttribute PostDto postDto) {
+            log.info("postDto = {}", postDto);
+            postService.editPost(postDto);
+        return "redirect:/board/" + gameId + "/detail?id=" + postDto.getId();
     }
 
     // 게시글 삭제 요청

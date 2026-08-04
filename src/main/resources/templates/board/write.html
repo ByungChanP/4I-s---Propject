@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>게시글 작성</title>
+    <title>파티 모집 글 작성</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/css/write.css}">
@@ -64,6 +64,8 @@
     <form th:action="@{/board/{gameId}/request(gameId=${game.id})}"
           th:object="${postDto}"
           method="post">
+
+        <input type="hidden" th:field="*{gameId}">
 
         <div class="form-group">
             <label>모집유형 :</label>
@@ -139,7 +141,7 @@
 
         <!-- 제목 -->
         <div class="form-group">
-            <label for="title">게시글 제목</label>
+            <label for="title">파티 모집 글 제목</label>
 
             <input type="text"
                    id="title"
@@ -154,7 +156,7 @@
 
         <!-- 내용 -->
         <div class="form-group">
-            <label for="content">게시글 내용</label>
+            <label for="content">파티 모집 글 내용</label>
 
             <textarea id="content"
                       th:field="*{content}"

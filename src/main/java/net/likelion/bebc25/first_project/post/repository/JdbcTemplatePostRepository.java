@@ -55,7 +55,7 @@ public class JdbcTemplatePostRepository implements PostRepository {
     public void save(PostDto post) {
         log.info("repository save = {}", post);
         jdbcTemplate.update("INSERT INTO post(game_id, title, tag, member_id, min_rank, max_rank, content, max_count, participant_count, deadline) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-                , 0 // 테스트를 위해 0
+                , post.getGameId()
                 , post.getTitle()
                 , post.getTag()
                 , 1 // 테스트를 위해 1 (아직 로그인과 HttpSession구현이 안됨)
@@ -69,14 +69,14 @@ public class JdbcTemplatePostRepository implements PostRepository {
 
     @Override
     public void update(PostDto post) {
-        jdbcTemplate.update("UPDATE post SET title = ?, tag = ?, content = ?, max_count = ?, participant_count = ?, deadline = ? WHERE id = ?",
+        jdbcTemplate.update("UPDATE post SET title = ?, tag = ?, min_rank=?, max_rank=?, content = ?, max_count = ?, deadline = ? WHERE id = ?",
                             post.getTitle(),
                             post.getTag(),
+                            post.getMinRank(),
+                            post.getMaxRank(),
                             post.getContent(),
                             post.getMaxParticipantCount(),
-                            post.getParticipantCount(),
                             post.getDeadline(),
-                            post.isClosed(),
                             post.getId());
 
         checkDeadline(post.getId());
