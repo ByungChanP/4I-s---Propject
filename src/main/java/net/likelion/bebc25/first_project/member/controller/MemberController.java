@@ -136,6 +136,12 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @PostMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();   // 세션 파기
+        return "redirect:/";
+    }
+
     /**
      * 회원 정보 수정 화면으로 유도합니다.
      *

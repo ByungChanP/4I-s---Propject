@@ -23,9 +23,9 @@ CREATE TABLE IF NOT EXISTS game
 CREATE TABLE IF NOT EXISTS member
 (
     id              int AUTO_INCREMENT PRIMARY KEY,
-    email           VARCHAR(50) NOT NULL,
-    pw              VARCHAR(20) NOT NULL,
-    nickname        VARCHAR(20) NOT NULL,
+    email           VARCHAR(50) UNIQUE NOT NULL,
+    pw              VARCHAR(20)        NOT NULL,
+    nickname        VARCHAR(20)        NOT NULL,
     created_at      DATETIME     DEFAULT CURRENT_TIMESTAMP,
     profile_img_dir VARCHAR(255) DEFAULT '/images/icon/person-circle.svg'
 );
