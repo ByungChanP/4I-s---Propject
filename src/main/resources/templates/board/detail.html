@@ -14,12 +14,15 @@
 <main>
     <div class="title row">
         <p class="label">제목</p>
-        <h2>실버 정글, 미드 구해요!</h2>
+        <h2 th:text="${post.title}">실버 정글, 미드 구해요!</h2>
     </div>
     <div class="post_info row">
         <p class="label"></p>
         <div class="post_info_content">
-            <p><img th:src="${member.profileImgDir}" alt="" th:text="${member.nickname}"> 소환사루나</p>
+            <p>
+                <img th:src="${member.profileImgDir}" alt="">
+                <span th:text="${member.nickname}">소환사루나</span>
+            </p>
             <p>일반</p>
             <p>지원인원 <span th:text="${post.participantCount}">3</span> / <span
                     th:text="${post.maxParticipantCount}">5</span></p>
@@ -51,11 +54,23 @@
                     <th>포지션</th>
                 </tr>
                 <tr>
-                    <td>소환사루나</td>
-                    <td>달빛정글러</td>
-                    <td>278</td>
-                    <td>실버</td>
-                    <td>미드</td>
+                <tr th:if="${!ingameInfo.isEmpty()}">
+
+                <td th:text="${ingameInfo.ingame_info.nickname}">
+                    소환사루나
+                </td>
+
+                <td th:text="${ingameInfo.ingame_info.level}">
+                    278
+                </td>
+
+                <td th:text="${ingameInfo.ingame_info.rank}">
+                    실버
+                </td>
+
+                <td th:text="${ingameInfo.ingame_info.position}">
+                    미드
+                </td>
                 </tr>
             </table>
         </div>
