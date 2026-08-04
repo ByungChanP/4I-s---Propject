@@ -12,7 +12,7 @@ public interface UserGameInfoService {
      *
      * @param gameInfo 인게임 정보를 요청할 DTO
      */
-    void register(int userId, int gameId, IngameInfoDto ingameInfoDto);
+    void register(int userId, int gameId, Object ingameInfoDto);
 
     /**
      * 인게임 정보를 수정합니다.

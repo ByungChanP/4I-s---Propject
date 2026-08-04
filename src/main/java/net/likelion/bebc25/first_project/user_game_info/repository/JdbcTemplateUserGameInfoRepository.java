@@ -2,6 +2,7 @@ package net.likelion.bebc25.first_project.user_game_info.repository;
 
 import net.likelion.bebc25.first_project.user_game_info.InfoDto.InfoDto;
 import net.likelion.bebc25.first_project.user_game_info.InfoDto.IngameInfoDto;
+import net.likelion.bebc25.first_project.user_game_info.InfoDto.LostarkInfoDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -48,6 +49,20 @@ public class JdbcTemplateUserGameInfoRepository implements UserGameInfoRepositor
     public void save(InfoDto info) {
         try {
             String ingameInfoJson = objectMapper.writeValueAsString(info.getIngame_info());
+            jdbcTemplate.update("INSERT INTO ingame_info (game_id, member_id, ingame_info) VALUES (?,?,?)"
+                    , info.getGame_id()
+                    , info.getMember_id()
+                    , ingameInfoJson);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public void save(LostarkInfoDto info) {
+        try {
+            String ingameInfoJson = objectMapper.writeValueAsString(info.getLostarkInfoDto());
             jdbcTemplate.update("INSERT INTO ingame_info (game_id, member_id, ingame_info) VALUES (?,?,?)"
                     , info.getGame_id()
                     , info.getMember_id()

@@ -1,122 +1,171 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Document</title>
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/common.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
 <header th:replace="~{layout/common :: header}"></header>
 <main class="px-4 py-4">
-  <section th:replace="~{layout/common :: intro}"></section>
-  <!--  section 시맨틱 -->
-  <section class="container">
-    <!--        form에 css적용하기 위한 div-->
-    <div class="bg-white rounded shadow-sm p-5 mt-4">
-      <form th:action="@{/board/{gameId}/profile(gameId=${game.id})}" th:object="${ingameInfoDto}" method="post">
+    <section th:replace="~{layout/common :: intro}"></section>
+    <!--  section 시맨틱 -->
+    <section class="container">
+        <!--        form에 css적용하기 위한 div-->
+        <div class="bg-white rounded shadow-sm p-5 mt-4">
+            <form th:object="${ingameInfo}"
+                  th:action="@{/board/{id}/profile(id=${game.id})}"
+                  method="post">
 
                 <!--                바로 다음 라인 div form의 '행' 에 해당-->
-        <!--                1행-->
-        <div class="row align-items-center mb-4">
-          <label for="nickname" class="col-3 fw-bold text-center">
-            닉네임
-          </label>
-          <div class="col-9">
-            <input type="text" th:field="*{nickname}" id="nickname" placeholder="인게임 닉네임을 입력해주세요"
-                   class="form-control form-control-lg">
-          </div>
+                <!--                1행-->
+                <div th:if="${game.id==1}">
+                    <div class="row align-items-center mb-4">
+                        <label for="nickname" class="col-3 fw-bold text-center">
+                            닉네임
+                        </label>
+                        <div class="col-9">
+                            <input type="text" th:field="*{nickname}" id="nickname" placeholder="인게임 닉네임을 입력해주세요"
+                                   class="form-control form-control-lg">
+                        </div>
+                    </div>
+                    <!--                2행 -->
+                    <div class="row align-items-center mb-4">
+                        <label for="level" class="col-3 fw-bold text-center">
+                            레벨
+                        </label>
+                        <div class="col-9">
+                            <input type="text" th:field="*{level}" id="level" placeholder="예) 123"
+                                   class="form-control form-control-lg">
+                        </div>
+                    </div>
+                    <!--                3행-->
+                    <div class="row align-items-center mb-4">
+                        <label for="rank" class="col-3 fw-bold text-center">
+                            랭크
+                        </label>
+                        <div class="col-9">
+                            <select th:field="*{rank}" id="rank" class="form-select form-select-lg">
+                                <option value="" selected disabled>
+                                    랭크를 선택해주세요
+                                </option>
+                                <option value="UNRANKED">언랭크</option>
+                                <option value="IRON">아이언</option>
+                                <option value="BRONZE">브론즈</option>
+                                <option value="SILVER">실버</option>
+                                <option value="GOLD">골드</option>
+                                <option value="PLATINUM">플래티넘</option>
+                                <option value="EMERALD">에메랄드</option>
+                                <option value="DIAMOND">다이아몬드</option>
+                                <option value="MASTER">마스터</option>
+                                <option value="GRANDMASTER">그랜드마스터</option>
+                                <option value="CHALLENGER">챌린저</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--                4행-->
+                    <div class="row align-items-center mb-4">
+                        <label class="col-3 fw-bold text-center">
+                            포지션
+                        </label>
+                        <div class="col-9">
+                            <p>
+                                주로 플레이하는 포지션을 선택해주세요. (복수 선택 가능)
+                            </p>
+                            <div class="row g-3">
+                                <div class="col">
+                                    <input type="checkbox" name="position" id="top" value="TOP" class="btn-check">
+                                    <label for="top" class="btn btn-outline-secondary w-100 py-3">
+                                        탑
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <input type="checkbox" name="position" id="jungle" value="JUNGLE" class="btn-check">
+                                    <label for="jungle" class="btn btn-outline-secondary w-100 py-3">
+                                        정글
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <input type="checkbox" name="position" id="mid" value="MID" class="btn-check">
+                                    <label for="mid" class="btn btn-outline-secondary w-100 py-3">
+                                        미드
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <input type="checkbox" name="position" id="adc" value="ADC" class="btn-check">
+                                    <label for="adc" class="btn btn-outline-secondary w-100 py-3">
+                                        원딜
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <input type="checkbox" name="position" id="sup" value="SUP" class="btn-check">
+                                    <label for="sup" class="btn btn-outline-secondary w-100 py-3">
+                                        서포터
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${game.id==2}">
+                    <div class="row align-items-center mb-4">
+                        <label for="nickname" class="col-3 fw-bold text-center">
+                            닉네임
+                        </label>
+                        <div class="col-9">
+                            <input type="text" th:field="*{nickname}" id="nickname" placeholder="인게임 닉네임을 입력해주세요"
+                                   class="form-control form-control-lg">
+                        </div>
+                    </div>
+                    <!--                2행 -->
+                    <div class="row align-items-center mb-4">
+                        <label for="equipLevel" class="col-3 fw-bold text-center">
+                            장비레벨
+                        </label>
+                        <div class="col-9">
+                            <input type="text" th:field="*{equipLevel}" id="equipLevel" placeholder="예) 123"
+                                   class="form-control form-control-lg">
+                        </div>
+                    </div>
+                    <!--                3행-->
+                    <div class="row align-items-center mb-4">
+                        <label for="job" class="col-3 fw-bold text-center">
+                            클래스
+                        </label>
+                        <div class="col-9">
+                            <select th:field="*{job}" id="job" class="form-select form-select-lg">
+                                <option value="" selected disabled>
+                                    클래스를 선택해주세요
+                                </option>
+                                <option value="WARRIOR_M">전사(남)</option>
+                                <option value="WARRIOR_W">전사(여)</option>
+                                <option value="MARTIALARTIST_M">무도가(남)</option>
+                                <option value="MARTIALARTIST_W">무도가(여)</option>
+                                <option value="GUNNER_M">헌터(남)</option>
+                                <option value="GUNNER_W">헌터(여)</option>
+                                <option value="MAGE">마법사</option>
+                                <option value="ASSASSIN">암살자</option>
+                                <option value="SPECIALIST_M">스페셜리스트(남)</option>
+                                <option value="SPECIALIST_W">스페셜리스트(여)</option>
+                                <option value="GuardianKnight">가디언나이트</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!--                5행 버튼-->
+                <div class="d-flex justify-content-center gap-4 mt-4">
+                    <a th:href="@{/board/{gameId}(gameId=${game.id})}" class="btn btn-outline-secondary profile-button">
+                        취소
+                    </a>
+                    <button type="submit" class="btn btn-orange profile-button">
+                        프로필 등록
+                    </button>
+                </div>
+            </form>
         </div>
-        <!--                2행 -->
-        <div class="row align-items-center mb-4">
-          <label for="level" class="col-3 fw-bold text-center">
-            레벨
-          </label>
-          <div class="col-9">
-            <input type="text" th:field="*{level}" id="level" placeholder="예) 123"
-                   class="form-control form-control-lg">
-          </div>
-        </div>
-        <!--                3행-->
-        <div class="row align-items-center mb-4">
-          <label for="rank" class="col-3 fw-bold text-center">
-            랭크
-          </label>
-          <div class="col-9">
-            <select th:field="*{rank}" id="rank" class="form-select form-select-lg">
-              <option value="" selected disabled>
-                랭크를 선택해주세요
-              </option>
-              <option value="UNRANKED">언랭크</option>
-              <option value="IRON">아이언</option>
-              <option value="BRONZE">브론즈</option>
-              <option value="SILVER">실버</option>
-              <option value="GOLD">골드</option>
-              <option value="PLATINUM">플래티넘</option>
-              <option value="EMERALD">에메랄드</option>
-              <option value="DIAMOND">다이아몬드</option>
-              <option value="MASTER">마스터</option>
-              <option value="GRANDMASTER">그랜드마스터</option>
-              <option value="CHALLENGER">챌린저</option>
-            </select>
-          </div>
-        </div>
-        <!--                4행-->
-        <div class="row align-items-center mb-4">
-          <label class="col-3 fw-bold text-center">
-            포지션
-          </label>
-          <div class="col-9">
-            <p>
-              주로 플레이하는 포지션을 선택해주세요. (복수 선택 가능)
-            </p>
-            <div class="row g-3">
-              <div class="col">
-                <input type="checkbox" name="position" id="top" value="TOP" class="btn-check">
-                <label for="top" class="btn btn-outline-secondary w-100 py-3">
-                  탑
-                </label>
-              </div>
-              <div class="col">
-                <input type="checkbox" name="position" id="jungle" value="JUNGLE" class="btn-check">
-                <label for="jungle" class="btn btn-outline-secondary w-100 py-3">
-                  정글
-                </label>
-              </div>
-              <div class="col">
-                <input type="checkbox" name="position" id="mid" value="MID" class="btn-check">
-                <label for="mid" class="btn btn-outline-secondary w-100 py-3">
-                  미드
-                </label>
-              </div>
-              <div class="col">
-                <input type="checkbox" name="position" id="adc" value="ADC" class="btn-check">
-                <label for="adc" class="btn btn-outline-secondary w-100 py-3">
-                  원딜
-                </label>
-              </div>
-              <div class="col">
-                <input type="checkbox" name="position" id="sup" value="SUP" class="btn-check">
-                <label for="sup" class="btn btn-outline-secondary w-100 py-3">
-                  서포터
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--                5행 버튼-->
-        <div class="d-flex justify-content-center gap-4 mt-4">
-          <a th:href="@{/board/{gameId}(gameId=${game.id})}" class="btn btn-outline-secondary profile-button">
-            취소
-          </a>
-          <button type="submit" class="btn btn-orange profile-button">
-            프로필 등록
-          </button>
-        </div>
-      </form>
-    </div>
-  </section>
+    </section>
 </main>
 </body>
 </html>
