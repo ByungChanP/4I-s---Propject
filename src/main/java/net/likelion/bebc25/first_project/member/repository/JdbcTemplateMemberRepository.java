@@ -4,6 +4,7 @@ import net.likelion.bebc25.first_project.member.dto.MemberDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import tools.jackson.databind.ObjectMapper;
 
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
@@ -30,6 +31,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
      * 데이터베이스 ResultSet 데이터를 MemberDto 객체로 변환해주는 맵퍼 정의입니다.
      */
     private final RowMapper<MemberDto> memberRowMapper = (ResultSet rs, int rowNum) -> {
+        ObjectMapper objectMapper = new ObjectMapper();
         return MemberDto.builder()
                 .id(rs.getInt("id"))
                 .email(rs.getString("email"))
