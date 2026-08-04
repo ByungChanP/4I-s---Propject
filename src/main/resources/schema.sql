@@ -49,11 +49,11 @@ CREATE TABLE IF NOT EXISTS post
 
 CREATE TABLE IF NOT EXISTS participant_info
 (
-    id         INT AUTO_INCREMENT PRIMARY KEY,
-    member_id  INT REFERENCES member (id) ON DELETE RESTRICT,
-    post_id    INT REFERENCES post (id) ON DELETE CASCADE,
-    content    TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    id               INT AUTO_INCREMENT PRIMARY KEY,
+    post_id          INT REFERENCES post (id) ON DELETE CASCADE,
+    member_id        INT REFERENCES member (id) ON DELETE RESTRICT,
+    participant_info TEXT NOT NULL,
+    created_at       DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS ingame_info

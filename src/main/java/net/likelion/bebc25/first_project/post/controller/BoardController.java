@@ -7,9 +7,12 @@ import net.likelion.bebc25.first_project.game.service.GameService;
 import net.likelion.bebc25.first_project.member.dto.MemberDto;
 import net.likelion.bebc25.first_project.member.dto.SessionMemberDto;
 import net.likelion.bebc25.first_project.member.service.MemberService;
+import net.likelion.bebc25.first_project.party_registration.dto.PartyRegistrationDto;
+import net.likelion.bebc25.first_project.party_registration.service.PartyRegistrationService;
 import net.likelion.bebc25.first_project.post.dto.PostDto;
 import net.likelion.bebc25.first_project.post.service.PostService;
 import net.likelion.bebc25.first_project.user_game_info.InfoDto.InfoDto;
+import net.likelion.bebc25.first_project.user_game_info.InfoDto.IngameInfoDto;
 import net.likelion.bebc25.first_project.user_game_info.service.UserGameInfoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,15 +31,17 @@ public class BoardController {
     private final PostService postService;
     private final GameService gameService;
     private final MemberService memberService;
-    private final ObjectMapper objectMapper;
+    private final PartyRegistrationService partyRegistrationService;
     private final UserGameInfoService userGameInfoService;
+    private final ObjectMapper objectMapper;
 
-    public BoardController(PostService postService, GameService gameService, MemberService memberService, ObjectMapper objectMapper, UserGameInfoService userGameInfoService) {
+    public BoardController(PostService postService, GameService gameService, MemberService memberService, PartyRegistrationService partyRegistrationService, UserGameInfoService userGameInfoService, ObjectMapper objectMapper) {
         this.postService = postService;
         this.gameService = gameService;
         this.memberService = memberService;
-        this.objectMapper = objectMapper;
+        this.partyRegistrationService = partyRegistrationService;
         this.userGameInfoService = userGameInfoService;
+        this.objectMapper = objectMapper;
     }
 
     // 게시글 목록 조회
@@ -54,7 +59,9 @@ public class BoardController {
 
     // 게시글 상세 조회
     @GetMapping("/{gameId}/detail")
-    public String getDetail(@PathVariable("gameId") int gameId, @RequestParam int id, Model model) {
+    public String getDetail(
+            @PathVariable("gameId") int gameId, @RequestParam int id,
+            HttpSession session, Model model) {
         log.info("게시글 상세조회");
         PostDto post = postService.getPost(id);
         model.addAttribute("post", post);
@@ -67,7 +74,22 @@ public class BoardController {
 
         InfoDto authorIngameInfo = userGameInfoService.getInfo(gameId, post.getMemberId());
         model.addAttribute("authorIngameInfo", authorIngameInfo);
-        model.addAttribute("position", String.join(", ", authorIngameInfo.getIngame_info().getPosition()));
+        model.addAttribute("authorPosition", String.join(", ", authorIngameInfo.getIngame_info().getPosition()));
+
+        // 파티 참가자 목록 조회
+        // 현재 로그인한 사용자가 이 파티에 참가했는지 확인하는 로직 포함
+        List<PartyRegistrationDto> participantInfoList = partyRegistrationService.getRegistrations(post.getId());
+        boolean isParticipant = false;
+        SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
+        for (PartyRegistrationDto participant : participantInfoList) {
+            if (participant.getMemberId() == loginMember.getId()) {isParticipant = true;}
+            IngameInfoDto participantIngameInfo = objectMapper.readValue(participant.getParticipantInfoString(), IngameInfoDto.class);
+            participant.setParticipantInfo(participantIngameInfo);
+            participant.setMemberNickname(memberService.getMember(participant.getMemberId()).getNickname());
+            participant.setPosition(String.join(", ", participantIngameInfo.getPosition()));
+        }
+        model.addAttribute("isParticipant", isParticipant);
+        model.addAttribute("participants", participantInfoList);
 
         int remainTimeInMinute = (int) Duration.between(LocalDateTime.now(), post.getDeadline()).toMinutes();
         String remainTimeInString = String.format("%d시간 %d분 남음", remainTimeInMinute / 60, remainTimeInMinute % 60);
@@ -142,10 +164,21 @@ public class BoardController {
     }
 
     // 참가요청
-    @PostMapping("/*/request:join")
-    public String joinParty() {
-        log.info("파티 참가 신청");
-        return "redirect:/board/leagueoflegend/detail";
+    @PostMapping("/{gameId}/{postId}/join")
+    public String joinParty(
+            @PathVariable int gameId, @PathVariable int postId,
+            HttpSession session
+    ) {
+        SessionMemberDto sessionMember = (SessionMemberDto) session.getAttribute("loginMember");
+        InfoDto participantIngameInfo = userGameInfoService.getInfo(gameId, sessionMember.getId());
+
+        PartyRegistrationDto registration = new PartyRegistrationDto();
+        registration.setPostId(postId);
+        registration.setMemberId(sessionMember.getId());
+        registration.setParticipantInfoString(objectMapper.writeValueAsString(participantIngameInfo.getIngame_info()));
+
+        partyRegistrationService.register(registration);
+        return "redirect:/board/%d/detail?id=%d".formatted(gameId, postId);
     }
 
     // 참가 거부
