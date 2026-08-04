@@ -6,9 +6,6 @@ import net.likelion.bebc25.first_project.user_game_info.repository.UserGameInfoR
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-
-import java.util.List;
-
 @Service
 public class UserGameInfoServiceImpl implements UserGameInfoService {
 
@@ -35,7 +32,7 @@ public class UserGameInfoServiceImpl implements UserGameInfoService {
     }
 
     @Override
-    public List<InfoDto> getInfo(int game_iD, int member_id) {
-        return List.of();
+    public InfoDto getInfo(int game_iD, int member_id) {
+        return userGameInfoRepository.findByID(game_iD, member_id);
     }
 }
