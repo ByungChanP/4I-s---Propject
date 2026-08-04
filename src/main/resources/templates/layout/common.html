@@ -34,7 +34,7 @@
 <!--<section th:replace="~{layout/common :: intro}"></section>-->
 <section th:fragment="intro" class="container common-container d-flex justify-content-between align-items-center">
     <div class="d-flex align-items-center gap-4">
-        <img src="/images/lol/lol-banner.png" class="board-banner" width="200">
+        <img th:src="${game.backgroundImgDir}" class="board-banner" width="200">
         <div>
             <h3 class="fw-bold">
                 <span th:text="${game.gameTitle}">게임명</span>
