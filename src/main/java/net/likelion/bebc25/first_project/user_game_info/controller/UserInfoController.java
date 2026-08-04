@@ -1,11 +1,10 @@
 package net.likelion.bebc25.first_project.user_game_info.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import net.likelion.bebc25.first_project.game.dto.GameDto;
 import net.likelion.bebc25.first_project.game.service.GameService;
-import net.likelion.bebc25.first_project.member.dto.MemberDto;
 import net.likelion.bebc25.first_project.member.dto.SessionMemberDto;
-import net.likelion.bebc25.first_project.user_game_info.InfoDto.InfoDto;
 import net.likelion.bebc25.first_project.user_game_info.InfoDto.IngameInfoDto;
 import net.likelion.bebc25.first_project.user_game_info.service.UserGameInfoService;
 import org.springframework.stereotype.Controller;
@@ -34,22 +33,24 @@ public class UserInfoController {
         model.addAttribute("game", game);
         model.addAttribute("ingameInfoDto", new IngameInfoDto());
 
+
         return "member/profile";
     }
 
     @PostMapping("/{id}/profile")
     public String createProfile(
             @PathVariable int id,
-            @RequestParam("memberId") int memberId,
-            @ModelAttribute IngameInfoDto ingameInfoDto
-
+            @ModelAttribute IngameInfoDto ingameInfoDto,
+            HttpSession session
     ) {
+        SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
+        int memberId = loginMember.getId();
         userGameInfoService.register(
                 id,
                 memberId,
                 ingameInfoDto
         );
-        return "redirect:/board/" +  id;
+        return "redirect:/board/" + id;
     }
 
 }

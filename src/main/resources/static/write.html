@@ -64,6 +64,8 @@
           th:object="${postDto}"
           method="post">
 
+        <input type="hidden" th:field="*{gameId}">
+
         <div class="form-group">
             <label>모집유형 :</label>
 
