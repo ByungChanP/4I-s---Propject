@@ -1,5 +1,6 @@
 package net.likelion.bebc25.first_project.member.service;
 
+import lombok.extern.slf4j.Slf4j;
 import net.likelion.bebc25.first_project.exception.DuplicateUsernameException;
 import net.likelion.bebc25.first_project.member.dto.MemberDto;
 import net.likelion.bebc25.first_project.member.repository.MemberRepository;
@@ -14,6 +15,7 @@ import java.util.List;
  * MemberService 인터페이스의 비즈니스 로직을 처리하는 기본 구현 클래스입니다.
  */
 @Service
+@Slf4j
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
