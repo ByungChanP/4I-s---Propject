@@ -64,7 +64,7 @@ public class MemberController {
      * @param memberDto 회원 가입 폼 입력 데이터 DTO
      * @return 로그인 화면으로의 redirect 경로
      */
-    @PostMapping("/requset:register")
+    @PostMapping("/register")
     public String register(@Valid @ModelAttribute("memberForm") MemberDto memberDto  // Validation 검증 대상 객체
             , BindingResult bindingResult) { // Validation 검증 결과 저장 객체(대상 객체 뒤에 기술해야 함)
         // 실습 영역
@@ -78,7 +78,7 @@ public class MemberController {
             // username 이 중복되는 예외 발생 시 username 필드 에러로 바인딩
             // rejectValue(에러가 발생한 필드, 에러코드, 기본 에러메세지)
             // 에러코드: 메세지 설정파일(errors.properties, messages.properties)에 정의한 키값(없을 경우 세번째 에러메세지로 대체됨)
-            bindingResult.rejectValue("username", "duplicate", e.getMessage());
+            bindingResult.rejectValue("email", "duplicate", e.getMessage());
             return "member/register";
         }
 
@@ -131,9 +131,9 @@ public class MemberController {
         System.out.println(">>> 4. 로그인 성공! 세션 생성 중... " + memberInfo.getEmail());
         SessionMemberDto sessionMember = new SessionMemberDto(memberInfo);
         session.setAttribute("loginMember", sessionMember);
-        System.out.println(">>> 5. /member/list 로 리다이렉트 실행");
+        System.out.println(">>> 5. /main 으로 리다이렉트 실행");
 
-        return "redirect:/";
+        return "redirect:/main";
     }
 
     @PostMapping("/logout")
