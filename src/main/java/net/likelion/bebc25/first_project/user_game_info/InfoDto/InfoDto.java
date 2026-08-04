@@ -1,4 +1,4 @@
-package net.likelion.bebc25.first_project.user_game_info.dto;
+package net.likelion.bebc25.first_project.user_game_info.InfoDto;
 
 
 import jakarta.validation.constraints.NotNull;
@@ -33,5 +33,6 @@ public class InfoDto {
     private int member_id;
 
 
-    private String ingame_info;
+    @NotNull
+    private IngameInfoDto ingame_info;
 }
