@@ -33,6 +33,6 @@ public class InfoDto {
     private int member_id;
 
 
-    @NotNull
+
     private IngameInfoDto ingame_info;
 }
