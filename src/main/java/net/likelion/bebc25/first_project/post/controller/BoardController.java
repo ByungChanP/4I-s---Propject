@@ -144,11 +144,4 @@ public class BoardController {
         log.info("참가거부");
         return "redirect:/board/leagueoflegend/detail";
     }
-
-    // 평점 제출
-    @PostMapping("/*/request:rating")
-    public String rating() {
-        log.info("별점 제출");
-        return "redirect:/board/leagueoflegend/detail";
-    }
 }
