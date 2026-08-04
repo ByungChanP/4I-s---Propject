@@ -72,7 +72,7 @@
                                     마감
                                 </option>
                             </select>
-                            <a th:href="@{./1/write_post}" class="btn btn-orange">
+                            <a th:href="@{./{gameId}/write(gameId=${game.id})}" class="btn btn-orange">
                                 글쓰기
                             </a>
                         </div>
@@ -92,7 +92,8 @@
                         <tbody>
                         <tr th:each="post : ${posts}">
                             <td>
-                                <a th:href="@{./${game.gameTitle}/detail(id=${post.id})}" th:text="${post.title}"
+                                <a th:href="@{./{gameId}/detail(id=${post.id}, gameId=${game.id})}"
+                                   th:text="${post.title}"
                                    class="text-decoration-none text-dark fw-semibold">
                                     제목(예시: 다이아 이상 파티원 모집합니다~)
                                 </a>

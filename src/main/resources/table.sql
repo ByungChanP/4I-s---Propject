@@ -1,8 +1,15 @@
+-- 1. 외래키 제약 조건 일시 해제
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- 2. 테이블 삭제 (순서에 상관없이 에러 없이 삭제됨)
 DROP TABLE IF EXISTS participant_info;
 DROP TABLE IF EXISTS post;
 DROP TABLE IF EXISTS ingame_info;
 DROP TABLE IF EXISTS game;
 DROP TABLE IF EXISTS member;
+
+-- 3. 외래키 제약 조건 재활성화 (필수)
+SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE IF NOT EXISTS game
 (
@@ -34,7 +41,7 @@ CREATE TABLE IF NOT EXISTS post
     restrictions      TEXT,
     title             VARCHAR(30) NOT NULL,
     content           TEXT        NOT NULL,
-    max_count         INT      DEFAULT 0,
+    max_count         INT      DEFAULT 1,
     participant_count INT      DEFAULT 1,
     deadline          DATETIME    NOT NULL,
     is_closed         BOOLEAN  DEFAULT FALSE,
