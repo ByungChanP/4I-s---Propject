@@ -197,5 +197,4 @@ public class MemberController {
         return "member/profile";
     }
 
-
 }
