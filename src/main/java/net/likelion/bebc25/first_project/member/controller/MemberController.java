@@ -139,7 +139,8 @@ public class MemberController {
     @PostMapping("/logout")
     public String logout(HttpSession httpSession) {
         httpSession.invalidate();   // 세션 파기
-        return "redirect:/";
+        log.info("로그아웃 실행");
+        return "redirect:/main";
     }
 
     /**
