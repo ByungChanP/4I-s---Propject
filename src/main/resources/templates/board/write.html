@@ -15,7 +15,7 @@
 <main class="px-4 py-4">
     <section th:replace="~{layout/common :: intro}"></section>
     <!-- 모집 유형 -->
-    <form th:action="@{/board/{gameId}/request(gameId=${game.id})}"
+    <form th:action="@{/board/{gameId}/write(gameId=${game.id})}"
           th:object="${postDto}"
           method="post">
 
@@ -54,7 +54,7 @@
         <div class="form-group">
             <label>인게임 랭크 :</label>
 
-            <select th:field="*{minRank}">
+            <select th:field="*{restriction[0]}">
                 <option value="iron">아이언</option>
                 <option value="bronze">브론즈</option>
                 <option value="silver">실버</option>
@@ -68,7 +68,7 @@
             </select>
             이상
 
-            <select th:field="*{maxRank}">
+            <select th:field="*{restriction[1]}">
                 <option value="iron">아이언</option>
                 <option value="bronze">브론즈</option>
                 <option value="silver">실버</option>
@@ -125,8 +125,10 @@
 
         <!-- 취소 및 확인 -->
         <div class="button-group">
-            <a th:href="@{/board/leagueoflegend}">취소</a>
             <button type="submit">등록</button>
+            <a th:href="@{/board/{gameId}(gameId=${gameId})}">
+                <button type="button">취소</button>
+            </a>
         </div>
     </form>
 </main>

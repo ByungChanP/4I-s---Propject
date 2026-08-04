@@ -16,13 +16,13 @@ erDiagram
     MEMBER ||--o{ PARTICIPANT-INFO : writes
     POST ||--o{ PARTICIPANT-INFO : contains
     GAME ||--o{ POST : contains
-    GAME ||--o{ IN_GAME_INFO : contains
-    MEMBER ||--o{ IN_GAME_INFO : contains
+    GAME ||--o{ INGAME_INFO : contains
+    MEMBER ||--o{ INGAME_INFO : contains
 
     MEMBER {
         int id PK
         varchar_50 email
-        varchar_20 password
+        varchar_20 pw
         varchar_20 nickname
         datetime created_at
         text profile_img_dir
@@ -76,7 +76,7 @@ erDiagram
 ### 1.2.1 member (회원 테이블)
 - id: INT, PRIMARY KEY, AUTO_INCREMENT (회원 고유 식별자)
 - email: VARCHAR(50), NOT NULL (이메일 아이디)
-- password: VARCHAR(20), NOT NULL (비밀번호)
+- pw: VARCHAR(20), NOT NULL (비밀번호)
 - nickname: VARCHAR(20), NOT NULL (닉네임)
 - created_at: DATETIME, DEFAULT CURRENT_TIMESTAMP (가입 일시)
 - profile_img_dir: text (프로필 이미지 경로)
@@ -86,6 +86,8 @@ erDiagram
 - member_id: INT, FOREIGN KEY, NOT NULL (작성자 회원 식별자)
 - game_id: INT. FOREIGN KEY, NOT NULL (게임 식별자)
 - tag: varchar(10), NOT NULL (카테고리)
+- min_rank: VARCHAR(15), NOT NULL (모집 조건)
+- max_rank: VARCHAR(15), NOT NULL (모집 조건)
 - restrictions : text (제한 조건)
 - title: VARCHAR(30), NOT NULL (게시글 제목)
 - content: TEXT, NOT NULL (게시글 본문)
@@ -113,7 +115,7 @@ erDiagram
 - id: INT, PRIMARY KEY, AUTO_INCREMENT (인게임 정보 테이블 고유 식별자)
 - member_id: INT, FOREIGN KEY, NOT NULL (작성자 회원 식별자)
 - game_id: INT. FOREIGN KEY, NOT NULL (게임 식별자)
-- ingame_info: JSON
+- ingame_info: text (유저 인게임 정보)
 
 ---
 
@@ -123,11 +125,11 @@ erDiagram
 CREATE TABLE IF NOT EXISTS member
 (
     id              int AUTO_INCREMENT PRIMARY KEY,
-    email           VARCHAR(50) NOT NULL,
-    pw              VARCHAR(20) NOT NULL,
-    nickname        VARCHAR(20) NOT NULL,
-    created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
-    profile_img_dir TEXT
+    email           VARCHAR(50) UNIQUE NOT NULL,
+    pw              VARCHAR(20)        NOT NULL,
+    nickname        VARCHAR(20) UNIQUE NOT NULL,
+    created_at      DATETIME     DEFAULT CURRENT_TIMESTAMP,
+    profile_img_dir VARCHAR(255) DEFAULT '/images/icon/person-circle.svg'
 );
 
 CREATE TABLE IF NOT EXISTS post
@@ -136,32 +138,36 @@ CREATE TABLE IF NOT EXISTS post
     game_id           INT REFERENCES game (id) ON DELETE CASCADE,
     member_id         INT REFERENCES member (id) ON DELETE RESTRICT,
     tag               VARCHAR(10) NOT NULL,
+    min_rank          VARCHAR(15) NOT NULL,
+    max_rank          VARCHAR(15) NOT NULL,
     restrictions      TEXT,
     title             VARCHAR(30) NOT NULL,
     content           TEXT        NOT NULL,
-    max_count         INT      DEFAULT 0,
+    max_count         INT      DEFAULT 1,
     participant_count INT      DEFAULT 1,
     deadline          DATETIME    NOT NULL,
-    created_at        DATETIME DEFAULT CURRENT_TIMESTAMP,
-    is_closed          BOOLEAN     NOT NULL
-);
+    is_closed         BOOLEAN  DEFAULT FALSE,
+    created_at        DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
 
-CREATE TABLE IF NOT EXISTS PARTICIPANT_INFO (
+CREATE TABLE IF NOT EXISTS participant_info
+(
     id         INT AUTO_INCREMENT PRIMARY KEY,
-    member_id  VARCHAR(20) REFERENCES member (id) ON DELETE RESTRICT,
+    member_id  INT REFERENCES member (id) ON DELETE RESTRICT,
     post_id    INT REFERENCES post (id) ON DELETE CASCADE,
     content    TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-)
+);
+
 
 CREATE TABLE IF NOT EXISTS game
 (
-    id                 INT PRIMARY KEY,
-    game_title               VARCHAR(50) UNIQUE NOT NULL,
+    id                 INT AUTO_INCREMENT PRIMARY KEY,
+    game_title         VARCHAR(50) UNIQUE NOT NULL,
     background_img_dir TEXT,
     game_logo_dir      TEXT,
     detail             TEXT
-)
+ );
 
 CREATE TABLE IF NOT EXISTS ingame_info
 (

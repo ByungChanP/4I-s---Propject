@@ -12,7 +12,7 @@ header {
     background-color: white;
 }
 
-.user-menu{
+.user-menu {
     display: flex;
     align-items: center;
     gap: 15px;
@@ -33,7 +33,7 @@ header {
     gap: 5%;
 }
 
-form {
+main > form {
     margin: 20px 5%;
     padding: 20px;
     background-color: white;

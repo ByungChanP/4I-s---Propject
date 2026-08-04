@@ -1,15 +1,18 @@
 package net.likelion.bebc25.first_project.post.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import net.likelion.bebc25.first_project.game.dto.GameDto;
 import net.likelion.bebc25.first_project.game.service.GameService;
 import net.likelion.bebc25.first_project.member.dto.MemberDto;
+import net.likelion.bebc25.first_project.member.dto.SessionMemberDto;
 import net.likelion.bebc25.first_project.member.service.MemberService;
 import net.likelion.bebc25.first_project.post.dto.PostDto;
 import net.likelion.bebc25.first_project.post.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import tools.jackson.databind.ObjectMapper;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -23,11 +26,13 @@ public class BoardController {
     private final PostService postService;
     private final GameService gameService;
     private final MemberService memberService;
+    private final ObjectMapper objectMapper;
 
-    public BoardController(PostService postService, GameService gameService, MemberService memberService) {
+    public BoardController(PostService postService, GameService gameService, MemberService memberService, ObjectMapper objectMapper) {
         this.postService = postService;
         this.gameService = gameService;
         this.memberService = memberService;
+        this.objectMapper = objectMapper;
     }
 
     // 게시글 목록 조회
@@ -88,12 +93,16 @@ public class BoardController {
     }
 
     // 게시글 등록 요청
-    @PostMapping("/{gameId}/request")
+    @PostMapping("/{gameId}/write")
     public String writePost(
             @PathVariable int gameId,
-            @ModelAttribute PostDto postDto
+            @ModelAttribute PostDto postDto,
+            HttpSession session
     ) {
-        log.info("postDto = {}", postDto);
+        SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
+        postDto.setMemberId(loginMember.getId());
+        String restriction = objectMapper.writeValueAsString(postDto.getRestriction());
+        postDto.setRestrictionString(restriction);
         postService.writePost(postDto);
         return "redirect:/board/" + gameId;
     }
@@ -102,8 +111,7 @@ public class BoardController {
     @PostMapping("/{gameId}/edit")
     public String editPost(@PathVariable int gameId,
                            @ModelAttribute PostDto postDto) {
-            log.info("postDto = {}", postDto);
-            postService.editPost(postDto);
+        postService.editPost(postDto);
         return "redirect:/board/" + gameId + "/detail?id=" + postDto.getId();
     }
 
@@ -134,13 +142,6 @@ public class BoardController {
     @PostMapping("/*/request:refuse")
     public String refuseParticipant() {
         log.info("참가거부");
-        return "redirect:/board/leagueoflegend/detail";
-    }
-
-    // 평점 제출
-    @PostMapping("/*/request:rating")
-    public String rating() {
-        log.info("별점 제출");
         return "redirect:/board/leagueoflegend/detail";
     }
 }
