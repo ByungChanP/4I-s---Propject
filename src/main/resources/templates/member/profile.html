@@ -15,17 +15,16 @@
   <section class="container">
     <!--        form에 css적용하기 위한 div-->
     <div class="bg-white rounded shadow-sm p-5 mt-4">
-      <form action="" method="post">
-<!--        세션의 유저 id 받는 방법 feat 병호님 ㅁ-->
-        <input type="hidden" name="memberId" value="">
+      <form th:action="@{/board/{gameId}/profile(gameId=${game.id})}" th:object="${ingameInfoDto}" method="post">
+
                 <!--                바로 다음 라인 div form의 '행' 에 해당-->
         <!--                1행-->
         <div class="row align-items-center mb-4">
-          <label for="gameNickname" class="col-3 fw-bold text-center">
+          <label for="nickname" class="col-3 fw-bold text-center">
             닉네임
           </label>
           <div class="col-9">
-            <input type="text" name="gameNickname" id="gameNickname" placeholder="인게임 닉네임을 입력해주세요"
+            <input type="text" th:field="*{nickname}" id="nickname" placeholder="인게임 닉네임을 입력해주세요"
                    class="form-control form-control-lg">
           </div>
         </div>
@@ -35,7 +34,7 @@
             레벨
           </label>
           <div class="col-9">
-            <input type="text" name="level" id="level" placeholder="예) 123"
+            <input type="text" th:field="*{level}" id="level" placeholder="예) 123"
                    class="form-control form-control-lg">
           </div>
         </div>
@@ -45,7 +44,7 @@
             랭크
           </label>
           <div class="col-9">
-            <select name="rank" id="rank" class="form-select form-select-lg">
+            <select th:field="*{rank}" id="rank" class="form-select form-select-lg">
               <option value="" selected disabled>
                 랭크를 선택해주세요
               </option>
@@ -65,7 +64,7 @@
         </div>
         <!--                4행-->
         <div class="row align-items-center mb-4">
-          <label for="gameNickname" class="col-3 fw-bold text-center">
+          <label class="col-3 fw-bold text-center">
             포지션
           </label>
           <div class="col-9">
@@ -108,7 +107,7 @@
         </div>
         <!--                5행 버튼-->
         <div class="d-flex justify-content-center gap-4 mt-4">
-          <a href="" class="btn btn-outline-secondary profile-button">
+          <a th:href="@{/board/{gameId}(gameId=${game.id})}" class="btn btn-outline-secondary profile-button">
             취소
           </a>
           <button type="submit" class="btn btn-orange profile-button">
