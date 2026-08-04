@@ -1,6 +1,5 @@
 package net.likelion.bebc25.first_project.user_game_info.repository;
-
-import net.likelion.bebc25.first_project.user_game_info.dto.InfoDto;
+import net.likelion.bebc25.first_project.user_game_info.InfoDto.InfoDto;
 
 import java.util.List;
 

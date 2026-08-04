@@ -1,11 +1,12 @@
 package net.likelion.bebc25.first_project.user_game_info.repository;
 
-import net.likelion.bebc25.first_project.user_game_info.dto.InfoDto;
+import net.likelion.bebc25.first_project.user_game_info.InfoDto.InfoDto;
+import net.likelion.bebc25.first_project.user_game_info.InfoDto.IngameInfoDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import tools.jackson.databind.ObjectMapper;
 
-import java.sql.ResultSet;
 import java.util.List;
 
 /**
@@ -15,38 +16,46 @@ import java.util.List;
 public class JdbcTemplateUserGameInfoRepository implements UserGameInfoRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final ObjectMapper objectMapper;
 
-    /**
-     * 생성자를 통해 의존하는 JdbcTemplate을 주입받습니다.
-     *
-     * @param jdbcTemplate 스프링 빈으로 등록된 JdbcTemplate 객체
-     */
-    public JdbcTemplateUserGameInfoRepository(JdbcTemplate jdbcTemplate) {
+    public JdbcTemplateUserGameInfoRepository(JdbcTemplate jdbcTemplate, ObjectMapper objectMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.objectMapper = objectMapper;
     }
 
-    /**
-     * 데이터베이스 ResultSet 데이터를 MemberDto 객체로 변환해주는 맵퍼 정의입니다.
-     */
-    private final RowMapper<InfoDto> UserRowMapper = (ResultSet rs, int rowNum) -> {
-        return InfoDto.builder()
-                .id(rs.getInt("id"))
-                .game_id(rs.getInt("game_id"))
-                .member_id(rs.getInt("member_id"))
-                .ingame_info(rs.getString("ingame_info"))
-                .build();
-    };
+    private RowMapper<InfoDto> userRowMapper() {
+        return (rs, rowNum) -> {
+            String json = rs.getString("ingame_info");
 
-    /**
-     * 프로필 정보 저장하는 메서드
-     * @param info 저장할 인게임 정보  DTO
-     */
+            IngameInfoDto ingameInfoDto;
+
+            try {
+                ingameInfoDto = objectMapper.readValue(json, IngameInfoDto.class);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+            return InfoDto.builder()
+                    .id(rs.getInt("id"))
+                    .game_id(rs.getInt("game_id"))
+                    .member_id(rs.getInt("member_id"))
+                    .ingame_info(ingameInfoDto)
+                    .build();
+        };
+    }
+
     @Override
     public void save(InfoDto info) {
-        jdbcTemplate.update("INSERT INTO ingame_info (game_id, member_id, ingame_info) VALUES (?,?,?)"
-                , info.getGame_id()
-                , info.getMember_id()
-                , info.getIngame_info());
+        try {
+            String ingameInfoJson = objectMapper.writeValueAsString(info.getIngame_info());
+            jdbcTemplate.update("INSERT INTO ingame_info (game_id, member_id, ingame_info) VALUES (?,?,?)"
+                    , info.getGame_id()
+                    , info.getMember_id()
+                    , ingameInfoJson);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
