@@ -83,20 +83,21 @@ public class BoardController {
     }
 
     // 게시글 등록 요청
-    @PostMapping("/*/request:post")
-    public String writePost(@ModelAttribute PostDto postDto) {
-
+    @PostMapping("/{gameId}/request")
+    public String writePost(
+            @PathVariable int gameId,
+            @ModelAttribute PostDto postDto
+    ) {
         log.info("postDto = {}", postDto);
         postService.writePost(postDto);
-
-        return "redirect:/board/leagueoflegend";
+        return "redirect:/board/" + gameId;
     }
 
     // 게시글 수정 요청
     @PostMapping("/*/request:edit_post")
     public String editPost() {
         log.info("게시글 수정요청");
-        return "redirect:/board/leagueoflegend";
+        return "redirect:/board/{gameId}";
     }
 
     // 게시글 삭제 요청
