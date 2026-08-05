@@ -37,20 +37,21 @@ public class UserInfoController {
         return "member/profile";
     }
 
-    @PostMapping("/{id}/profile")
+    @PostMapping("/{gameId}/profile")
     public String createProfile(
-            @PathVariable int id,
+            @PathVariable int gameId,
             @ModelAttribute IngameInfoDto ingameInfoDto,
             HttpSession session
     ) {
         SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
         int memberId = loginMember.getId();
+        log.info("gameId = " + gameId);
         userGameInfoService.register(
-                id,
                 memberId,
+                gameId,
                 ingameInfoDto
         );
-        return "redirect:/board/" + id;
+        return "redirect:/board/" + gameId;
     }
 
 }
