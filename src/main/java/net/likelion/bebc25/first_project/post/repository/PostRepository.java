@@ -15,6 +15,8 @@ public interface PostRepository {
 
     void update(PostDto post);
 
+    void updateParticipantCount(int postId, String calcType);
+
     void close(int postId);
 
     void checkDeadline(int id);

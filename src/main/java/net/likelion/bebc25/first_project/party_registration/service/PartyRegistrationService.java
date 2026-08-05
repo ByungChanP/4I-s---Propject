@@ -8,7 +8,7 @@ public interface PartyRegistrationService {
     // 파티참가 신청정보 등록
     void register(PartyRegistrationDto registration);
 
-    void delete(int id);
+    void delete(int registrationId, int postId);
 
     List<PartyRegistrationDto> getRegistrations(int postId);
 }

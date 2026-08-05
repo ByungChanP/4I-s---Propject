@@ -89,6 +89,19 @@ public class JdbcTemplatePostRepository implements PostRepository {
     }
 
     @Override
+    public void updateParticipantCount(int postId, String calcType) {
+        PostDto post = findById(postId);
+        int updatedValue = 0;
+        if (calcType.equals("add")) {updatedValue = 1;}
+        if (calcType.equals("remove")) {updatedValue = -1;}
+        int updatedParticipantCount = post.getParticipantCount() + updatedValue;
+        jdbcTemplate.update("UPDATE post SET participant_count = ? WHERE id = ?", updatedParticipantCount, postId);
+        if (updatedParticipantCount == post.getMaxParticipantCount()) {
+            jdbcTemplate.update("UPDATE post SET is_closed = true WHERE id = ?", postId);
+        }
+    }
+
+    @Override
     public void close(int postId) {
         jdbcTemplate.update("UPDATE post SET is_closed = true WHERE id = ?", postId);
     }
