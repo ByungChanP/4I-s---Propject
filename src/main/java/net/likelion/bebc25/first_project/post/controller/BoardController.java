@@ -60,6 +60,10 @@ public class BoardController {
         }
     }
 
+    private boolean checkLogin(SessionMemberDto loginMember) {
+        return loginMember != null;
+    }
+
     @GetMapping("/{Id}")
     public String getPosts(
             @PathVariable("Id") int gameId,
@@ -91,16 +95,8 @@ public class BoardController {
 
 
         SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
-        if (loginMember != null) {
-            model.addAttribute("ingameProfileExist", checkIngameProfileExist(gameId, loginMember));
-            model.addAttribute("isLogin", true);
-            log.info("isLogin >>> " + true);
-        }
-        else {
-            model.addAttribute("ingameProfileExist", checkIngameProfileExist(gameId, loginMember));
-            model.addAttribute("isLogin", false);
-            log.info("isLogin >>> " + false);
-        }
+        model.addAttribute("ingameProfileExist", checkIngameProfileExist(gameId, loginMember));
+        model.addAttribute("isLogin", checkLogin(loginMember));
 
 
         return "board/list";
@@ -142,7 +138,10 @@ public class BoardController {
         }
         model.addAttribute("isParticipant", isParticipant);
         model.addAttribute("participants", participantInfoList);
+
         model.addAttribute("ingameProfileExist", checkIngameProfileExist(gameId, loginMember));
+        model.addAttribute("isLogin", checkLogin(loginMember));
+
 
         String remainTime = calcRemainTime(post);
         model.addAttribute("remainTime", remainTime);
@@ -163,6 +162,7 @@ public class BoardController {
             return "redirect:/board/%d/profile".formatted(gameId);
         }
         model.addAttribute("ingameProfileExist", checkIngameProfileExist(gameId, loginMember));
+        model.addAttribute("isLogin", true);
 
         PostDto postDto = new PostDto();
         postDto.setGameId(gameId);
@@ -186,6 +186,7 @@ public class BoardController {
 
         SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
         model.addAttribute("ingameProfileExist", checkIngameProfileExist(gameId, loginMember));
+        model.addAttribute("isLogin", true);
         return "board/edit";
     }
 
@@ -197,6 +198,7 @@ public class BoardController {
             HttpSession session
     ) {
         SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
+
         postDto.setMemberId(loginMember.getId());
         String restriction = objectMapper.writeValueAsString(postDto.getRestriction());
         postDto.setRestrictionString(restriction);
