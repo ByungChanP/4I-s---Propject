@@ -21,8 +21,8 @@ public class PartyRegistrationServiceImpl implements PartyRegistrationService {
     }
 
     @Override
-    public void delete(int id) {
-
+    public void delete(int registrationId) {
+        partyRegistrationRepository.remove(registrationId);
     }
 
     @Override

@@ -96,7 +96,9 @@
                     <td th:text="${participant.participantInfo.rank}">실버</td>
                     <td th:text="${participant.position}">정글</td>
                     <td>
-                        <form th:if="${!post.isClosed()}" action="./request:refuse" method="post">
+                        <form th:if="${!post.isClosed() and (session.loginMember.id == participant.memberId or session.loginMember.id == post.memberId)}"
+                              th:action="@{/board/{gameId}/{postId}/refuse/{registrationId}(gameId=${game.id}, postId=${post.id}, registrationId=${participant.id})}"
+                              method="post">
                             <button class="btn refuse">x</button>
                         </form>
                     </td>

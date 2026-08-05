@@ -211,9 +211,11 @@ public class BoardController {
     }
 
     // 참가 거부
-    @PostMapping("/*/request:refuse")
-    public String refuseParticipant() {
-        log.info("참가거부");
-        return "redirect:/board/leagueoflegend/detail";
+    @PostMapping("/{gameId}/{postId}/refuse/{registrationId}")
+    public String refuseParticipant(
+            @PathVariable int gameId, @PathVariable int postId, @PathVariable int registrationId
+    ) {
+        partyRegistrationService.delete(registrationId);
+        return "redirect:/board/%d/detail?id=%d".formatted(gameId, postId);
     }
 }
