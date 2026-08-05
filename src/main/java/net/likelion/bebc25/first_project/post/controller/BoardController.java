@@ -14,6 +14,7 @@ import net.likelion.bebc25.first_project.post.service.PostService;
 import net.likelion.bebc25.first_project.user_game_info.InfoDto.InfoDto;
 import net.likelion.bebc25.first_project.user_game_info.InfoDto.LolIngameInfoDto;
 import net.likelion.bebc25.first_project.user_game_info.service.UserGameInfoService;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -131,8 +132,15 @@ public class BoardController {
     @GetMapping("/{gameId}/write")
     public String getWriteForm(
             @PathVariable("gameId") int gameId,
-            Model model
+            HttpSession session, Model model
     ) {
+        SessionMemberDto sessionMember = (SessionMemberDto) session.getAttribute("loginMember");
+        try {
+            userGameInfoService.getInfo(gameId, sessionMember.getId());
+        } catch (EmptyResultDataAccessException e) {
+            return "redirect:/board/%d/profile".formatted(gameId);
+        }
+
         PostDto postDto = new PostDto();
         postDto.setGameId(gameId);
         model.addAttribute("postDto", postDto);
