@@ -12,7 +12,7 @@ import net.likelion.bebc25.first_project.party_registration.service.PartyRegistr
 import net.likelion.bebc25.first_project.post.dto.PostDto;
 import net.likelion.bebc25.first_project.post.service.PostService;
 import net.likelion.bebc25.first_project.user_game_info.InfoDto.InfoDto;
-import net.likelion.bebc25.first_project.user_game_info.InfoDto.IngameInfoDto;
+import net.likelion.bebc25.first_project.user_game_info.InfoDto.LolIngameInfoDto;
 import net.likelion.bebc25.first_project.user_game_info.service.UserGameInfoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,30 +57,31 @@ public class BoardController {
 //        return "board/list";
 //    }
 
-@GetMapping("/{Id}")
-public String getPosts(
-        @PathVariable("Id") int gameId,
-        @RequestParam(required = false) String tag,
-        Model model) {
+    @GetMapping("/{Id}")
+    public String getPosts(
+            @PathVariable("Id") int gameId,
+            @RequestParam(required = false) String tag,
+            Model model) {
 
-    log.info(">>>> [요청 들어옴] gameId: {}, 수신된 tag: '{}'", gameId, tag);
-    List<PostDto> posts;
+        log.info(">>>> [요청 들어옴] gameId: {}, 수신된 tag: '{}'", gameId, tag);
+        List<PostDto> posts;
 
-    // tag가 없거나, 빈값이거나, "all"인 경우는 전체 조회
-    if (tag == null || tag.trim().isEmpty() || "all".equalsIgnoreCase(tag)) {
-        posts = postService.getPosts(gameId);
-    } else {
-        posts = postService.getPosts(gameId, tag);
+        // tag가 없거나, 빈값이거나, "all"인 경우는 전체 조회
+        if (tag == null || tag.trim().isEmpty() || "all".equalsIgnoreCase(tag)) {
+            posts = postService.getPosts(gameId);
+        }
+        else {
+            posts = postService.getPosts(gameId, tag);
+        }
+        log.info(">>>> 조회된 게시글 개수: {}개", posts.size());
+        model.addAttribute("posts", posts);
+        model.addAttribute("tag", tag);
+
+        GameDto game = gameService.getGame(gameId);
+        model.addAttribute("game", game);
+
+        return "board/list";
     }
-    log.info(">>>> 조회된 게시글 개수: {}개", posts.size());
-    model.addAttribute("posts", posts);
-    model.addAttribute("tag", tag);
-
-    GameDto game = gameService.getGame(gameId);
-    model.addAttribute("game", game);
-
-    return "board/list";
-}
 
     // 게시글 상세 조회
     @GetMapping("/{gameId}/detail")
@@ -99,7 +100,10 @@ public String getPosts(
 
         InfoDto authorIngameInfo = userGameInfoService.getInfo(gameId, post.getMemberId());
         model.addAttribute("authorIngameInfo", authorIngameInfo);
-        model.addAttribute("authorPosition", String.join(", ", authorIngameInfo.getIngame_info().getPosition()));
+        if (gameId == 1) {
+            model.addAttribute("authorPosition", String.join(", ", authorIngameInfo.getLolIngameInfo().getPosition()));
+        }
+
 
         // 파티 참가자 목록 조회
         // 현재 로그인한 사용자가 이 파티에 참가했는지 확인하는 로직 포함
@@ -108,7 +112,7 @@ public String getPosts(
         SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
         for (PartyRegistrationDto participant : participantInfoList) {
             if (participant.getMemberId() == loginMember.getId()) {isParticipant = true;}
-            IngameInfoDto participantIngameInfo = objectMapper.readValue(participant.getParticipantInfoString(), IngameInfoDto.class);
+            LolIngameInfoDto participantIngameInfo = objectMapper.readValue(participant.getParticipantInfoString(), LolIngameInfoDto.class);
             participant.setParticipantInfo(participantIngameInfo);
             participant.setMemberNickname(memberService.getMember(participant.getMemberId()).getNickname());
             participant.setPosition(String.join(", ", participantIngameInfo.getPosition()));
@@ -200,7 +204,7 @@ public String getPosts(
         PartyRegistrationDto registration = new PartyRegistrationDto();
         registration.setPostId(postId);
         registration.setMemberId(sessionMember.getId());
-        registration.setParticipantInfoString(objectMapper.writeValueAsString(participantIngameInfo.getIngame_info()));
+        registration.setParticipantInfoString(objectMapper.writeValueAsString(participantIngameInfo.getLolIngameInfo()));
 
         partyRegistrationService.register(registration);
         return "redirect:/board/%d/detail?id=%d".formatted(gameId, postId);

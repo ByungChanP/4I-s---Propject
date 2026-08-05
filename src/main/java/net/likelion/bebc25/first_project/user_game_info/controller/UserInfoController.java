@@ -5,8 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.likelion.bebc25.first_project.game.dto.GameDto;
 import net.likelion.bebc25.first_project.game.service.GameService;
 import net.likelion.bebc25.first_project.member.dto.SessionMemberDto;
-import net.likelion.bebc25.first_project.user_game_info.InfoDto.IngameInfoDto;
-import net.likelion.bebc25.first_project.user_game_info.InfoDto.LostarkInfoDto;
+import net.likelion.bebc25.first_project.user_game_info.InfoDto.LolIngameInfoDto;
 import net.likelion.bebc25.first_project.user_game_info.InfoDto.LostarkIngameInfoDto;
 import net.likelion.bebc25.first_project.user_game_info.service.UserGameInfoService;
 import org.springframework.stereotype.Controller;
@@ -48,17 +47,17 @@ public class UserInfoController {
 
         if (gameId == 1) {
 
-            IngameInfoDto lolDto =
-                    (IngameInfoDto) ingameInfoDto;
+            LolIngameInfoDto lolDto =
+                    (LolIngameInfoDto) ingameInfoDto;
 
             userGameInfoService.register(
                     memberId,
                     gameId,
                     lolDto
-
             );
 
-        } else if (gameId == 2) {
+        }
+        else if (gameId == 2) {
 
             LostarkIngameInfoDto lostarkDto =
                     (LostarkIngameInfoDto) ingameInfoDto;
@@ -78,7 +77,7 @@ public class UserInfoController {
     ) {
 
         if (gameId == 1) {
-            return new IngameInfoDto();
+            return new LolIngameInfoDto();
         }
 
         if (gameId == 2) {

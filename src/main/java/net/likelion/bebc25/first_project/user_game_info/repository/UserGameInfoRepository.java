@@ -1,6 +1,4 @@
 package net.likelion.bebc25.first_project.user_game_info.repository;
-import net.likelion.bebc25.first_project.user_game_info.InfoDto.InfoDto;
-import net.likelion.bebc25.first_project.user_game_info.InfoDto.LostarkInfoDto;
 
 import net.likelion.bebc25.first_project.user_game_info.InfoDto.InfoDto;
 
@@ -13,8 +11,7 @@ public interface UserGameInfoRepository {
      * @param gameInfo 저장할 인게임 정보  DTO
      */
     void save(InfoDto gameInfo);
-    void save(LostarkInfoDto gameInfo);
-
+    
     /**
      * 기존 인게임 정보를 수정합니다
      *

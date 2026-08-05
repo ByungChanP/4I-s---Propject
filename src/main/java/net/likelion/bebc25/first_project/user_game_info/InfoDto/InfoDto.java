@@ -33,6 +33,14 @@ public class InfoDto {
     private int member_id;
 
 
+    private IngameInfoDto lolIngameInfo;
+    private IngameInfoDto lostarkIngameInfo;
 
-    private IngameInfoDto ingame_info;
+    public LolIngameInfoDto getLolIngameInfo() {
+        return (LolIngameInfoDto) lolIngameInfo;
+    }
+
+    public LostarkIngameInfoDto getLostarkInfoDto() {
+        return (LostarkIngameInfoDto) lostarkIngameInfo;
+    }
 }

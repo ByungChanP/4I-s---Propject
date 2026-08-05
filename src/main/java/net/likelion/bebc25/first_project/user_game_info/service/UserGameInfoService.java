@@ -8,9 +8,9 @@ public interface UserGameInfoService {
     /**
      * 신규 등록을 처리합니다.
      *
-     * @param gameInfo 인게임 정보를 요청할 DTO
+     * @param ingameInfoDto 인게임 정보를 요청할 DTO
      */
-    void register(int userId, int gameId, Object ingameInfoDto);
+    void register(int userId, int gameId, IngameInfoDto ingameInfoDto);
 
     /**
      * 인게임 정보를 수정합니다.
