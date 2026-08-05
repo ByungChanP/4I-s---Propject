@@ -22,6 +22,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<PostDto> getPosts(int gameId, String tag){return postRepository.findByTag(gameId, tag);}
+
+    @Override
     public PostDto getPost(int id) {
         return postRepository.findById(id);
     }

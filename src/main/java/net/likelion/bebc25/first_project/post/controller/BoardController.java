@@ -39,18 +39,43 @@ public class BoardController {
         this.userGameInfoService = userGameInfoService;
     }
 
-    // 게시글 목록 조회
-    @GetMapping("/{id}")
-    public String getPosts(@PathVariable("id") int gameId, Model model) {
-        log.info("게시글 목록");
-        List<PostDto> posts = postService.getPosts(gameId);
-        model.addAttribute("posts", posts);
+//    // 게시글 목록 조회
+//    @GetMapping("/{id}")
+//    public String getPosts(@PathVariable("id") int gameId, Model model) {
+//        log.info("게시글 목록");
+//        List<PostDto> posts = postService.getPosts(gameId);
+//        model.addAttribute("posts", posts);
+//
+//        GameDto game = gameService.getGame(gameId);
+//        model.addAttribute("game", game);
+//
+//        return "board/list";
+//    }
 
-        GameDto game = gameService.getGame(gameId);
-        model.addAttribute("game", game);
+@GetMapping("/{Id}")
+public String getPosts(
+        @PathVariable("Id") int gameId,
+        @RequestParam(required = false) String tag,
+        Model model) {
 
-        return "board/list";
+    log.info(">>>> [요청 들어옴] gameId: {}, 수신된 tag: '{}'", gameId, tag);
+    List<PostDto> posts;
+
+    // tag가 없거나, 빈값이거나, "all"인 경우는 전체 조회
+    if (tag == null || tag.trim().isEmpty() || "all".equalsIgnoreCase(tag)) {
+        posts = postService.getPosts(gameId);
+    } else {
+        posts = postService.getPosts(gameId, tag);
     }
+    log.info(">>>> 조회된 게시글 개수: {}개", posts.size());
+    model.addAttribute("posts", posts);
+    model.addAttribute("tag", tag);
+
+    GameDto game = gameService.getGame(gameId);
+    model.addAttribute("game", game);
+
+    return "board/list";
+}
 
     // 게시글 상세 조회
     @GetMapping("/{gameId}/detail")

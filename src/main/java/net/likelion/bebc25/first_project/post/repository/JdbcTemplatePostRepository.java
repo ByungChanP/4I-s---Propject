@@ -46,6 +46,15 @@ public class JdbcTemplatePostRepository implements PostRepository {
     }
 
     @Override
+    public List<PostDto> findByTag(int gameId, String tag) {
+        log.info("카테고리 별 게시글 목록 조회 - game_id: {}, tag: {}", gameId, tag);
+        String sql = "SELECT * FROM post WHERE game_id = ? AND tag = ? ORDER BY created_at DESC";
+        List<PostDto> posts = jdbcTemplate.query(sql, postRowMapper, gameId, tag);
+        return posts;
+    }
+
+
+    @Override
     public PostDto findById(int id) {
         checkDeadline(id);
         return jdbcTemplate.queryForObject("SELECT * FROM post WHERE id = ?", postRowMapper, id);
