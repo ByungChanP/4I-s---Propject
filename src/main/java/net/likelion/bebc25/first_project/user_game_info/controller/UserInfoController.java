@@ -8,6 +8,7 @@ import net.likelion.bebc25.first_project.member.dto.SessionMemberDto;
 import net.likelion.bebc25.first_project.user_game_info.InfoDto.LolIngameInfoDto;
 import net.likelion.bebc25.first_project.user_game_info.InfoDto.LostarkIngameInfoDto;
 import net.likelion.bebc25.first_project.user_game_info.service.UserGameInfoService;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +29,14 @@ public class UserInfoController {
 
 
     @GetMapping("/{gameId}/profile")
-    public String getInfoForm(@PathVariable("gameId") int gameId, Model model) {
-
+    public String getInfoForm(@PathVariable int gameId, HttpSession session, Model model) {
+        SessionMemberDto sessionMember = (SessionMemberDto) session.getAttribute("loginMember");
+        try {
+            userGameInfoService.getInfo(gameId, sessionMember.getId());
+            model.addAttribute("ingameProfileExist", true);
+        } catch (EmptyResultDataAccessException _) {
+            model.addAttribute("ingameProfileExist", false);
+        }
         GameDto game = gameService.getGame(gameId);
         model.addAttribute("game", game);
 
