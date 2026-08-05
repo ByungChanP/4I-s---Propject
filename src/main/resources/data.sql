@@ -13,9 +13,9 @@ VALUES ('user1@example.com', '1111', 'user1'),
        ('user4@example.com', '1111', 'user4');
 
 INSERT INTO post(game_id, member_id, tag, restrictions, title, content, deadline, max_count,is_closed)
-VALUES (1, 1, '랭크', '', '게시글1-1', '내용1-1', current_timestamp, '5',0),
-       (1, 2, '일반', '', '게시글1-2', '내용1-2', current_timestamp, '2',1),
-       (1, 3, '일반', '', '게시글1-3', '내용1-3', current_timestamp, '5',1),
-       (2, 4, '사냥', '', '게시글2-1', '내용2-1', current_timestamp, '3',0),
-       (2, 3, '사냥', '', '게시글2-2', '내용2-2', current_timestamp, '3',1),
-       (2, 2, '레이드', '', '게시글2-3', '내용2-3', current_timestamp, '6',0);
+VALUES (1, 1, '랭크', '', '자유 랭크 5인큐 구해요 골드 이상', '모든 포지션 가능. 마이크 필수.', current_timestamp, '5',0),
+       (1, 2, '일반', '', '일겜 듀오 하실분', '어느 포지션이든 상관 없습니다. 즐겜하실분', current_timestamp, '2',1),
+       (1, 3, '일반', '', '칼바람 5인큐 아무나', '어떤 분이든 OK 마이크 가능하신 분 환영', current_timestamp, '5',1),
+       (2, 4, '사냥', '카오스 던전 같이 도실 분', '혼자 돌기 심심해서 대화하면서 같이 하실 분 찾아요.', '내용2-1', current_timestamp, '3',0),
+       (2, 3, '사냥', '', '필드 사냥 같이 하실 분', '즐겁게 대화하면서 사냥하실 분', current_timestamp, '3',1),
+       (2, 2, '레이드', '', '카멘 노말 파티원 모집', '카멘 노말 도전하실 분 모집합니다', current_timestamp, '6',0);
