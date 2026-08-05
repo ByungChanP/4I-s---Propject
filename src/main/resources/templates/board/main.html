@@ -25,7 +25,9 @@
                 <div class="card shadow-sm game-card">
                     <img th:src="${game.getBackgroundImgDir()}" alt=""
                          class="game-banner overflow-hidden card-img-top w-100">
-                    <a th:href="|/board/${game.id}|" class="text-decoration-none text-dark">
+                    <a th:href="|/board/${game.id}|"
+                       th:onclick="${game.id != 1} ? 'alert(\'준비 중인 게임입니다.\'); return false;' : null"
+                       class="text-decoration-none text-dark">
                         <div class="card-body d-flex align-items-center gap-3">
                             <img th:src="${game.getLogoImgDir()}" alt="" class="game-icon">
                             <div>
