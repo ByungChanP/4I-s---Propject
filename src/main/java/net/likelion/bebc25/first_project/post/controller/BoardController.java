@@ -260,7 +260,7 @@ public class BoardController {
         try {
             participantIngameInfo = userGameInfoService.getInfo(gameId, loginMember.getId());
         } catch (EmptyResultDataAccessException _) {
-            return "redirect:/board//%d/profile".formatted(gameId);
+            return "redirect:/board/%d/profile".formatted(gameId);
         }
 
         PartyRegistrationDto registration = new PartyRegistrationDto();
