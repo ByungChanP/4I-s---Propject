@@ -15,7 +15,7 @@ public interface PostRepository {
 
     void update(PostDto post);
 
-    void close(PostDto post);
+    void close(int postId);
 
     void checkDeadline(int id);
 
