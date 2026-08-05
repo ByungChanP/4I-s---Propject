@@ -36,8 +36,8 @@ public class JdbcTemplatePartyRegistrationRepository implements PartyRegistratio
     }
 
     @Override
-    public void remove(int id) {
-
+    public void remove(int registrationId) {
+        jdbcTemplate.update("DELETE FROM participant_info WHERE id = ?", registrationId);
     }
 
     @Override
