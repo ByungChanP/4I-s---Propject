@@ -28,7 +28,8 @@
                     th:text="${post.maxParticipantCount}">5</span></p>
             <p th:if="${!post.isClosed()}">마감시간 <span th:text="${remainTime}">1사간 45분 남음</span></p>
             <p th:if="${post.isClosed()}"> 마감됨 </p>
-            <form th:if="${!post.isClosed()}" th:action="@{./request:close(id=${post.id})}" method="post"
+            <form th:if="${!post.isClosed() and session.loginMember.id == post.memberId}"
+                  th:action="@{/board/{gameId}/{postId}/close(gameId=${game.id}, postId=${post.id})}" method="post"
                   th:object="${post}">
                 <button class="btn close">모집마감</button>
             </form>

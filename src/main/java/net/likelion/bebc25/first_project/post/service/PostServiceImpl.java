@@ -22,7 +22,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getPosts(int gameId, String tag){return postRepository.findByTag(gameId, tag);}
+    public List<PostDto> getPosts(int gameId, String tag) {return postRepository.findByTag(gameId, tag);}
 
     @Override
     public PostDto getPost(int id) {
@@ -40,8 +40,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void closePost(PostDto post) {
-        postRepository.close(post);
+    public void closePost(int postId) {
+        postRepository.close(postId);
     }
 
     @Override

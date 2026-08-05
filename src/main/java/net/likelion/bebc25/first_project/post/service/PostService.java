@@ -15,7 +15,7 @@ public interface PostService {
 
     void editPost(PostDto post);
 
-    void closePost(PostDto post);
+    void closePost(int postId);
 
     void removePost(int id);
 }

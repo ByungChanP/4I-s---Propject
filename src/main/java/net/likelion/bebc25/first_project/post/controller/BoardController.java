@@ -184,12 +184,10 @@ public class BoardController {
     }
 
     // 파티원 모집 마감 요청
-    @PostMapping("/*/request:close")
-    public String closePost(@PathVariable int gameId, @RequestParam("id") int id, Model model) {
-        log.info("파티원 모집 마감");
-        PostDto post = postService.getPost(id);
-        model.addAttribute("post", post);
-        return "redirect:/board/" + gameId + "/detail?id=" + post.getId();
+    @PostMapping("/{gameId}/{postId}/close")
+    public String closePost(@PathVariable int gameId, @PathVariable int postId) {
+        postService.closePost(postId);
+        return "redirect:/board/" + gameId + "/detail?id=" + postId;
     }
 
     // 참가요청
