@@ -3,8 +3,6 @@ package net.likelion.bebc25.first_project.user_game_info.service;
 import net.likelion.bebc25.first_project.user_game_info.InfoDto.InfoDto;
 import net.likelion.bebc25.first_project.user_game_info.InfoDto.IngameInfoDto;
 
-import java.util.List;
-
 public interface UserGameInfoService {
 
     /**
@@ -26,7 +24,7 @@ public interface UserGameInfoService {
      *
      * @return
      */
-    List<InfoDto> getInfo(int game_iD, int member_id);
+    InfoDto getInfo(int game_iD, int member_id);
 
 
 }

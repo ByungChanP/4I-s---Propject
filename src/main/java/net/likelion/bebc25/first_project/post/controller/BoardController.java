@@ -10,7 +10,6 @@ import net.likelion.bebc25.first_project.member.service.MemberService;
 import net.likelion.bebc25.first_project.post.dto.PostDto;
 import net.likelion.bebc25.first_project.post.service.PostService;
 import net.likelion.bebc25.first_project.user_game_info.InfoDto.InfoDto;
-import net.likelion.bebc25.first_project.user_game_info.InfoDto.IngameInfoDto;
 import net.likelion.bebc25.first_project.user_game_info.service.UserGameInfoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,24 +54,24 @@ public class BoardController {
 
     // 게시글 상세 조회
     @GetMapping("/{gameId}/detail")
-    public String getDetail(@PathVariable("gameId") int gameId, @RequestParam int id, Model model, Model remainTime) {
+    public String getDetail(@PathVariable("gameId") int gameId, @RequestParam int id, Model model) {
         log.info("게시글 상세조회");
         PostDto post = postService.getPost(id);
-        MemberDto member = memberService.getMember(post.getMemberId());
-        List<InfoDto> ingameInfoList =
-                userGameInfoService.getInfo(
-                        post.getGameId(),
-                        post.getMemberId()
-                );
-        model.addAttribute("ingameInfo", ingameInfoList);
-        GameDto game = gameService.getGame(post.getGameId());
         model.addAttribute("post", post);
+
+        MemberDto member = memberService.getMember(post.getMemberId());
         model.addAttribute("member", member);
+
+        GameDto game = gameService.getGame(post.getGameId());
         model.addAttribute("game", game);
+
+        InfoDto authorIngameInfo = userGameInfoService.getInfo(gameId, post.getMemberId());
+        model.addAttribute("authorIngameInfo", authorIngameInfo);
+        model.addAttribute("position", String.join(", ", authorIngameInfo.getIngame_info().getPosition()));
 
         int remainTimeInMinute = (int) Duration.between(LocalDateTime.now(), post.getDeadline()).toMinutes();
         String remainTimeInString = String.format("%d시간 %d분 남음", remainTimeInMinute / 60, remainTimeInMinute % 60);
-        remainTime.addAttribute("remainTime", remainTimeInString);
+        model.addAttribute("remainTime", remainTimeInString);
 
         return "board/detail"; // 템플릿 파일 경로
     }
@@ -139,7 +138,7 @@ public class BoardController {
         log.info("파티원 모집 마감");
         PostDto post = postService.getPost(id);
         model.addAttribute("post", post);
-        return "redirect:/board/"+ gameId + "/detail?id=" + post.getId();
+        return "redirect:/board/" + gameId + "/detail?id=" + post.getId();
     }
 
     // 참가요청
