@@ -30,43 +30,7 @@
                                     검색
                                 </button>
                             </div>
-                            <div class="d-flex gap-3">
-                                <input type="radio"
-                                       class="btn-check"
-                                       name="tag"
-                                       id="all"
-                                       value="all"
-                                       onchange="this.form.submit()"
-                                       th:checked>
-
-                                <label class="btn btn-outline-orange" for="all">
-                                    전체
-                                </label>
-
-                                <input type="radio"
-                                       class="btn-check"
-                                       name="tag"
-                                       id="rank"
-                                       value="랭크"
-                                       onchange="this.form.submit()"
-                                       th:checked>
-
-                                <label class="btn btn-outline-orange" for="rank">
-                                    랭크
-                                </label>
-
-                                <input type="radio"
-                                       class="btn-check"
-                                       name="tag"
-                                       id="normal"
-                                       value="일반"
-                                       onchange="this.form.submit()"
-                                       th:checked>
-
-                                <label class="btn btn-outline-orange" for="normal">
-                                    일반
-                                </label>
-                            </div>
+                            <div th:replace="~{layout/gamecategory :: category}"></div>
                         </div>
                         <div class="d-flex gap-3">
                             <select name="status">

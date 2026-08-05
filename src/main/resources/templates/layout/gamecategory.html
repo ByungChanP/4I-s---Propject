@@ -1,0 +1,80 @@
+<th:block th:fragment="category">
+
+    <!-- 롤 -->
+    <div class="d-flex gap-3" th:if="${game.id == 1}">
+
+        <input type="radio"
+               class="btn-check"
+               name="tag"
+               id="lolAll"
+               value="all"
+               onchange="this.form.submit()">
+
+        <label class="btn btn-outline-orange" for="lolAll">
+            전체
+        </label>
+
+        <input type="radio"
+               class="btn-check"
+               name="tag"
+               id="rank"
+               value="랭크"
+               onchange="this.form.submit()">
+
+        <label class="btn btn-outline-orange" for="rank">
+            랭크
+        </label>
+
+        <input type="radio"
+               class="btn-check"
+               name="tag"
+               id="normal"
+               value="일반"
+               onchange="this.form.submit()">
+
+        <label class="btn btn-outline-orange" for="normal">
+            일반
+        </label>
+
+    </div>
+
+
+    <!-- 로스트아크 -->
+    <div class="d-flex gap-3" th:if="${game.id == 2}">
+
+        <input type="radio"
+               class="btn-check"
+               name="tag"
+               id="lostArkAll"
+               value="all"
+               onchange="this.form.submit()">
+
+        <label class="btn btn-outline-orange" for="lostArkAll">
+            전체
+        </label>
+
+        <input type="radio"
+               class="btn-check"
+               name="tag"
+               id="hunt"
+               value="사냥"
+               onchange="this.form.submit()">
+
+        <label class="btn btn-outline-orange" for="hunt">
+            사냥
+        </label>
+
+        <input type="radio"
+               class="btn-check"
+               name="tag"
+               id="raid"
+               value="레이드"
+               onchange="this.form.submit()">
+
+        <label class="btn btn-outline-orange" for="raid">
+            레이드
+        </label>
+
+    </div>
+
+</th:block>
