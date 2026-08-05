@@ -50,12 +50,20 @@ public class BoardController {
         return String.format("%d시간 %d분 남음", remainTimeInMinute / 60, remainTimeInMinute % 60);
     }
 
+    private boolean checkIngameProfileExist(int gameId, SessionMemberDto loginMember) {
+        try {
+            userGameInfoService.getInfo(gameId, loginMember.getId());
+            return true;
+        } catch (EmptyResultDataAccessException _) {
+            return false;
+        }
+    }
 
     @GetMapping("/{Id}")
     public String getPosts(
             @PathVariable("Id") int gameId,
             @RequestParam(required = false) String tag,
-            Model model) {
+            HttpSession session, Model model) {
 
         log.info(">>>> [요청 들어옴] gameId: {}, 수신된 tag: '{}'", gameId, tag);
         List<PostDto> posts;
@@ -79,6 +87,10 @@ public class BoardController {
 
         GameDto game = gameService.getGame(gameId);
         model.addAttribute("game", game);
+
+        SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
+        model.addAttribute("ingameProfileExist", checkIngameProfileExist(gameId, loginMember));
+
 
         return "board/list";
     }
@@ -119,6 +131,7 @@ public class BoardController {
         }
         model.addAttribute("isParticipant", isParticipant);
         model.addAttribute("participants", participantInfoList);
+        model.addAttribute("ingameProfileExist", checkIngameProfileExist(gameId, loginMember));
 
         String remainTime = calcRemainTime(post);
         model.addAttribute("remainTime", remainTime);
@@ -132,30 +145,36 @@ public class BoardController {
             @PathVariable("gameId") int gameId,
             HttpSession session, Model model
     ) {
-        SessionMemberDto sessionMember = (SessionMemberDto) session.getAttribute("loginMember");
+        SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
         try {
-            userGameInfoService.getInfo(gameId, sessionMember.getId());
+            userGameInfoService.getInfo(gameId, loginMember.getId());
         } catch (EmptyResultDataAccessException e) {
             return "redirect:/board/%d/profile".formatted(gameId);
         }
+        model.addAttribute("ingameProfileExist", checkIngameProfileExist(gameId, loginMember));
 
         PostDto postDto = new PostDto();
         postDto.setGameId(gameId);
         model.addAttribute("postDto", postDto);
         GameDto game = gameService.getGame(gameId);
         model.addAttribute("game", game);
+
+
         return "board/write";
     }
 
     // 게시글 수정화면 요청
     @GetMapping("/{gameId}/edit")
-    public String getEditForm(@PathVariable("gameId") int gameId, @RequestParam int id, Model model) {
+    public String getEditForm(@PathVariable("gameId") int gameId, @RequestParam int id,
+                              HttpSession session, Model model) {
         PostDto post = postService.getPost(id);
         post.setGameId(gameId);
         model.addAttribute("postDto", post);
         GameDto game = gameService.getGame(gameId);
         model.addAttribute("game", game);
-        log.info("게시글 수정");
+
+        SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
+        model.addAttribute("ingameProfileExist", checkIngameProfileExist(gameId, loginMember));
         return "board/edit";
     }
 
@@ -202,12 +221,12 @@ public class BoardController {
             @PathVariable int gameId, @PathVariable int postId,
             HttpSession session
     ) {
-        SessionMemberDto sessionMember = (SessionMemberDto) session.getAttribute("loginMember");
-        InfoDto participantIngameInfo = userGameInfoService.getInfo(gameId, sessionMember.getId());
+        SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
+        InfoDto participantIngameInfo = userGameInfoService.getInfo(gameId, loginMember.getId());
 
         PartyRegistrationDto registration = new PartyRegistrationDto();
         registration.setPostId(postId);
-        registration.setMemberId(sessionMember.getId());
+        registration.setMemberId(loginMember.getId());
         registration.setParticipantInfoString(objectMapper.writeValueAsString(participantIngameInfo.getLolIngameInfo()));
 
         partyRegistrationService.register(registration);
