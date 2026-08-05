@@ -112,7 +112,8 @@
             <button class="btn_detail list">목록</button>
         </a>
         <div th:if="${session.loginMember.id == member.id}" class="author_only">
-            <a th:href="@{/board/{gameId}/edit(gameId=${game.id}, id=${post.id})}">
+            <!--            th:href="@{/board/{gameId}/edit(gameId=${game.id}, id=${post.id})}-->
+            <a href="">
                 <button class="btn edit">게시글 수정</button>
             </a>
             <form th:action="@{/board/{gameId}/delete(postId=${post.id}, gameId=${game.id})}" method="post">
