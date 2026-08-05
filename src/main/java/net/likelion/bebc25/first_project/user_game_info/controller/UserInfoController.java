@@ -28,8 +28,8 @@ public class UserInfoController {
     }
 
 
-    @GetMapping("/{id}/profile")
-    public String getInfoForm(@PathVariable("id") int gameId, Model model) {
+    @GetMapping("/{gameId}/profile")
+    public String getInfoForm(@PathVariable("gameId") int gameId, Model model) {
 
         GameDto game = gameService.getGame(gameId);
         model.addAttribute("game", game);
@@ -39,42 +39,42 @@ public class UserInfoController {
 
     @PostMapping("/{gameId}/profile")
     public String createProfile(
-            @PathVariable int id,
+            @PathVariable("gameId") int gameId,
             @ModelAttribute("ingameInfo") Object ingameInfoDto,
             HttpSession session
     ) {
         SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
         int memberId = loginMember.getId();
 
-        if (id == 1) {
+        if (gameId == 1) {
 
             IngameInfoDto lolDto =
                     (IngameInfoDto) ingameInfoDto;
 
             userGameInfoService.register(
-                    id,
                     memberId,
+                    gameId,
                     lolDto
 
             );
 
-        } else if (id == 2) {
+        } else if (gameId == 2) {
 
             LostarkIngameInfoDto lostarkDto =
                     (LostarkIngameInfoDto) ingameInfoDto;
 
             userGameInfoService.register(
-                    id,
                     memberId,
+                    gameId,
                     lostarkDto
             );
         }
-        return "redirect:/board/" + id;
+        return "redirect:/board/" + gameId;
     }
 
     @ModelAttribute("ingameInfo")
     public Object ingameInfo(
-            @PathVariable("id") int gameId
+            @PathVariable("gameId") int gameId
     ) {
 
         if (gameId == 1) {
