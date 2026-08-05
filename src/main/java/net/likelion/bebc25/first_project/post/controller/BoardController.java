@@ -45,18 +45,11 @@ public class BoardController {
         this.objectMapper = objectMapper;
     }
 
-//    // 게시글 목록 조회
-//    @GetMapping("/{id}")
-//    public String getPosts(@PathVariable("id") int gameId, Model model) {
-//        log.info("게시글 목록");
-//        List<PostDto> posts = postService.getPosts(gameId);
-//        model.addAttribute("posts", posts);
-//
-//        GameDto game = gameService.getGame(gameId);
-//        model.addAttribute("game", game);
-//
-//        return "board/list";
-//    }
+    private String calcRemainTime(PostDto post) {
+        int remainTimeInMinute = (int) Duration.between(LocalDateTime.now(), post.getDeadline()).toMinutes();
+        return String.format("%d시간 %d분 남음", remainTimeInMinute / 60, remainTimeInMinute % 60);
+    }
+
 
     @GetMapping("/{Id}")
     public String getPosts(
@@ -73,6 +66,12 @@ public class BoardController {
         }
         else {
             posts = postService.getPosts(gameId, tag);
+        }
+
+        for (PostDto post : posts) {
+            MemberDto author = memberService.getMember(post.getMemberId());
+            post.setMemberNickname(author.getNickname());
+            post.setRemainTime(calcRemainTime(post));
         }
         log.info(">>>> 조회된 게시글 개수: {}개", posts.size());
         model.addAttribute("posts", posts);
@@ -121,9 +120,8 @@ public class BoardController {
         model.addAttribute("isParticipant", isParticipant);
         model.addAttribute("participants", participantInfoList);
 
-        int remainTimeInMinute = (int) Duration.between(LocalDateTime.now(), post.getDeadline()).toMinutes();
-        String remainTimeInString = String.format("%d시간 %d분 남음", remainTimeInMinute / 60, remainTimeInMinute % 60);
-        model.addAttribute("remainTime", remainTimeInString);
+        String remainTime = calcRemainTime(post);
+        model.addAttribute("remainTime", remainTime);
 
         return "board/detail"; // 템플릿 파일 경로
     }

@@ -22,7 +22,8 @@
             </aside>
             <section class="col-10">
                 <div class="bg-white rounded shadow-sm p-3 mb-3">
-                    <form th:action="@{./{gameId}(gameId=${game.id})}" method="get" class="d-flex justify-content-between align-items-center">
+                    <form th:action="@{./{gameId}(gameId=${game.id})}" method="get"
+                          class="d-flex justify-content-between align-items-center">
                         <div class="d-flex gap-5">
                             <div>
                                 <input type="text" name="keyword" placeholder="제목, 작성자 검색">
@@ -73,7 +74,7 @@
                             <td>
                                 <div>
                                     <img src="/images/icon/person-circle.svg">
-                                    <span th:text="${post.memberId}" class="text-secondary">
+                                    <span th:text="${post.memberNickname}" class="text-secondary">
                                      게시판 닉네임(인게임 닉네임X)
                                  </span>
                                 </div>
@@ -88,7 +89,7 @@
                              </span>
                             </td>
                             <td>
-                                <p th:if="${!post.isClosed()}" th:text="${post.deadline}">
+                                <p th:if="${!post.isClosed()}" th:text="${post.remainTime}">
                                     마감까지 남은 시간
                                 </p>
                                 <p th:if="${post.isClosed()}" th:text="마감됨">
