@@ -269,6 +269,7 @@ public class BoardController {
         registration.setParticipantInfoString(objectMapper.writeValueAsString(participantIngameInfo.getLolIngameInfo()));
 
         partyRegistrationService.register(registration);
+
         return "redirect:/board/%d/detail?id=%d".formatted(gameId, postId);
     }
 
@@ -277,7 +278,7 @@ public class BoardController {
     public String refuseParticipant(
             @PathVariable int gameId, @PathVariable int postId, @PathVariable int registrationId
     ) {
-        partyRegistrationService.delete(registrationId);
+        partyRegistrationService.delete(registrationId, postId);
         return "redirect:/board/%d/detail?id=%d".formatted(gameId, postId);
     }
 }
