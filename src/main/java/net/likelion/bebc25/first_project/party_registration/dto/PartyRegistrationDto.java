@@ -1,6 +1,7 @@
 package net.likelion.bebc25.first_project.party_registration.dto;
 
 import lombok.*;
+import net.likelion.bebc25.first_project.user_game_info.InfoDto.IngameInfoDto;
 
 import java.time.LocalDateTime;
 
@@ -16,9 +17,15 @@ public class PartyRegistrationDto {
 
     private int postId;
 
-    private String author;
+    private int memberId;
 
-    private int content;
+    private String memberNickname;
+
+    private String participantInfoString;
 
     private LocalDateTime createdAt;
+
+    private IngameInfoDto participantInfo;
+
+    private String position;
 }

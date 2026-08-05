@@ -37,7 +37,7 @@ public class UserInfoController {
         return "member/profile";
     }
 
-    @PostMapping("/{id}/profile")
+    @PostMapping("/{gameId}/profile")
     public String createProfile(
             @PathVariable int id,
             @ModelAttribute("ingameInfo") Object ingameInfoDto,

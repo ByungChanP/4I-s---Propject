@@ -22,7 +22,7 @@
             </aside>
             <section class="col-10">
                 <div class="bg-white rounded shadow-sm p-3 mb-3">
-                    <form action="/" method="get" class="d-flex justify-content-between align-items-center">
+                    <form th:action="@{./{gameId}(gameId=${game.id})}" method="get" class="d-flex justify-content-between align-items-center">
                         <div class="d-flex gap-5">
                             <div>
                                 <input type="text" name="keyword" placeholder="제목, 작성자 검색">
@@ -33,10 +33,11 @@
                             <div class="d-flex gap-3">
                                 <input type="radio"
                                        class="btn-check"
-                                       name="type"
+                                       name="tag"
                                        id="all"
                                        value="all"
-                                       checked>
+                                       onchange="this.form.submit()"
+                                       th:checked>
 
                                 <label class="btn btn-outline-orange" for="all">
                                     전체
@@ -44,9 +45,11 @@
 
                                 <input type="radio"
                                        class="btn-check"
-                                       name="type"
+                                       name="tag"
                                        id="rank"
-                                       value="rank">
+                                       value="랭크"
+                                       onchange="this.form.submit()"
+                                       th:checked>
 
                                 <label class="btn btn-outline-orange" for="rank">
                                     랭크
@@ -54,9 +57,11 @@
 
                                 <input type="radio"
                                        class="btn-check"
-                                       name="type"
+                                       name="tag"
                                        id="normal"
-                                       value="normal">
+                                       value="일반"
+                                       onchange="this.form.submit()"
+                                       th:checked>
 
                                 <label class="btn btn-outline-orange" for="normal">
                                     일반

@@ -8,8 +8,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import tools.jackson.databind.ObjectMapper;
 
-import java.util.List;
-
 /**
  * Spring의 JdbcTemplate을 사용하여 프로필 데이터를 처리하는 저장소 구현체입니다.
  */
@@ -79,7 +77,7 @@ public class JdbcTemplateUserGameInfoRepository implements UserGameInfoRepositor
     }
 
     @Override
-    public List<InfoDto> findByID(int id) {
-        return List.of();
+    public InfoDto findByID(int gameId, int memberId) {
+        return jdbcTemplate.queryForObject("SELECT * FROM ingame_info WHERE game_id = ? AND member_id = ?", userRowMapper(), gameId, memberId);
     }
 }

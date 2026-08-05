@@ -23,7 +23,7 @@
                 <img th:src="${member.profileImgDir}" alt="">
                 <span th:text="${member.nickname}">소환사루나</span>
             </p>
-            <p>일반</p>
+            <p th:text="${post.tag}">일반</p>
             <p>지원인원 <span th:text="${post.participantCount}">3</span> / <span
                     th:text="${post.maxParticipantCount}">5</span></p>
             <p th:if="${!post.isClosed()}">마감시간 <span th:text="${remainTime}">1사간 45분 남음</span></p>
@@ -36,7 +36,7 @@
     </div>
     <div class="detail row">
         <p class="label">모집 내용</p>
-        <div class="content" th:text="${post.content}">
+        <div style="white-space: pre-wrap" class="content" th:text="${post.content}">
             편하게 같이 게임하실 분 구합니다.
             실버 구간이고, 정글 또는 미드 플레이 가능하신 분 환영해요.
             디스코드 가능하신 분이면 더 좋고, 즐겜 위주로 편하게 하실 분 구합니다!
@@ -54,23 +54,22 @@
                     <th>포지션</th>
                 </tr>
                 <tr>
-                <tr th:if="${!ingameInfo.isEmpty()}">
-
-                <td th:text="${ingameInfo.ingame_info.nickname}">
-                    소환사루나
-                </td>
-
-                <td th:text="${ingameInfo.ingame_info.level}">
-                    278
-                </td>
-
-                <td th:text="${ingameInfo.ingame_info.rank}">
-                    실버
-                </td>
-
-                <td th:text="${ingameInfo.ingame_info.position}">
-                    미드
-                </td>
+                <tr>
+                    <td th:text="${member.nickname}">
+                        소환사루나
+                    </td>
+                    <td th:text="${authorIngameInfo.ingame_info.nickname}">
+                        소환사루나
+                    </td>
+                    <td th:text="${authorIngameInfo.ingame_info.level}">
+                        278
+                    </td>
+                    <td th:text="${authorIngameInfo.ingame_info.rank}">
+                        실버
+                    </td>
+                    <td th:text="${authorPosition}">
+                        미드
+                    </td>
                 </tr>
             </table>
         </div>
@@ -85,14 +84,17 @@
                     <th>레벨</th>
                     <th>랭크</th>
                     <th>포지션</th>
-                    <th class="btn_col" th:if="${!post.isClosed()}">참가거부</th>
+                    <th class="btn_col" th:if="${!post.isClosed()}">
+                        <span th:if="${session.loginMember.id == post.memberId}">참가거부</span>
+                        <span th:if="${session.loginMember.id != post.memberId}">참가취소</span>
+                    </th>
                 </tr>
-                <tr>
-                    <td>정글의신</td>
-                    <td>블루버프왕</td>
-                    <td>214</td>
-                    <td>실버</td>
-                    <td>정글</td>
+                <tr th:each="participant : ${participants}">
+                    <td th:text="${participant.memberNickname}">정글의신</td>
+                    <td th:text="${participant.participantInfo.nickname}">블루버프왕</td>
+                    <td th:text="${participant.participantInfo.level}">214</td>
+                    <td th:text="${participant.participantInfo.rank}">실버</td>
+                    <td th:text="${participant.position}">정글</td>
                     <td>
                         <form th:if="${!post.isClosed()}" action="./request:refuse" method="post">
                             <button class="btn refuse">x</button>
@@ -115,7 +117,8 @@
             </form>
         </div>
         <div class="participant_only">
-            <form th:if="${!post.isClosed()}" action="./request:join" method="post">
+            <form th:if="${!post.isClosed() and session.loginMember.id != post.memberId and !isParticipant}"
+                  th:action="@{/board/{gameId}/{postId}/join(gameId=${game.id}, postId=${post.id})}" method="post">
                 <button type="submit" class="btn join">파티 참가</button>
             </form>
         </div>
