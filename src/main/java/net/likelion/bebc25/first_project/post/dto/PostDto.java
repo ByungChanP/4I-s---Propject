@@ -1,6 +1,8 @@
 package net.likelion.bebc25.first_project.post.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -36,10 +38,10 @@ public class PostDto {
 
     private int participantCount;
 
-    @NotBlank(message = "모집인원을 설정해주세요.")
+    @Min(2)
     private int maxParticipantCount;
 
-    @NotBlank(message = "마감 시간을 설정해주세요.")
+    @NotNull(message = "마감 시간을 설정해주세요.")
     private LocalDateTime deadline;
 
     private boolean isClosed;

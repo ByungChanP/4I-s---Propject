@@ -1,6 +1,7 @@
 package net.likelion.bebc25.first_project.post.controller;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import net.likelion.bebc25.first_project.game.dto.GameDto;
 import net.likelion.bebc25.first_project.game.service.GameService;
@@ -17,6 +18,7 @@ import net.likelion.bebc25.first_project.user_game_info.service.UserGameInfoServ
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tools.jackson.databind.ObjectMapper;
 
@@ -178,6 +180,7 @@ public class BoardController {
     @GetMapping("/{gameId}/edit")
     public String getEditForm(@PathVariable("gameId") int gameId, @RequestParam int id,
                               HttpSession session, Model model) {
+
         PostDto post = postService.getPost(id);
         post.setGameId(gameId);
         model.addAttribute("postDto", post);
@@ -194,9 +197,19 @@ public class BoardController {
     @PostMapping("/{gameId}/write")
     public String writePost(
             @PathVariable int gameId,
-            @ModelAttribute PostDto postDto,
-            HttpSession session
+            @Valid @ModelAttribute PostDto postDto,
+            BindingResult bindingResult,
+            HttpSession session,
+            Model model
     ) {
+        if (bindingResult.hasErrors()) {
+            SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
+            model.addAttribute("ingameProfileExist", checkIngameProfileExist(gameId, loginMember));
+            model.addAttribute("isLogin", true);
+            model.addAttribute("game", gameService.getGame(gameId));
+            return "/board/write";
+        }
+
         SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
 
         postDto.setMemberId(loginMember.getId());
@@ -208,8 +221,13 @@ public class BoardController {
 
     // 게시글 수정 요청
     @PostMapping("/{gameId}/edit")
-    public String editPost(@PathVariable int gameId,
-                           @ModelAttribute PostDto postDto) {
+    public String editPost(
+            @PathVariable int gameId, @Valid @ModelAttribute PostDto postDto,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            return "board/%d/edit".formatted(gameId);
+        }
         postService.editPost(postDto);
         return "redirect:/board/" + gameId + "/detail?id=" + postDto.getId();
     }
@@ -235,7 +253,12 @@ public class BoardController {
             HttpSession session
     ) {
         SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
-        InfoDto participantIngameInfo = userGameInfoService.getInfo(gameId, loginMember.getId());
+        InfoDto participantIngameInfo;
+        try {
+            participantIngameInfo = userGameInfoService.getInfo(gameId, loginMember.getId());
+        } catch (EmptyResultDataAccessException _) {
+            return "redirect:/board//%d/profile".formatted(gameId);
+        }
 
         PartyRegistrationDto registration = new PartyRegistrationDto();
         registration.setPostId(postId);
