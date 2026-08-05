@@ -47,7 +47,7 @@
             </p>
         </div>
     </div>
-    <a th:if="${!ingameProfileExist}" th:href="@{/board/{id}/profile(id=${game.id})}"
+    <a th:if="${!ingameProfileExist or !isLogin}" th:href="@{/board/{id}/profile(id=${game.id})}"
        class="btn btn-outline-orange fw-semibold">
         인게임 프로필 등록
     </a>

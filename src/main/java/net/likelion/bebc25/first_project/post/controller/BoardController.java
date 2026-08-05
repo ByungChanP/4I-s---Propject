@@ -51,6 +51,7 @@ public class BoardController {
     }
 
     private boolean checkIngameProfileExist(int gameId, SessionMemberDto loginMember) {
+        if (loginMember == null) return false;
         try {
             userGameInfoService.getInfo(gameId, loginMember.getId());
             return true;
@@ -88,8 +89,18 @@ public class BoardController {
         GameDto game = gameService.getGame(gameId);
         model.addAttribute("game", game);
 
+
         SessionMemberDto loginMember = (SessionMemberDto) session.getAttribute("loginMember");
-        model.addAttribute("ingameProfileExist", checkIngameProfileExist(gameId, loginMember));
+        if (loginMember != null) {
+            model.addAttribute("ingameProfileExist", checkIngameProfileExist(gameId, loginMember));
+            model.addAttribute("isLogin", true);
+            log.info("isLogin >>> " + true);
+        }
+        else {
+            model.addAttribute("ingameProfileExist", checkIngameProfileExist(gameId, loginMember));
+            model.addAttribute("isLogin", false);
+            log.info("isLogin >>> " + false);
+        }
 
 
         return "board/list";
