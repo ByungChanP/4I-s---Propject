@@ -48,7 +48,7 @@ erDiagram
         int id PK
         int post_id FK
         int member_id FK
-        text content
+        text participant_info
         datetime created_at
     }
 
@@ -64,8 +64,10 @@ erDiagram
         int id PK
         int game_id FK
         int post_id FK
-        json ingame_info
+        text ingame_info
     }
+    
+    
 
 ```
 
@@ -75,9 +77,9 @@ erDiagram
 
 ### 1.2.1 member (회원 테이블)
 - id: INT, PRIMARY KEY, AUTO_INCREMENT (회원 고유 식별자)
-- email: VARCHAR(50), NOT NULL (이메일 아이디)
+- email: VARCHAR(50), UNIQUE, NOT NULL (이메일 아이디)
 - pw: VARCHAR(20), NOT NULL (비밀번호)
-- nickname: VARCHAR(20), NOT NULL (닉네임)
+- nickname: VARCHAR(20), UNIQUE, NOT NULL (닉네임)
 - created_at: DATETIME, DEFAULT CURRENT_TIMESTAMP (가입 일시)
 - profile_img_dir: text (프로필 이미지 경로)
 
@@ -91,7 +93,7 @@ erDiagram
 - restrictions : text (제한 조건)
 - title: VARCHAR(30), NOT NULL (게시글 제목)
 - content: TEXT, NOT NULL (게시글 본문)
-- max_count: INT, DEFAULT 0 (인원 제한)
+- max_count: INT, DEFAULT 1 (인원 제한)
 - participant_count: INT, DEFAULT 1 (참여 인원)
 - created_at: DATETIME, DEFAULT CURRENT_TIMESTAMP (작성 일시)
 - deadline : DATETIME, NOT NULL (마감 기한)
@@ -101,12 +103,12 @@ erDiagram
 - id: INT, PRIMARY KEY, AUTO_INCREMENT (가입 유저 고유 식별자)
 - post_id: INT, FOREIGN KEY (대상 게시글 식별자)
 - member_id: INT, FOREIGN KEY (댓글 작성자 식별자)
-- content: TEXT, NOT NULL (댓글 내용)
+- participant_info TEXT NOT NULL,
 - created_at: DATETIME, DEFAULT CURRENT_TIMESTAMP (작성 일시)
 
 ### 1.2.4 game (게임 테이블)
 - id: INT, PRIMARY KEY, AUTO_INCREMENT (게임 고유 식별자)
-- game_title: VARCHAR(50), UQIQUE, NOT NULL (게임 이름)
+- game_title: VARCHAR(50), UNIQUE, NOT NULL (게임 이름)
 - background_img_dir : text (배경 이미지 경로)
 - game_logo_dir: text (게임 로고 이미지 경로)
 - detail: text (게임 상세)
@@ -155,7 +157,7 @@ CREATE TABLE IF NOT EXISTS participant_info
     id         INT AUTO_INCREMENT PRIMARY KEY,
     member_id  INT REFERENCES member (id) ON DELETE RESTRICT,
     post_id    INT REFERENCES post (id) ON DELETE CASCADE,
-    content    TEXT NOT NULL,
+    participant_info    TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
