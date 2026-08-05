@@ -103,6 +103,7 @@
 
 ### 2.7 파티 모집 상세 화면(작성자) (GET `/board/{gameId}/detail?id={postId}`)
 <img src="../images/07_party_join_detail_owner.png" width="500" alt="사용자 로그인 화면">
+
 - 출력 데이터 항목 (Output Data):
   - 일반 사용자 화면 데이터 + 관리 컨트롤 영역
 - 화면 제어 및 권한 규칙 (Behavior Rules):
@@ -113,6 +114,7 @@
 
 ### 2.8 프로필 등록화면 (게임마다 변경사항 있음) (GET `/board/{gameId}/profile`)
 <img src="../images/08_profile.png" width="500" alt="사용자 로그인 화면">
+
 - 출력 데이터 항목 (Output Data):
   - GNB 및 타이틀 영역: 서비스 로고, 사용자 프로필/인증 정보, 게임별 게시판 헤더 배너
   - 입력 폼 타이틀: 닉네임, 레벨, 랭크, 포지션 등 
