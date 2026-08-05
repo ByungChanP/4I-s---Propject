@@ -45,4 +45,8 @@ public class PostDto {
     private boolean isClosed;
 
     private LocalDateTime createdAt;
+
+    private String memberNickname;
+
+    private String remainTime;
 }
