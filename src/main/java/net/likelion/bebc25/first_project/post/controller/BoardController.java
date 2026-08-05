@@ -71,6 +71,9 @@ public class BoardController {
             HttpSession session, Model model) {
 
         log.info(">>>> [요청 들어옴] gameId: {}, 수신된 tag: '{}'", gameId, tag);
+        if (gameId != 1 && gameId != 2) {
+            return "redirect:/main";   // 1,2번 게임이 아닌경우
+        }
         List<PostDto> posts;
 
         // tag가 없거나, 빈값이거나, "all"인 경우는 전체 조회
