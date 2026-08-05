@@ -89,8 +89,8 @@ public class JdbcTemplatePostRepository implements PostRepository {
     }
 
     @Override
-    public void close(PostDto post) {
-        jdbcTemplate.update("UPDATE post SET is_closed = true WHERE id = ?", post.getId());
+    public void close(int postId) {
+        jdbcTemplate.update("UPDATE post SET is_closed = true WHERE id = ?", postId);
     }
 
     @Override
