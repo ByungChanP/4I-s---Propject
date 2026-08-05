@@ -7,6 +7,8 @@ import java.util.List;
 public interface PostRepository {
     List<PostDto> findAll(int gameId);
 
+    List<PostDto> findByTag(int gameId, String tag);
+
     PostDto findById(int id);
 
     void save(PostDto post);

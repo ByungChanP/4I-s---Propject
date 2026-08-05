@@ -8,10 +8,10 @@ VALUES ('user1@example.com', '1111', 'user1'),
        ('user3@example.com', '1111', 'user3'),
        ('user4@example.com', '1111', 'user4');
 
-INSERT INTO post(game_id, member_id, tag, restrictions, title, content, deadline, max_count)
-VALUES (1, 1, '일반', '', '게시글1-1', '내용1-1', current_timestamp, '5'),
-       (1, 2, '일반', '', '게시글1-2', '내용1-2', current_timestamp, '2'),
-       (1, 3, '일반', '', '게시글1-3', '내용1-3', current_timestamp, '5'),
-       (2, 4, '사냥', '', '게시글2-1', '내용2-1', current_timestamp, '3'),
-       (2, 3, '사냥', '', '게시글2-2', '내용2-2', current_timestamp, '3'),
-       (2, 2, '레이드', '', '게시글2-3', '내용2-3', current_timestamp, '6');
+INSERT INTO post(game_id, member_id, tag, restrictions, title, content, deadline, max_count,is_closed)
+VALUES (1, 1, '랭크', '', '게시글1-1', '내용1-1', current_timestamp, '5',0),
+       (1, 2, '일반', '', '게시글1-2', '내용1-2', current_timestamp, '2',1),
+       (1, 3, '일반', '', '게시글1-3', '내용1-3', current_timestamp, '5',1),
+       (2, 4, '사냥', '', '게시글2-1', '내용2-1', current_timestamp, '3',0),
+       (2, 3, '사냥', '', '게시글2-2', '내용2-2', current_timestamp, '3',1),
+       (2, 2, '레이드', '', '게시글2-3', '내용2-3', current_timestamp, '6',0);

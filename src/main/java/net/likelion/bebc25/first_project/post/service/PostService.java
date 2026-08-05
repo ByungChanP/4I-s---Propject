@@ -7,6 +7,8 @@ import java.util.List;
 public interface PostService {
     List<PostDto> getPosts(int gameId);
 
+    List<PostDto> getPosts(int gameId, String tag);
+
     PostDto getPost(int id);
 
     void writePost(PostDto post);
