@@ -63,7 +63,7 @@ erDiagram
     INGAME_INFO{
         int id PK
         int game_id FK
-        int post_id FK
+        int member_id FK
         text ingame_info
     }
     
